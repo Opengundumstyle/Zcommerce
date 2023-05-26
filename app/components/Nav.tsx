@@ -8,7 +8,9 @@ import Link from "next/link"
 export default function Nav({user}:Session){
       return (
           <nav className="flex justify-between items-center py-8">
-            <h1>sexy brian</h1>
+            <Link href={'/'} >
+              <h1>sexy brian</h1>
+            </Link>
             <ul className="flex items-center gap-12">
                 {/**if the user is not signed in */}
                 {!user && (
@@ -22,14 +24,12 @@ export default function Nav({user}:Session){
                   user && (
                   
                        <li>
-                            <Link href={'/'} >
                               <Image 
                                 src={user?.image as string} 
                                 alt={user.name as string} 
                                 width={48} height={48}
                                 className="rounded-full"
                                 />
-                             </Link>
                        </li>
                     
                   )
