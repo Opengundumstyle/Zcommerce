@@ -19,7 +19,9 @@ export default function Nav({user}:Session){
             </Link>
             <ul className="flex items-center gap-12">
                 {/**if the user is not signed in */}
-                <li className="flex items-center text-3xl cursor-pointer relative">
+                <li 
+                  onClick={()=>cartstore.toggleCart()}
+                  className="flex items-center text-3xl cursor-pointer relative">
                  <AiFillShopping/>
                  <span className="bg-teal-700 text-white text-sm font-bold w-5 h-5 rounded-full absolute left-4 bottom-4 flex items-center justify-center">{cartstore.cart.length}</span>
 
