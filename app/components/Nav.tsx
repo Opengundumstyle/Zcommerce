@@ -3,6 +3,7 @@
 import { Session } from "next-auth"
 import {signIn} from "next-auth/react"
 import Image from "next/image"
+import Link from "next/link"
 
 export default function Nav({user}:Session){
       return (
@@ -21,12 +22,14 @@ export default function Nav({user}:Session){
                   user && (
                   
                        <li>
-                           <Image 
-                             src={user?.image as string} 
-                             alt={user.name as string} 
-                             width={48} height={48}
-                             className="rounded-full"
-                             />
+                            <Link href={'/'} >
+                              <Image 
+                                src={user?.image as string} 
+                                alt={user.name as string} 
+                                width={48} height={48}
+                                className="rounded-full"
+                                />
+                             </Link>
                        </li>
                     
                   )
