@@ -8,6 +8,7 @@ const prisma = new PrismaClient();
 
 export const authOptions:NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
+  secret:process.env.NEXT_AUTH_SECRET,
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
@@ -21,8 +22,8 @@ export const authOptions:NextAuthOptions = {
          })
          if(user.name && user.email){
           const customer = await stripe.customers.create({
-             email:user.email,
-             name:user.name
+             email:user.email || undefined,
+             name:user.name || undefined,
          })
          //also update our prisma user with the stripecusomterid
             await prisma.user.update({
@@ -31,8 +32,20 @@ export const authOptions:NextAuthOptions = {
             })
         }
      }
+  },
+  callbacks:{
+     async session({session,token,user}){
+          session.user  = user
+          return session
+     }
   }
+  
 };
 
 
-export default NextAuth(authOptions)
+const nextAuthHandler = NextAuth(authOptions);
+
+export default nextAuthHandler;
+
+// Close the database connection when no longer needed
+prisma.$disconnect();

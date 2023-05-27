@@ -6,10 +6,13 @@ import Image from "next/image"
 import Link from "next/link"
 import Cart from "./Cart"
 import useCartStore from "@/store"
+import {AnimatePresence, motion} from 'framer-motion'
+
 import {AiFillShopping} from 'react-icons/ai'
 
 export default function Nav({user}:Session){
-
+   
+      console.log('what is the user',user)
       const cartstore = useCartStore()
 
       return (
@@ -23,7 +26,17 @@ export default function Nav({user}:Session){
                   onClick={()=>cartstore.toggleCart()}
                   className="flex items-center text-3xl cursor-pointer relative">
                  <AiFillShopping/>
-                 <span className="bg-teal-700 text-white text-sm font-bold w-5 h-5 rounded-full absolute left-4 bottom-4 flex items-center justify-center">{cartstore.cart.length}</span>
+                 {cartstore.cart.length > 0 && (
+                  <AnimatePresence>
+                    <motion.span 
+                       animate={{scale:1}} 
+                       initial={{scale:0}} 
+                       exit={{scale:0}}
+                       className="bg-teal-700 text-white text-sm font-bold w-5 h-5 rounded-full absolute left-4 bottom-4 flex items-center justify-center">
+                      {cartstore.cart.length}
+                    </motion.span>
+                  </AnimatePresence>
+                )}
 
                 </li>
                 {!user && (
@@ -48,7 +61,9 @@ export default function Nav({user}:Session){
                   )
                 }
             </ul>
-            {cartstore.isOpen && <Cart/>}
+            <AnimatePresence>
+              {cartstore.isOpen && <Cart/>}
+            </AnimatePresence>
           </nav>
       )
 }
