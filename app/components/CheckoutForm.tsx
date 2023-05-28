@@ -1,7 +1,7 @@
 'use client'
 
 import { useState,useEffect } from "react"
-import { PaymentElement,useStripe,useElements, useCartElementState } from "@stripe/react-stripe-js"
+import { PaymentElement,useStripe,useElements } from "@stripe/react-stripe-js"
 import formatPrice from "../util/PriceFormat"
 import useCartStore from "@/store"
 
@@ -22,8 +22,8 @@ export default function CheckoutForm({clientSecret}:{clientSecret:string}){
 
      },[stripe])
      
-     const handleSubmit =async(e:React.FormEvent)=>{
-         e.preventDefault
+     const handleSubmit = async(e:React.FormEvent)=>{
+         e.preventDefault()
 
          if(!stripe || !elements) return
 
@@ -33,7 +33,11 @@ export default function CheckoutForm({clientSecret}:{clientSecret:string}){
               redirect:'if_required'
           })
           .then((result)=>{
+
+               cartStore.setPaymentIntent('')
+     
                if(!result.error){
+                 
                  cartStore.setCheckout("success")
                }
                setIsLoading(false)

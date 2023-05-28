@@ -64,7 +64,7 @@ model Product{
   name            String    
   description     String?   
   unit_amount     Float
-  image           String
+  image           String?
   quantity        Float @default(0)
   orders          Order[]
 }

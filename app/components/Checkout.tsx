@@ -24,11 +24,13 @@ export default function Checkout(){
                    payment_intent_id:cartStore.paymentIntent,
                })
            }).then((res)=>{
+            console.log('wat wrong bitch',res)
             if(res.status === 403){
                   return router.push('/api/auth/signin')
             }
             return res.json()
            }).then((data)=>{
+               console.log('do i get the fking data?',data)
                setClientSecret(data.paymentIntent.client_secret) 
                cartStore.setPaymentIntent(data.paymentIntent.id)
            })
