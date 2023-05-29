@@ -18,7 +18,12 @@ export default function Nav({user}:Session){
       return (
           <nav className="flex justify-between items-center py-12">
             <Link href={'/'} >
-              <h1 className="font-lobster text-xl">Zcommerce</h1>
+                <motion.h1   
+                    initial={{ x: "90%" }}
+                    animate={{ x: "calc(10%)" }} 
+                    className="font-lobster text-xl">
+                  Zcommerce
+                </motion.h1>
             </Link>
             <ul className="flex items-center gap-8">
                 {/**if the user is not signed in */}
