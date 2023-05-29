@@ -7,7 +7,8 @@ import {Roboto,Lobster_Two} from 'next/font/google'
 
 
 // Define main font
-const roboto = Roboto({weight:['400','500','700'],subsets:['latin']})
+const roboto = Roboto({weight:['400','500','700'],subsets:['latin'],variable:'--font-roboto'})
+const lobster = Lobster_Two({weight:'700',subsets:['latin'],variable:'--font-lobster'})
 
 export const metadata = {
   title: 'Zcommerce',
@@ -24,13 +25,15 @@ export default async function RootLayout({
   
 
   return (
-    <html lang="en">
-      <body className={`mx-4 lg:mx-48 ${roboto.className}`}>
+    <html lang="en" className={` ${roboto.variable} ${lobster.variable}`}>
+      
         <Hydrate>
-          <Nav user={session?.user} expires={session?.expires as string}/>
-          {children}
+           
+            <Nav user={session?.user} expires={session?.expires as string}/>
+            {children}
+         
         </Hydrate>
-      </body>
+      
     </html>
   )
 }

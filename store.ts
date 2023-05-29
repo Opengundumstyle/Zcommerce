@@ -61,14 +61,30 @@ const useCartStore = create<CartState>()(
         }),
          setPaymentIntent:(val)=>set((state)=>({paymentIntent:val})),
          setCheckout:(val) =>set((state)=>({onCheckout:val})),
-         clearCart:()=>set((state)=>({cart:[]}))
+         clearCart:()=>set((state)=>({cart:[]})) 
       }),
 
       {
         name: 'cart-store', // Name for the local storage key
-        getStorage: () => localStorage, // Storage mechanism (can be local storage, session storage, etc.)
       }
     )
   );
   
   export default useCartStore;
+
+
+type ThemeState = {
+    mode:'light' | 'dark'
+    toggleMode:(theme:'light'|'dark') => void
+}
+
+  export const useThemeStore =create<ThemeState>()(
+      persist(
+          (set)=>({
+             mode:'light',
+             toggleMode:(theme)=>set((state)=>({mode:theme})),
+          }),
+          {name:'themeStore'}
+      )
+  )
+  

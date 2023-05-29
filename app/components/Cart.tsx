@@ -31,12 +31,12 @@ export default function Cart(){
             <motion.div  
                 layout
                 onClick={(e)=>e.stopPropagation()}
-                className="bg-white absolute right-0 top-0 h-screen p-12 overflow-y-scroll text-gray-700 w-full lg:w-1/4">
+                className="bg-base-200 absolute right-0 top-0 h-screen p-12 overflow-y-scroll w-full lg:w-1/4">
                   
                   {cartStore.onCheckout === 'cart' && (
                   <div className="flex flex-row">
                   <button onClick={()=>cartStore.toggleCart()} className="text-sm font-bold pb-12 mr-2">Back to Store</button>
-                  {cartStore.cart.length > 0 && <h1 className="flex-1 text-center">Here's ur shopping list 👨🏻‍💻</h1>}
+                  {cartStore.cart.length > 0 && <h1 className="flex-1 text-center">Here's ur shopping-list 👨🏻‍💻</h1>}
                  </div>
                  )}
                   {cartStore.onCheckout === 'checkout' && (
@@ -47,7 +47,7 @@ export default function Cart(){
                  {cartStore.onCheckout === 'cart' && (
                   <>
                  {cartStore.cart.map((item)=>(
-                       <motion.div layout key={item.id} className="flex py-4 gap-4">
+                       <motion.div layout key={item.id} className="flex p-4 gap-4 bg-base-100 my-4 rounded-lg">
                             <Image className="rounded-md h-full w-24 object-cover" src={item.image} alt={item.name} width={150} height={150} />
                             <div>
                                 <h2>{item.name}</h2>

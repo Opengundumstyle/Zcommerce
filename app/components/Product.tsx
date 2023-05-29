@@ -13,13 +13,14 @@ export default function Product({name,image,unit_amount,id,description,metadata}
            href={{pathname:`/product/${id}`,
            query:{image,name,unit_amount,id,description,details}}}
           >
-        <div className="text-gray-700">
+        <div>
                 <Image 
                   src={image} 
                   alt={image} 
                   width={400} 
                   height={400}
                   className="w-full h-96 object-cover rounded-lg"
+                  priority={true}
                 />
 
                 <div className="font-medium py-2">

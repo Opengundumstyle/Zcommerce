@@ -6,6 +6,8 @@ import { Elements } from "@stripe/react-stripe-js"
 import useCartStore from "@/store"
 import { useState,useEffect } from "react"
 import { useRouter } from "next/navigation"
+import OrderAnimation from "./OrderAnimation"
+import { motion } from "framer-motion"
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STIPE_PUBLIC_KEY!)
 
@@ -24,19 +26,17 @@ export default function Checkout(){
                    payment_intent_id:cartStore.paymentIntent,
                })
            }).then((res)=>{
-            console.log('wat wrong bitch',res)
             if(res.status === 403){
                   return router.push('/api/auth/signin')
             }
             return res.json()
            }).then((data)=>{
-               console.log('do i get the fking data?',data)
                setClientSecret(data.paymentIntent.client_secret) 
                cartStore.setPaymentIntent(data.paymentIntent.id)
            })
      },[])
 
-
+  
     const options:StripeElementsOptions = {
          clientSecret,
          appearance:{
@@ -47,12 +47,13 @@ export default function Checkout(){
 
      return(
           <div>
+             {!clientSecret && <OrderAnimation/>}
              {clientSecret && (
-                  <div>
+                  <motion.div initial={{opacity:0}} animate={{opacity:1}}>
                     <Elements options={options} stripe={stripePromise}>
                          <CheckoutForm clientSecret={clientSecret}/>
                     </Elements>
-                  </div>
+                  </motion.div>
              )}
           </div>
      )

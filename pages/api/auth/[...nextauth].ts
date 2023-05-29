@@ -1,10 +1,10 @@
 import NextAuth, { NextAuthOptions }  from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/app/util/prisma";
 import Stripe from "stripe";
 
-const prisma = new PrismaClient();
+
 
 export const authOptions:NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
@@ -26,6 +26,7 @@ export const authOptions:NextAuthOptions = {
              name:user.name || undefined,
          })
          //also update our prisma user with the stripecusomterid
+            
             await prisma.user.update({
                  where:{id:user.id},
                  data:{stripeCustomerId:customer.id}
@@ -36,6 +37,7 @@ export const authOptions:NextAuthOptions = {
   callbacks:{
      async session({session,token,user}){
           session.user  = user
+          await prisma.$disconnect();
           return session
      }
   }
@@ -46,6 +48,3 @@ export const authOptions:NextAuthOptions = {
 const nextAuthHandler = NextAuth(authOptions);
 
 export default nextAuthHandler;
-
-// Close the database connection when no longer needed
-prisma.$disconnect();
