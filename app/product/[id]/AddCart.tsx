@@ -10,14 +10,12 @@ import { useState } from "react"
 export default function AddCart({
             name,id,image,unit_amount,quantity}:AddCartType
          ){
-            console.log('i need to know why add cart dont have id',{
-               name,id,image,unit_amount,quantity})
-               
+      
             const cartStore = useCartStore()
             const [added,setAdded] = useState(false)
 
             const handleAddToCart =()=>{
-               console.log('do i have a id?',{id})
+      
                cartStore.addProduct({id,image,unit_amount,quantity,name})
                setAdded(true)
                setTimeout(()=>{

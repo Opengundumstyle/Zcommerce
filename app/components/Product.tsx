@@ -8,7 +8,7 @@ import Link from "next/link"
 export default function Product({name,image,unit_amount,id,description,metadata}:ProductType){
 
       const {details} = metadata
-      console.log('what is this sht?',{name,image,unit_amount,id,description,metadata})
+   
       const itemId = id
      return (
       <Link

@@ -30,7 +30,7 @@ const useCartStore = create<CartState>()(
             set((state)=>({isOpen:!state.isOpen}))
           },
         addProduct:(item)=>set((state)=>{
-            console.log('what is the item here',item)
+         
             const existingItem = state.cart.find((cartItem) => cartItem.id === item.id)
             console.log(existingItem)
             if(existingItem){

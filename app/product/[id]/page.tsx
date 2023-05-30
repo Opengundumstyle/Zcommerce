@@ -4,14 +4,9 @@ import Image from "next/image"
 import { SearchParamTypes } from "@/types/SearchParamTypes"
 import formatPrice from "@/app/util/PriceFormat"
 import AddCart from "./AddCart"
-// import { useParams } from "next/navigation"
 
 export default async function Product({searchParams}:SearchParamTypes){
   
-   console.log('what is the search params like ?',searchParams)
-  //  const getParams = useParams()
-  //  console.log('can i see the id now',getParams?.id)
-  //  const id = getParams?.id as string
     return( 
       <div className="flex flex-col xl:flex-row items-center justify-between gap-24 ">
          <Image   src={searchParams.image} 
