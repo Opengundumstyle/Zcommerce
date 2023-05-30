@@ -41,6 +41,7 @@ const useCartStore = create<CartState>()(
                })
                return {cart:updatedCart}
             }else{
+               
                return {cart:[...state.cart,{...item,quantity:1}]}
             }
         }),
