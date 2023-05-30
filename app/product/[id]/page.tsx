@@ -5,6 +5,8 @@ import AddCart from "./AddCart"
 
 export default async function Product({searchParams}:SearchParamTypes){
   
+   console.log('what is the search params like ?',searchParams)
+  
     return( 
       <div className="flex flex-col xl:flex-row items-center justify-between gap-24 ">
          <Image   src={searchParams.image} 
