@@ -3,6 +3,7 @@ type Params ={
 }
 
 type SearchParams ={
+    itemId: string
     name: string
     image: string
     unit_amount:number | null

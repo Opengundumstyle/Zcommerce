@@ -9,6 +9,7 @@ export default function Product({name,image,unit_amount,id,description,metadata}
 
       const {details} = metadata
       console.log('what is this sht?',{name,image,unit_amount,id,description,metadata})
+      const itemId = id
      return (
       <Link
         href={{
@@ -17,7 +18,7 @@ export default function Product({name,image,unit_amount,id,description,metadata}
             image,
             name,
             unit_amount,
-            id,
+            itemId,
             description,
             details
           }
