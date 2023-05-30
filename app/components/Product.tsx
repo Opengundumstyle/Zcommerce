@@ -10,7 +10,7 @@ import Link from "next/link"
 export default function Product({name,image,unit_amount,id,description,metadata}:ProductType){
 
       const {details} = metadata
-      console.log('do we have id query from product ?',{id})
+      console.log('what is this sht?',{name,image,unit_amount,id,description,metadata})
      return (
         <Link  
            href={{pathname:`/product/${id}`,
