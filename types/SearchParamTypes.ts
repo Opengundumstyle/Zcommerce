@@ -3,9 +3,9 @@ type Params ={
 }
 
 type SearchParams ={
-    name: string,
-    image: string,
-    unit_amount:number | null,
+    name: string
+    image: string
+    unit_amount:number | null
     id:string
     description:string | null
     details:string
@@ -13,6 +13,6 @@ type SearchParams ={
 
 
 export type SearchParamTypes = {
-    params:Params,
+    params:Params
     searchParams:SearchParams
 }
