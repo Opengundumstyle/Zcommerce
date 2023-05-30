@@ -12,11 +12,19 @@ export default function Product({name,image,unit_amount,id,description,metadata}
       const {details} = metadata
       console.log('what is this sht?',{name,image,unit_amount,id,description,metadata})
      return (
-        <Link  
-           href={{pathname:`/product/${id}`,
-           query:{image,name,unit_amount,id,description,details},
-          }}
-          >
+      <Link
+        href={{
+          pathname: `/product/${id}`,
+          query: {
+            image,
+            name,
+            unit_amount,
+            id,
+            description,
+            details
+          }
+      }}
+    >
         <div>
                 <Image 
                   src={image} 
