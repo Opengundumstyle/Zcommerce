@@ -37,7 +37,6 @@ export const authOptions:NextAuthOptions = {
   callbacks:{
      async session({session,token,user}){
           session.user  = user
-          await prisma.$disconnect();
           return session
      }
   }

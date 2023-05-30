@@ -31,12 +31,12 @@ export default function Cart(){
             <motion.div  
                 layout
                 onClick={(e)=>e.stopPropagation()}
-                className="bg-base-200 absolute right-0 top-0 h-screen p-12 overflow-y-scroll w-full lg:w-1/4">
+                className="bg-base-200 absolute right-0 top-0 h-screen p-12 overflow-y-scroll w-full lg:w-2/5">
                   
                   {cartStore.onCheckout === 'cart' && (
                   <div className="flex flex-row">
                   <button onClick={()=>cartStore.toggleCart()} className="text-sm font-bold pb-12 mr-2">Back to Store</button>
-                  {cartStore.cart.length > 0 && <h1 className="flex-1 text-center">Here's ur shopping-list 👨🏻‍💻</h1>}
+                  {cartStore.cart.length > 0 && <h1 className="flex-1 text-center text-lg">Here's ur shopping-list 👨🏻‍💻</h1>}
                  </div>
                  )}
                   {cartStore.onCheckout === 'checkout' && (
