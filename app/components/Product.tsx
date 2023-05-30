@@ -4,6 +4,7 @@ import formatPrice from "../util/PriceFormat"
 import { ProductType } from "@/types/ProducType"
 import Link from "next/link"
 
+
 export default function Product({name,image,unit_amount,id,description,metadata}:ProductType){
 
       const {details} = metadata
@@ -11,7 +12,8 @@ export default function Product({name,image,unit_amount,id,description,metadata}
      return (
         <Link  
            href={{pathname:`/product/${id}`,
-           query:{image,name,unit_amount,id,description,details}}}
+           query:{image,name,unit_amount,id,description,details},
+          }}
           >
         <div>
                 <Image 
@@ -31,3 +33,4 @@ export default function Product({name,image,unit_amount,id,description,metadata}
        </Link>
      )
 }
+
