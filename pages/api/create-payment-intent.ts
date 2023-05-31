@@ -9,14 +9,12 @@ const stripe = new Stripe(process.env.STRIPE_SECRET as string, {
   apiVersion: "2022-11-15",
 })
 
-
 const calculateOrderAmount = (items:AddCartType[]) => {
   const totalPrice = items.reduce((acc, item) => {
     return acc + item.unit_amount! * item.quantity!
   }, 0)
   return totalPrice
 }
-
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse

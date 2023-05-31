@@ -6,7 +6,7 @@ import formatPrice from "../util/PriceFormat";
 import Image from "next/image";
 
 
-// export const revalidate = 0
+export const revalidate = 0
 
 const fetchOrders = async()=>{
 

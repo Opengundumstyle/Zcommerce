@@ -2,8 +2,6 @@ import {create} from 'zustand'
 import {persist} from 'zustand/middleware'
 import { AddCartType } from './types/AddCartType'
 
-
-
 type CartState = {
      isOpen:boolean
      cart:AddCartType[]
@@ -15,7 +13,6 @@ type CartState = {
      onCheckout:string
      setPaymentIntent:(val:string) => void
      setCheckout:(val:string) => void
-
 }
  
 const useCartStore = create<CartState>()(
