@@ -24,7 +24,11 @@ export default async function Product({searchParams}:SearchParamTypes){
               <p className="font-bold text-teal-700">{searchParams.unit_amount && formatPrice(searchParams.unit_amount)}</p>
         </div>
  
-          <AddCart id={searchParams.itemId} image={searchParams.image} name={searchParams.name} unit_amount={searchParams.unit_amount} />
+          <AddCart id={searchParams.itemId} 
+                   image={searchParams.image} 
+                   name={searchParams.name} 
+                   unit_amount={searchParams.unit_amount} 
+                   />
 
         </div>
      </div>
