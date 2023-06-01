@@ -7,6 +7,7 @@ import Link from "next/link"
 import Cart from "./Cart"
 import useCartStore from "@/store"
 import {AnimatePresence, motion} from 'framer-motion'
+import Search from "./Search"
 import DarkLight from "./DarkLight"
 
 import {AiFillShopping} from 'react-icons/ai'
@@ -25,6 +26,9 @@ export default function Nav({user}:Session){
                   Zcommerce
                 </motion.h1>
             </Link>
+
+            <Search/>
+            
             <ul className="flex items-center gap-8">
                 {/**if the user is not signed in */}
                 <li 
