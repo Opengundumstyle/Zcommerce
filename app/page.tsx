@@ -1,12 +1,26 @@
 import Stripe from "stripe"
 import Product from "./components/Product"
 
+
+const limit = 100; // Number of products to fetch per page
+let startingAfter:any = null; // Starting point for pagination, initially set to null
+
 const getProducts = async()=>{
+
+      let allProducts: any[] = []
+
      const stripe = new Stripe(process.env.STRIPE_SECRET as string,{
          apiVersion:'2022-11-15'
      })
-     const products = await stripe.products.list()
-   
+     
+     while (true) {
+
+      const params = {
+         limit: limit,
+         ...(startingAfter && { starting_after: startingAfter })
+       };
+
+     const products = await stripe.products.list(params)
 
      const productWithPrices = await Promise.all(
         products.data.map(async(product)=>{
@@ -25,7 +39,17 @@ const getProducts = async()=>{
         })
      )
 
-    return productWithPrices
+     allProducts = allProducts.concat(productWithPrices);
+
+      if (!products.has_more) {
+         break; // Exit the loop if there are no more pages
+      }
+
+      startingAfter = products.data[products.data.length - 1].id;
+
+      }
+      return allProducts
+
     }
 
 export default async function Home() {
