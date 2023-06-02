@@ -25,7 +25,8 @@ export default function Product({name,image,unit_amount,id,description,metadata}
       }}
       
     >
-        <div className="max-w-xs">
+        <div className="max-w-xs ">
+              <div className="transition-transform duration-300 hover:scale-105">
                 <Image 
                   src={image} 
                   alt={image} 
@@ -34,10 +35,12 @@ export default function Product({name,image,unit_amount,id,description,metadata}
                   className="w-full h-96 object-cover rounded-lg"
                   priority={true}
                 />
+               
 
                 <div className="font-medium py-2">
                     <h1 >{name}</h1>
                     <h2 className="text-sm text-teal-700"> {unit_amount?formatPrice(unit_amount):'N/A'}</h2>
+                </div>
                 </div>
        </div>
        </Link>
