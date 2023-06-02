@@ -110,7 +110,7 @@ export default function Search(){
       
           <div className="relative" ref={dropdownRef}>
             {isDropdownOpen && products.length > 0 && (
-             <ul className="list-none absolute bg-base-100 shadow-md w-full rounded-md max-h-48 overflow-y-auto">
+             <ul className="list-none absolute bg-base-100 shadow-md w-full rounded-md max-h-48 overflow-y-auto z-10">
                  {products.map((item)=> (
                   
                             <Link

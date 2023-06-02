@@ -30,4 +30,16 @@ a {
   text-decoration: none;
 }
 
+@font-face {
+  font-family: 'Roboto';
+  src: url('/fonts/roboto.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
 
+@font-face {
+  font-family: 'Lobster Two';
+  src: url('/fonts/lobster.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
