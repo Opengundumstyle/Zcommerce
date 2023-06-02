@@ -100,7 +100,7 @@ export default function Search(){
                                 image: item.image,
                                 name: item.name,
                                 unit_amount: item.unit_amount,
-                                id: item.id,
+                                itemId: item.id,
                                 description: item.description,
                                 details: item.details,
                                 },
