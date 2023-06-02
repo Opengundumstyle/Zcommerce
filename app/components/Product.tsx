@@ -23,8 +23,9 @@ export default function Product({name,image,unit_amount,id,description,metadata}
             details
           }
       }}
+      
     >
-        <div>
+        <div className="max-w-xs">
                 <Image 
                   src={image} 
                   alt={image} 

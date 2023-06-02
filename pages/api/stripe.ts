@@ -51,7 +51,6 @@ export default async function handler(req: NextApiRequest,res: NextApiResponse){
   
         }
 
- 
     const search = (p)=>{
         let products = []
            for(let el of p){
@@ -63,9 +62,7 @@ export default async function handler(req: NextApiRequest,res: NextApiResponse){
     }
      
    let queryProducts =  search(allProducts)
-
-    console.log('what is query product',queryProducts)
   
-    res.status(200).json(queryProducts.splice(0,3))
+    res.status(200).json(queryProducts)
 
   };
