@@ -5,7 +5,7 @@ import Product from "./components/Product"
 const limit = 100; // Number of products to fetch per page
 let startingAfter:any = null; // Starting point for pagination, initially set to null
 
-const getProducts = async()=>{
+export const getProducts = async()=>{
 
       let allProducts: any[] = []
 
@@ -49,7 +49,6 @@ const getProducts = async()=>{
 
       }
       return allProducts
-
     }
 
 export default async function Home() {

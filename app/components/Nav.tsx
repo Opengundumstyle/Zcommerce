@@ -17,17 +17,20 @@ export default function Nav({user}:Session){
       const cartstore = useCartStore()
 
       return (
-          <nav className="flex justify-between items-center py-12">
-            <Link href={'/'} >
-                <motion.h1   
-                    initial={{ x: "90%" }}
-                    animate={{ x: "calc(10%)" }} 
-                    className="font-lobster text-xl">
-                  Zcommerce
-                </motion.h1>
-            </Link>
+          <nav className="flex justify-between items-center py-12 ">
+          
+              <Link href={'/'} >
+                  <motion.h1   
+                      initial={{ x: "90%" }}
+                      animate={{ x: "calc(10%)" }} 
+                      className="font-lobster text-xl">
+                    Zcommerce
+                  </motion.h1>
+              </Link>
 
-            <Search/>
+              <div className="flex-1 px-10">
+                 <Search />
+              </div>
             
             <ul className="flex items-center gap-8">
                 {/**if the user is not signed in */}
