@@ -88,3 +88,27 @@ type ThemeState = {
       )
   )
   
+  type SessionState = {
+    isSession:boolean
+    onLogin:boolean
+    toggleSession:()=>void
+    setLogin:()=>void
+  }
+
+  export const useSession = create<SessionState>()(
+     persist(
+       (set)=>({
+           isSession:false,
+           onLogin:true,
+           toggleSession:()=>{
+            set((state)=>({isSession:!state.isSession}))
+          },
+            setLogin:()=>{
+                  set((state)=>({onLogin:!state.onLogin}))
+            }
+         }),
+         
+       {name:'sessionStore'}
+     )
+     
+  )

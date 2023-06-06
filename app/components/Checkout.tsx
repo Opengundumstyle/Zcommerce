@@ -8,11 +8,16 @@ import { useState,useEffect } from "react"
 import { useRouter } from "next/navigation"
 import OrderAnimation from "./OrderAnimation"
 import { motion } from "framer-motion"
+import { toast } from "react-hot-toast"
+import { useSession } from "@/store"
+
+
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STIPE_PUBLIC_KEY!)
 
 export default function Checkout(){
      const cartStore = useCartStore()
+     const session = useSession()
      const router = useRouter()
      const [clientSecret,setClientSecret]= useState("")
 
@@ -27,10 +32,18 @@ export default function Checkout(){
                })
            }).then((res)=>{
             if(res.status === 403){
-                  return router.push('/api/auth/signin')
-            }
-            return res.json()
+               if(session.isSession === false) session.toggleSession()
+               cartStore.toggleCart()
+               cartStore.setCheckout('cart')
+               toast('Sign in to proceed', {
+                    icon: '🫡',
+                  });
+                  return router.push('/auth')
+            }else{
+               return res.json()
+             }
            }).then((data)=>{
+              if(!data) return
                setClientSecret(data.paymentIntent.client_secret) 
                cartStore.setPaymentIntent(data.paymentIntent.id)
            })

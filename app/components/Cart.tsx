@@ -2,6 +2,7 @@
 
 import Image from "next/image"
 import useCartStore from "@/store"
+import { useSession } from "@/store"
 import formatPrice from "../util/PriceFormat"
 
 import {IoAddCircle, IoRemoveCircle } from 'react-icons/io5'
@@ -11,10 +12,16 @@ import { AnimatePresence, motion } from "framer-motion"
 import Checkout from "./Checkout"
 import OrderConfirmed from "./OrderConfirmed"
 
+import { useState } from "react"
 
-export default function Cart(){
+
+export default function Cart({user}){
 
       const cartStore  = useCartStore()
+      const sessionStore = useSession()
+      console.log('what is the sessionStore',sessionStore)
+      const [isHovered, setIsHovered] = useState(false);
+
       //total price
       const totalPrice  = cartStore.cart.reduce((acc,item)=>{
                return acc + item.unit_amount! * item.quantity!
@@ -34,9 +41,9 @@ export default function Cart(){
                 className="bg-base-200 absolute right-0 top-0 h-screen p-12 overflow-y-scroll w-full lg:w-2/5">
                   
                   {cartStore.onCheckout === 'cart' && (
-                  <div className="flex flex-row">
+                  <div className="flex flex-row items-baseline">
                   <button onClick={()=>cartStore.toggleCart()} className="text-sm font-bold pb-12 mr-2">Back to Store</button>
-                  {cartStore.cart.length > 0 && <h1 className="flex-1 text-center text-lg">Here's ur shopping-list 👨🏻‍💻</h1>}
+                  {cartStore.cart.length > 0 && <h1 className="flex-1 text-center text-lg font-serif">Shopping List <br/><div className="hidden lg:block">👨🏻‍💻</div></h1>}
                  </div>
                  )}
                   {cartStore.onCheckout === 'checkout' && (
@@ -80,15 +87,25 @@ export default function Cart(){
                  )}
                  {/**Check out and total */}
                  {cartStore.cart.length > 0 && cartStore.onCheckout === 'cart'? (
-                 <motion.div layout>
+
+                 
+                 <motion.div  layout >
+                        
                     <p>Total:{formatPrice(totalPrice)}</p>
-                    <button 
+                    <div  
+                       onMouseEnter={() => setIsHovered(true)}  
+                       onMouseLeave={() => setIsHovered(false)}>
+                     <button 
                      onClick={()=>cartStore.setCheckout('checkout')}
-                     className="py-2 mt-4 bg-teal-700 w-full rounded-md text-white"
+                     className="py-2 mt-4 bg-teal-700 w-full rounded-md text-white "
+                     disabled={sessionStore.isSession}
                      >
                      Check Out
                     </button>
+                    </div>
                  </motion.div>):null}
+
+                  {isHovered && !user && sessionStore.isSession && <div className="pt-5">Sign in ... You're so closeee</div>}
 
                  {/** check out form */}
                  {cartStore.onCheckout === 'success' && <OrderConfirmed/>}

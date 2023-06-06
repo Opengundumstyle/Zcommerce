@@ -14,6 +14,16 @@ module.exports = {
          lobster:['var(--font-lobster)'],
          roboto:['var(--font-roboto)'],
        },
+       colors: {
+        midnight: {
+          900: '#013D61ff',
+          600: '#11527Cff',
+        },
+        night: {
+          600: '#001939',
+          900:'#002d4d',
+        },
+      },
     },
   },
   plugins: [require("daisyui")], 

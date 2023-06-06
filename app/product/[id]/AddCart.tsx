@@ -3,7 +3,7 @@
 import useCartStore from "@/store"
 import { AddCartType } from "@/types/AddCartType"
 import { useState } from "react"
-
+import { toast } from "react-hot-toast"
 
 
 
@@ -18,7 +18,9 @@ export default function AddCart({
       
                cartStore.addProduct({id,image,unit_amount,quantity,name})
                setAdded(true)
+              
                setTimeout(()=>{
+                  toast.success(`Item added 👏`)
                     setAdded(false)
                },500)
             }
@@ -30,7 +32,7 @@ export default function AddCart({
             disabled={added}
             className="my-4 btn w-full">
                {!added && <span>Add to cart</span>}
-               {added && <span>Adding to cart 😉</span>}
+               {added && <span>Adding ... </span>}
           </button>
          </>
       )

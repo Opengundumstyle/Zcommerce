@@ -7,13 +7,11 @@ export default function SearchPage() {
   const [query, setQuery] = useState("");
   const [products,setProducts] = useState([])
   const url = new URL(window.location.href);
- 
 
   useEffect(() => {
     const queryParams = new URLSearchParams(url.search);
     const q = queryParams.get("q") || "";
     setQuery(q);
-
 
     const fetchProducts = async()=>{
       try{

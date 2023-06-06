@@ -1,10 +1,11 @@
 import './globals.css'
 import Nav from './components/Nav'
+
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '@/pages/api/auth/[...nextauth]'
 import Hydrate from './components/Hydrate'
 import {Roboto,Lobster_Two} from 'next/font/google'
-
+import ToasterProvider from './providers/Toasterprovider'
 
 // Define main font
 const roboto = Roboto({weight:['400','500','700'],subsets:['latin'],variable:'--font-roboto'})
@@ -23,20 +24,24 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+
   // Fetch the user
   const session = await getServerSession(authOptions)
-  
 
+  console.log('what is session',session)
+
+  
   return (
-    <html lang="en" className={` ${roboto.variable} ${lobster.variable}`}>
-      
+    <html lang="en" className={`${roboto.variable} ${lobster.variable}`}>
+     
         <Hydrate>
-           
-            <Nav user={session?.user} expires={session?.expires as string}/>
-            {children}
-         
+             
+              <ToasterProvider/>
+              <Nav user={session?.user} expires={session?.expires as string} />
+                {children}
         </Hydrate>
-      
+       
+       
     </html>
   )
 }

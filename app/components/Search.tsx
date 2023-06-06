@@ -6,7 +6,7 @@ import { motion } from "framer-motion"
 import { useRouter } from "next/navigation"
 import querystring from "querystring";
 import FireAnimation from "./FireAnimation"
-
+import { useSession } from "@/store"
 
 export default function Search(){
 
@@ -17,6 +17,7 @@ export default function Search(){
     const router = useRouter()
     const [isHovered, setIsHovered] = useState(false);
     const [selected,setSelected] = useState("")
+    const sessionstore = useSession()
 
     useEffect(()=>{
           const fetchProducts = async()=>{
@@ -55,6 +56,7 @@ export default function Search(){
 
  // reset input when user select items
   const handleItemClick = () => {
+    if(sessionstore.isSession === true) sessionstore.toggleSession()
     setQuery("")
     setIsDropdownOpen(false);
   };
@@ -76,7 +78,7 @@ export default function Search(){
                  >
               <input 
                   type="text" 
-                  placeholder="Got something in mind..?" 
+                  placeholder={sessionstore.isSession?"Browse here anyways :)":"Got something in mind..?" }
                   className="input max-w-lg w-full border-none focus:outline-none" 
                   onChange={e=>setQuery(e.target.value)}
                   value={query}
@@ -113,7 +115,7 @@ export default function Search(){
              <ul className="list-none absolute bg-base-100 shadow-md w-full rounded-md max-h-48 overflow-y-auto z-10">
                  {products.map((item)=> (
                   
-                            <Link
+                           <Link
                             key={item.id}
                             href={{
                                 pathname: `/product/${item.id}`,

@@ -6,7 +6,7 @@ const nextConfig = {
   typescript:{
     ignoreBuildErrors:true,
   },
-  images:{domains:['lh3.googleusercontent.com','files.stripe.com']}
+  images:{domains:['lh3.googleusercontent.com','files.stripe.com','avatars.githubusercontent.com','images.unsplash.com','res.cloudinary.com']}
 }
 
 module.exports = nextConfig
