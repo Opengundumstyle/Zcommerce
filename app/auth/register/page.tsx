@@ -159,7 +159,7 @@ async function handleGithubSignIn(){
                     </div>
                 </form>
                 {/**bottom */}
-                <p className="text-center text-gray-400 mb-5">
+                <p className="text-center text-gray-400 mb-5 text-sm">
                     Have an account? &nbsp;
                     <Link  
                      onClick={()=>!session.onLogin&&session.setLogin()}

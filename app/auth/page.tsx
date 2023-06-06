@@ -75,7 +75,10 @@ const AuthPage = () => {
       </Head>
      <section className={`w-3/4 mx-auto flex flex-col gap-10 rounded-r-md`}>
           <div className="title mt-3">
-                <h3 className="text-slate-100 text-2xl font-bold py-7 pb-3 font-lobster">Explore</h3>
+                <h3 
+                  className="text-slate-100 text-2xl font-bold py-7 pb-3 font-lobster cursor-pointer"
+                   onClick={()=>router.push('/')}
+                  >Explore</h3>
                 <p className="w-full mx-auto text-gray-400 text-sm">Zcommerce is a trendy fashion ecommerce store that offers a wide range of stylish clothing and accessories for fashion-forward individuals</p>
           </div>
           {/**form */}
@@ -128,10 +131,10 @@ const AuthPage = () => {
               </div>
           </form>
            {/**bottom */}
-           <p className="text-center text-gray-400 pb-5">
+           <p className="text-center text-gray-400 pb-5 text-sm">
                don't have an account yet? &nbsp;
                <Link  
-                className="text-base-100 hover:underline" 
+                className="text-base-100 hover:underline " 
                 href={'auth/register'}
                 onClick={()=>sessionStore.onLogin&&sessionStore.setLogin()}>
                   Sign Up

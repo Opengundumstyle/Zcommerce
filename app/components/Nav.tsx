@@ -48,7 +48,7 @@ export default function Nav({user}:Session){
                   </motion.h1>
          
 
-              <div className="flex-1 px-10">
+              <div className="flex-1 px-10 hidden md:block">
                  <Search />
               </div>
             
