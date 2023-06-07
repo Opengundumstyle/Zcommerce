@@ -42,20 +42,27 @@ export default async function handler(req: NextApiRequest,res: NextApiResponse){
        )
   
        allProducts = allProducts.concat(productWithPrices);
-  
+       
         if (!products.has_more) {
            break; // Exit the loop if there are no more pages
         }
+
+   
   
         startingAfter = products.data[products.data.length - 1].id;
-  
+       
+    // Rate limiting mechanism
+     await new Promise((resolve) => setTimeout(resolve, 400)); // Delay between requests to stay within the rate limit
         }
 
     const search = (p)=>{
+         
         let products = []
+        
            for(let el of p){
                if(el.name.toLowerCase().includes(q) || el.description?.toLowerCase().includes(q)) {
                 products.push(el)
+                if(products.length > 10) break
                }
            }
         return products

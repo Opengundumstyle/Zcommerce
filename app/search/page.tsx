@@ -2,19 +2,28 @@
 
 import { useEffect, useState } from "react";
 import Product from "../components/Product";
+import { useSearchParams } from 'next/navigation';
+
 
 export default function SearchPage() {
-  const [query, setQuery] = useState("");
+
+   const search = useSearchParams()
+
+   let  query = search?.get("q")
+
   const [products,setProducts] = useState([])
-  const url = new URL(window.location.href);
+
+  console.log('get query',query)
+  
+  console.log('what are the products',products)
 
   useEffect(() => {
-    const queryParams = new URLSearchParams(url.search);
-    const q = queryParams.get("q") || "";
-    setQuery(q);
+   
+    // setQuery(q);
 
     const fetchProducts = async()=>{
       try{
+        console.log('did i get triggered')
         const response = await fetch(`/api/stripe?q=${query}`)
         const data = await response.json()
         setProducts(data)
@@ -26,13 +35,15 @@ export default function SearchPage() {
       }
 
         if(query){
+            console.log('search query')
             fetchProducts()
         }else{
             setProducts([])
-        }
+        } 
 
 
-        }, [url,query]);
+
+        }, []);
 
 
 
@@ -43,6 +54,7 @@ export default function SearchPage() {
        ))}
     </main>
   );
+
 }
 
 

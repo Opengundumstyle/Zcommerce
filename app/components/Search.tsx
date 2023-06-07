@@ -31,8 +31,9 @@ export default function Search(){
                 console.error("Error fetching goods:", err);
               }
           }
-
+           
           if(query){
+            console.log('is it fetching')
               fetchProducts()
           }else{
               setProducts([])
