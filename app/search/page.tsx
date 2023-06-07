@@ -13,37 +13,29 @@ export default function SearchPage() {
 
   const [products,setProducts] = useState([])
 
-  console.log('get query',query)
-  
-  console.log('what are the products',products)
-
   useEffect(() => {
    
     // setQuery(q);
 
     const fetchProducts = async()=>{
       try{
-        console.log('did i get triggered')
+        console.log('did i get trigger')
         const response = await fetch(`/api/stripe?q=${query}`)
         const data = await response.json()
         setProducts(data)
    
-       
         }catch(err){
           console.error("Error fetching goods:", err);
         }
       }
 
         if(query){
-            console.log('search query')
             fetchProducts()
         }else{
             setProducts([])
         } 
 
-
-
-        }, []);
+        }, [query]);
 
 
 
