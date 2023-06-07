@@ -9,7 +9,7 @@ export default function SearchPage() {
 
    const search = useSearchParams()
 
-   let  query = search?.get("q")
+   let  query = search?.get("q")?.replace('%20', ' ').toLowerCase();
 
   const [products,setProducts] = useState([])
 
