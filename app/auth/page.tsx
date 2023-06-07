@@ -13,7 +13,7 @@ import login_validate from "@/lib/validate";
 import { useRouter } from "next/navigation";
 import { toast } from 'react-hot-toast'
 import { useSession } from "@/store";
-
+import { AiOutlineLogin } from "react-icons/ai";
 
 const AuthPage = () => {
 
@@ -77,7 +77,10 @@ const AuthPage = () => {
           <div className="title mt-3">
                 <h3 
                   className="text-slate-100 text-2xl font-bold py-7 pb-3 font-lobster cursor-pointer"
-                   onClick={()=>router.push('/')}
+                   onClick={()=>{
+                      if(sessionStore.isSession)sessionStore.toggleSession()
+                      if(sessionStore.onLogin) sessionStore.setLogin()
+                      router.push('/')}}
                   >Explore</h3>
                 <p className="w-full mx-auto text-gray-400 text-sm">Zcommerce is a trendy fashion ecommerce store that offers a wide range of stylish clothing and accessories for fashion-forward individuals</p>
           </div>
@@ -116,7 +119,12 @@ const AuthPage = () => {
               {/**login buttons */}
               <div className="input-button">
                  <button type="submit" className={styles.button}>
-                      Sign In
+                        <div className="flex flex-row justify-center items-center">
+                           
+                            Sign In 
+                      
+                        <AiOutlineLogin className="pl-3 w-10 h-auto"/>
+                       </div>
                  </button>
               </div>
               <div className="input-button">

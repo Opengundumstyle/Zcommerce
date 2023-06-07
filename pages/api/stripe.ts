@@ -5,7 +5,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET as string, {
     apiVersion: '2022-11-15'
   });
 
-const limit = 100; // Number of products to fetch per request
+const limit = 10; // Number of products to fetch per request
 let startingAfter:any = null; // Starting point for pagination, initially set to null
 
 

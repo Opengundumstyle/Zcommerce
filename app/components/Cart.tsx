@@ -42,7 +42,7 @@ export default function Cart({user}){
                   
                   {cartStore.onCheckout === 'cart' && (
                   <div className="flex flex-row items-baseline">
-                  <button onClick={()=>cartStore.toggleCart()} className="text-sm font-bold pb-12 mr-2">Back to Store</button>
+                  <button onClick={()=>cartStore.toggleCart()} className="text-sm font-bold pb-12 ">Back to Store</button>
                   {cartStore.cart.length > 0 && <h1 className="flex-1 text-center text-lg font-serif">Shopping List <br/><div className="hidden lg:block">👨🏻‍💻</div></h1>}
                  </div>
                  )}
