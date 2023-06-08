@@ -10,7 +10,7 @@ import OrderAnimation from "./OrderAnimation"
 import { motion } from "framer-motion"
 import { toast } from "react-hot-toast"
 import { useSession } from "@/store"
-
+import {FiCopy} from "react-icons/fi";
 
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STIPE_PUBLIC_KEY!)
@@ -66,6 +66,20 @@ export default function Checkout(){
                     <Elements options={options} stripe={stripePromise}>
                          <CheckoutForm clientSecret={clientSecret}/>
                     </Elements>
+                     <div className="py-10 flex-row text-gray-500">
+                         Testing Card number:
+                      <div onClick={() => {
+                             navigator.clipboard.writeText('4242424242424242')
+                             toast.success('Copied to clipboard.', {
+                              position: "bottom-center"
+                            })
+                         }} 
+                          className="cursor-pointer flex flex-row justify-center items-center gap-2 bg-slate-200 border-slate-200 rounded-sm py-1 hover:bg-slate-100 hover:text-black transition-all duration-200 ">
+                          <div className="text-gray-500 hover:text-black">4242 424242 4242 4242</div>
+                           <FiCopy/>
+                         </div>
+                         
+                         </div>
                   </motion.div>
              )}
           </div>

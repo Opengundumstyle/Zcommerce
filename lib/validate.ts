@@ -32,8 +32,6 @@ export function registerValidate(values){
   // check name
   if(!values.name){
      errors.name = "Required"
-  }else if(values.name.includes(" ")){
-     errors.name = "Invalid username...!"
   }
   //check email
   if (!values.email) {

@@ -14,6 +14,7 @@ export default async function handler(req: NextApiRequest,res: NextApiResponse){
     const {q} = req.query
     let allProducts: any[] = []
 
+
     // Example: Fetch products in pagination
     while (true) {
 
@@ -69,7 +70,7 @@ export default async function handler(req: NextApiRequest,res: NextApiResponse){
     }
      
    let queryProducts =  search(allProducts)
-  
+    console.log(queryProducts)
     res.status(200).json(queryProducts)
 
   };

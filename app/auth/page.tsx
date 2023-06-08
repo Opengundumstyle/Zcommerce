@@ -32,7 +32,6 @@ const AuthPage = () => {
 
   async function onSubmit(values: any){
 
-
     const status =  await signIn('credentials',{
           redirect:false,
           email:values.email,
