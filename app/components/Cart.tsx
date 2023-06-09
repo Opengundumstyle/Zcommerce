@@ -105,7 +105,7 @@ export default function Cart({user}){
                     </div>
                  </motion.div>):null}
 
-                  {isHovered && !user && sessionStore.isSession && <div className="pt-5">Sign in ... You're so closeee</div>}
+                  {isHovered && !user && sessionStore.isSession && <div className="pt-5 text-gray-400">Sign in ... You're so closeee</div>}
 
                  {/** check out form */}
                  {cartStore.onCheckout === 'success' && <OrderConfirmed/>}
