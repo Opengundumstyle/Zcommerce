@@ -93,7 +93,7 @@ export default function Search(){
                   />
                
                     <motion.div 
-                     initial={{ x: "90%" }}
+                     initial={{ x: "90%" }} search bar
                      animate={{ x: "calc(10%)" }} 
                       className="absolute top-0 right-0 h-full flex items-center mr-2">
                           {(isHovered)&&(!query)&& (<FireAnimation/>)}

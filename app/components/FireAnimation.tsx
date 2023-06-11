@@ -4,7 +4,7 @@ import { Player } from "@lottiefiles/react-lottie-player";
 
 export default function FireAnimation(){
       return(
-         <div className="flex items-center justify-center flex-col h-9 w-9">
+         <div className="flex items-center justify-center flex-col h-7 w-7">
              <Player autoplay loop src={fire}>
              </Player>
          </div>

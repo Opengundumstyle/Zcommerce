@@ -11,7 +11,7 @@ import { motion } from "framer-motion"
 import { toast } from "react-hot-toast"
 import { useSession } from "@/store"
 import {FiCopy} from "react-icons/fi";
-import { AiFillQuestionCircle,AiOutlineInfoCircle} from "react-icons/ai";
+import { AiFillQuestionCircle,AiOutlineInfoCircle,AiFillInfoCircle} from "react-icons/ai";
 
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STIPE_PUBLIC_KEY!)
@@ -80,7 +80,7 @@ export default function Checkout(){
                           Card number:
                       <div onClick={() => {
                              navigator.clipboard.writeText('4242424242424242')
-                             toast.success('Paste into card number', {
+                             toast.success('Card number ready to use', {
                               position: "bottom-center"
                             })
                          }} 
@@ -97,7 +97,7 @@ export default function Checkout(){
                          <div tabIndex={0} className="collapse collapse-arrow border border-base-300 bg-base-200">
                               <div className="collapse-title text-md font-semibold text-teal-700 flex flex-row items-center gap-2 ">
                                   Disclaimers
-                                  <span><AiOutlineInfoCircle className="text-teal-700 text-lg text-bold"/></span>
+                                  <span><AiFillInfoCircle className="text-teal-700 text-lg text-bold"/></span>
                               </div>
                               <div className="collapse-content"> 
                               <div className="font-sans text-sm">
