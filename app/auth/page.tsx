@@ -5,7 +5,6 @@ import LayOut from "../layout/layout";
 import Link from "next/link";
 import styles from '../../styles/Form.module.css'
 import Image from "next/image";
-import { useState } from "react";
 import { HiAtSymbol,HiEye } from "react-icons/hi";
 import { signIn} from "next-auth/react";
 import { useFormik } from "formik";
@@ -14,6 +13,9 @@ import { useRouter } from "next/navigation";
 import { toast } from 'react-hot-toast'
 import { useSession } from "@/store";
 import { AiOutlineLogin } from "react-icons/ai";
+
+import { useState } from "react";
+
 
 const AuthPage = () => {
 

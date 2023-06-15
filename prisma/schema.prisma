@@ -78,3 +78,14 @@ model VerificationToken {
 
   @@unique([identifier, token])
 }
+
+
+// model Songs{
+//   id         String   @id @default(cuid())  
+//   create     DateTime  @default(now())
+//   title      String
+//   song_path  String
+//   image_path String
+//   author     String
+
+// }

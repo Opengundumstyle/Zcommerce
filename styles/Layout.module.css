@@ -78,7 +78,9 @@
   }
   
 
-
+  .no_rotate {
+    transform: none !important;
+  }
 
 
 /*css keyframes*/

@@ -1,6 +1,6 @@
 'use client'
 
-import React, { ReactNode } from 'react';
+import React, { ReactNode,useEffect,useState } from 'react';
 import { motion } from 'framer-motion';
 import { useThemeStore } from '@/store';
 import styles from '../../styles/Layout.module.css'
@@ -9,10 +9,15 @@ import { useSession } from '@/store';
 import useCartStore from '@/store';
 import { signIn } from 'next-auth/react';
 import { toast } from 'react-hot-toast';
+import Link from 'next/link';
+// import supabase from '../util/supabaseClient';
+
+import MusicPlayer from '../components/MusicPlayer';
 
 interface LayOutProps {
   children: ReactNode;
 }
+
 
 const LayOut = ({ children }: LayOutProps) => {
 
@@ -20,6 +25,7 @@ const LayOut = ({ children }: LayOutProps) => {
  const cartStore = useCartStore()
  const router = useRouter()
  const sessionStore = useSession()
+
 
 
  const handleDemoLogin = async()=>{
@@ -32,11 +38,11 @@ const LayOut = ({ children }: LayOutProps) => {
 
 if(status?.ok){
      
-    router.refresh()
-    router.push('/')
-    sessionStore.toggleSession()
+    if(sessionStore.isSession)sessionStore.toggleSession()
     setTimeout(() => {
+      router.refresh()
       toast.success('Logged In')
+     
     }, 300);
 } 
 
@@ -56,38 +62,47 @@ if(status?.error){
   );
 }
   return (
-    <div className='flex flex-col'>
-      <div className='mb-5 text-center'> 
-      <span className='font-sans hover:bg-base-700 hover:text-teal-700 font-semibold cursor-pointer p-1 pl-2 rounded-md transition-all duration-300 gap-1 hover:text-lg' 
+    
+  
+
+     <div className='music-auth flex flex-row items-center'>
+          <MusicPlayer />
+      <div className='flex flex-col flex-grow'>
+      <div className='mb-2 text-center'> 
+       <Link href="/" className='font-sans hover:bg-base-700 hover:text-teal-700 font-semibold cursor-pointer p-1 pl-2 rounded-md transition-all duration-300 gap-1 hover:scale-110' 
              onClick={handleDemoLogin}>
-        Use Demo </span>
+        Use Demo 
+       </Link>
         instead
       </div>
-      <motion.div
-        initial={{ y: '100vh', x: '20wh' }}
-        animate={{ y: 0, x:0, rotate: 0, originX: 0.5, originY: 0.5 }}
-        transition={{ duration: 1, ease: 'easeInOut' }}
-        
-      >
-        <div className=' m-auto bg-teal-700 rounded-lg w-4/5 h-auto grid lg:grid-cols-2  '>
-          
-          <div className={`flex ${themeStore.mode === 'light'? `${styles.imgStyle}`:`${styles.imgNightStyle}`}`}>
-            
-              <div className={styles.cartoonImg}></div>
-              <div className={styles.cloud_one}></div>
-              <div className={styles.cloud_two}></div>
+          <motion.div
+            initial={{ y: '100vh', x: '20wh' }}
+            animate={{ y: 0, x:0, rotate: 0, originX: 0.5, originY: 0.5 }}
+            transition={{ duration: 1, ease: 'easeInOut' }}
+            className='flex-grow'
+          >
+            <div className=' m-auto bg-teal-700 rounded-lg w-4/5 h-auto grid lg:grid-cols-2  '>
               
+              <div className={`flex ${themeStore.mode === 'light'? `${styles.imgStyle}`:`${styles.imgNightStyle}`}`}>
+                
+                  <div className={styles.cartoonImg}></div>
+                  <div className={styles.cloud_one}></div>
+                  <div className={styles.cloud_two}></div>
+                  
 
-          </div>
+              </div>
 
-          <div className='right flex flex-col justify-evenly rounded-r-md '>
-                <div className='text-center py-4.5 '>
-                  {children}
-                </div>
-          </div>
-        </div>
-        
-      </motion.div>
+              <div className='right flex flex-col justify-evenly rounded-r-md '>
+                    <div className='text-center py-4.5 '>
+                      {children}
+                    </div>
+              </div>
+            </div>
+            
+          </motion.div>
+
+      </div>
+
     </div>
   );
 };

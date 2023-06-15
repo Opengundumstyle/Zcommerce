@@ -21,7 +21,7 @@ export default function Nav({user}:Session){
       const cartstore = useCartStore()
       const sessionstore = useSession()
       const router = useRouter()
-
+  
       const handleSession = ()=>{
          if(sessionstore.isSession === false) sessionstore.toggleSession()
          if(sessionstore.onLogin === false) sessionstore.setLogin()
@@ -32,8 +32,6 @@ export default function Nav({user}:Session){
           if(sessionstore.isSession === true) sessionstore.toggleSession()
           router.push('/')
      } 
-    
-
       return (
           <nav className="flex justify-between items-center py-12 ">
           

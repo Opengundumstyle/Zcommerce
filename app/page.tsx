@@ -7,6 +7,8 @@ const stripe = new Stripe(process.env.STRIPE_SECRET as string, {
 
 });
 
+export const revalidate = 0
+
 export const getProducts = async () => {
   const limit = 10; // Number of products to fetch per request
   let allProducts: any[] = [];
@@ -56,6 +58,7 @@ export const getProducts = async () => {
 export default async function Home() {
 
   const products = await getProducts()
+  
   
   return (
     <main className="grid grid-cols-fluid gap-12">
