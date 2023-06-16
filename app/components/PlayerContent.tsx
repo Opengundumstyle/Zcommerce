@@ -89,6 +89,7 @@ interface PlayerContentProps {
         player.setId('1')
         }
         player.setIsPlaying(true)
+        player.togglePlayer(true)
     
         play()
 

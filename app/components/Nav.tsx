@@ -28,7 +28,7 @@ export default function Nav({user}:Session){
       const router = useRouter()
       const player = usePlayer()
       
-      const [playMode,setPlayMode] = useState(player.activeId?true:false)
+      
   
       const handleSession = ()=>{
          if(sessionstore.isSession === false) sessionstore.toggleSession()
@@ -40,6 +40,9 @@ export default function Nav({user}:Session){
           if(sessionstore.isSession === true) sessionstore.toggleSession()
           router.push('/')
      } 
+
+
+
       return (
           <nav className="flex justify-between items-center py-12 ">
           
@@ -110,17 +113,16 @@ export default function Nav({user}:Session){
                                   <ul tabIndex={0} className="dropdown-content menu p-4 space-y-4 shadow bg-base-100 rounded-box w-72">
                                      <li className="rounded-md outline-none"
                                             onClick={()=>{
-                                                if(!playMode) {
-                                                    player.setId('1')
-                                                    setPlayMode(true)
+                                                if(!player.isOpen) {
+                                                   if(!player.activeId) player.setId('1')
+                                                    player.togglePlayer(true)
                                                   }else{
-                                                     player.setId('')
-                                                     setPlayMode(false)
+                                                     player.togglePlayer(false)
                                                   }
                                                 }}>
                                                 <div className="flex flex-row justify-between items-center space-x-6">
                                                      Music Player 
-                                                     <div className="font-semibold">{playMode?'on':'off'}</div>
+                                                     <div className="font-semibold">{player.isOpen?'on':'off'}</div>
                                                 </div>
                                                 
                                       </li>
