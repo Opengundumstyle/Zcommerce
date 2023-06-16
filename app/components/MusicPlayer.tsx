@@ -40,7 +40,7 @@ const MusicPlayer = () => {
   return (
     <div 
        className={`flex flex-col gap-4 
-                  ${!session.isSession? song?.id?`${style.music_player} pt-10`:'hidden':''} 
+                  ${!session.isSession? player.activeId?`${style.music_player} pt-10`:'hidden':''} 
                   ${cart.isOpen && 'hidden'} 
                   
                   `}

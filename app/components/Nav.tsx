@@ -13,7 +13,12 @@ import {AnimatePresence, motion} from 'framer-motion'
 import Search from "./Search"
 import DarkLight from "./DarkLight"
 import { useRouter } from "next/navigation"
-import {AiFillShopping} from 'react-icons/ai'
+import {AiFillShopping,AiOutlineHistory} from 'react-icons/ai'
+import { IoIosLogOut } from "react-icons/io";
+import { useState } from "react"
+
+import usePlayer from '@/hooks/usePlayer';
+
 
 
 export default function Nav({user}:Session){
@@ -21,6 +26,9 @@ export default function Nav({user}:Session){
       const cartstore = useCartStore()
       const sessionstore = useSession()
       const router = useRouter()
+      const player = usePlayer()
+      
+      const [playMode,setPlayMode] = useState(player.activeId?true:false)
   
       const handleSession = ()=>{
          if(sessionstore.isSession === false) sessionstore.toggleSession()
@@ -100,21 +108,49 @@ export default function Nav({user}:Session){
                                     <div className="text-sm hidden lg:block font-lobster">{user.name}</div>
                                   </div>
                                   <ul tabIndex={0} className="dropdown-content menu p-4 space-y-4 shadow bg-base-100 rounded-box w-72">
+                                     <li className="rounded-md outline-none"
+                                            onClick={()=>{
+                                                if(!playMode) {
+                                                    player.setId('1')
+                                                    setPlayMode(true)
+                                                  }else{
+                                                     player.setId('')
+                                                     setPlayMode(false)
+                                                  }
+                                                }}>
+                                                <div className="flex flex-row justify-between items-center space-x-6">
+                                                     Music Player 
+                                                     <div className="font-semibold">{playMode?'on':'off'}</div>
+                                                </div>
+                                                
+                                      </li>
+                                       
                                        <Link 
                                          href={'/dashboard'} 
                                          className="hover:bg-base-300 p-4 rounded-md"
                                          onClick={()=>{
                                           if(document.activeElement instanceof HTMLElement){
                                              document.activeElement.blur()}}}>
-                                        Orders
+                                              <div className="flex flex-row justify-between items-center">
+                                              Orders 
+                                              <AiOutlineHistory className="text-xl"/>
+                                              </div>
+                                        
                                         </Link>
-                                       <li className="hover:bg-base-300 p-4 rounded-md"
+
+                                       <li className="rounded-md"
                                            onClick={()=>{
                                               signOut()
                                               if(document.activeElement instanceof HTMLElement){
                                               document.activeElement.blur()}
                                               
-                                              }}>Sign out</li>
+                                              }}>
+                                                 <div className="flex flex-row justify-between items-center">
+                                                   Sign out <IoIosLogOut className="text-xl"/>
+                                                 </div>
+                                        </li>
+
+                                         
                                   </ul>
                                 </div>
                        </li>

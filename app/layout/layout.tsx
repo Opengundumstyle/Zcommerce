@@ -39,10 +39,13 @@ console.log('did layout triggered???')
 if(status?.ok){
      
     if(sessionStore.isSession)sessionStore.toggleSession()
+
+    router.push('/')
+
     setTimeout(() => {
-      router.refresh()
-      toast.success('Logged In')
      
+      toast.success('Logged In')
+      router.refresh()
     }, 300);
 } 
 
@@ -66,11 +69,11 @@ if(status?.error){
  
 
       <div className='flex flex-col '>
-      <div className='mb-2 text-center'> 
-       <Link href="/" className='font-sans hover:bg-base-700 hover:text-teal-700 font-semibold cursor-pointer p-1 pl-2 rounded-md transition-all duration-300 gap-1 hover:scale-110' 
+      <div className='mb-2 text-center flex flex-row items-center justify-center'> 
+       <div className='font-sans hover:bg-base-700 hover:text-teal-700 font-semibold cursor-pointer p-1 pl-2 rounded-md transition-all duration-300 gap-1 hover:scale-110' 
              onClick={handleDemoLogin}>
         Use Demo 
-       </Link>
+       </div>
         instead
       </div>
           <motion.div
