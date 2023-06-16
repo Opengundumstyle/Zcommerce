@@ -40,8 +40,10 @@ const MusicPlayer = () => {
   return (
     <div 
        className={`flex flex-col gap-4 
-                  ${!session.isSession && `${style.music_player} pt-10`} 
-                  ${cart.isOpen && 'hidden'}`}
+                  ${!session.isSession? song?.id?`${style.music_player} pt-10`:'hidden':''} 
+                  ${cart.isOpen && 'hidden'} 
+                  
+                  `}
                   onMouseEnter={()=>setPlayerHovered(true)}
                   onMouseLeave={()=>setPlayerHovered(false)}
                   >
