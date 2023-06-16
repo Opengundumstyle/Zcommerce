@@ -30,8 +30,7 @@ const MusicPlayer = () => {
     const SpotifyAd = ()=>{
         return (
             <div className='max-w-xs font-sans font-light text-gray-400 text-sm'>
-             Listen to music while shopping? try zcommerce's playlist or
-              Sign in with Spotify for more song selections!
+             Try listening to music while shopping? check out zcommerce's playlist 
             </div>
         )
     }
