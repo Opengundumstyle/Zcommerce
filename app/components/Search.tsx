@@ -74,7 +74,7 @@ export default function Search(){
     return(
         <div className="relative w-full" >
           
-            <div className={`flex flex-row border-2 rounded-lg p-2 hover:border-teal-700 items-center transition-all duration-200 ${query?'border-teal-700':'border-transparent' }`}
+            <div className={`flex flex-row border-2 rounded-2xl p-2 hover:border-teal-700 items-center transition-all duration-200 ${query?'border-teal-700':'border-transparent' }`}
                  
                  >
               <input 
@@ -93,7 +93,7 @@ export default function Search(){
                   />
                
                     <motion.div 
-                     initial={{ x: "90%" }} search bar
+                     initial={{ x: "90%" }} 
                      animate={{ x: "calc(10%)" }} 
                       className="absolute top-0 right-0 h-full flex items-center mr-2">
                           {(isHovered)&&(!query)&& (<FireAnimation/>)}

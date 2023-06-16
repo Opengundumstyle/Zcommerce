@@ -24,8 +24,8 @@ return(
        step={0.1}
        aria-label="Volume"
        >
-         <RadixSlider.Track className="relative grow rounded-full h-[3px] bg-neutral-600">
-              <RadixSlider.Range className="absolute bg-gray-500 rounded-full h-full"/>
+         <RadixSlider.Track className="relative grow rounded-full h-[5px] w-8 bg-neutral-600">
+              <RadixSlider.Range className="absolute bg-teal-600 rounded-full h-full"/>
          </RadixSlider.Track>
      </RadixSlider.Root>
 )

@@ -10,9 +10,9 @@ import useCartStore from '@/store';
 import { signIn } from 'next-auth/react';
 import { toast } from 'react-hot-toast';
 import Link from 'next/link';
-// import supabase from '../util/supabaseClient';
 
-import MusicPlayer from '../components/MusicPlayer';
+
+
 
 interface LayOutProps {
   children: ReactNode;
@@ -26,7 +26,7 @@ const LayOut = ({ children }: LayOutProps) => {
  const router = useRouter()
  const sessionStore = useSession()
 
-
+console.log('did layout triggered???')
 
  const handleDemoLogin = async()=>{
   const status =  await signIn('credentials',{
@@ -53,7 +53,7 @@ if(status?.error){
 
  if (cartStore.isOpen) {
   return (
-    <div className="flex justify-center items-center h-4/6 w-2/3">
+    <div className="flex justify-center items-center h-full w-2/3">
       <div className="text-center mt-20">
         <h2 className="text-3xl font-bold text-base-900 font-lobster">Sign in to Buy</h2>
         <p className="text-gray-600 mt-4">Please sign in to proceed with your purchase.</p>
@@ -63,11 +63,9 @@ if(status?.error){
 }
   return (
     
-  
+ 
 
-     <div className='music-auth flex flex-row items-center'>
-          <MusicPlayer />
-      <div className='flex flex-col flex-grow'>
+      <div className='flex flex-col '>
       <div className='mb-2 text-center'> 
        <Link href="/" className='font-sans hover:bg-base-700 hover:text-teal-700 font-semibold cursor-pointer p-1 pl-2 rounded-md transition-all duration-300 gap-1 hover:scale-110' 
              onClick={handleDemoLogin}>
@@ -103,7 +101,7 @@ if(status?.error){
 
       </div>
 
-    </div>
+  
   );
 };
 

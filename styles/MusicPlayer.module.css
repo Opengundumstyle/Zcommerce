@@ -1,0 +1,22 @@
+.music_player {
+    position: fixed;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    width: 0%;
+    height: 50vh;
+    transition: width 0.6s ease;
+    background-color: rgba(0, 0, 0, 0.7); /* Transparent black background */
+    color: #fff;
+    backdrop-filter: blur(4px); /* Apply a blur effect */
+  }
+  
+  .music_player.expanded {
+
+    width: 100%;
+  }
+  
+  .music_player:hover {
+   
+    width: 100%;
+  }

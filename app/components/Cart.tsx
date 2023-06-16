@@ -15,7 +15,7 @@ import OrderConfirmed from "./OrderConfirmed"
 import { useState } from "react"
 
 
-export default function Cart({user}){
+export default function Cart({user}:any){
 
       const cartStore  = useCartStore()
       const sessionStore = useSession()
@@ -47,7 +47,7 @@ export default function Cart({user}){
                  </div>
                  )}
                   {cartStore.onCheckout === 'checkout' && (
-                     <button onClick={()=>cartStore.setCheckout('cart')} className="text-sm font-bold pb-12 mr-2">Check your cart 🛒</button>
+                     <button onClick={()=>cartStore.setCheckout('cart')} className="text-sm font-bold pb-12 mr-2">Check your cart &nbsp;  🛒</button>
                  )}
 
 

@@ -6,8 +6,7 @@ import { authOptions } from '@/pages/api/auth/[...nextauth]'
 import Hydrate from './components/Hydrate'
 import {Roboto,Lobster_Two} from 'next/font/google'
 import ToasterProvider from './providers/Toasterprovider'
-
-
+import MusicPlayer from './components/MusicPlayer'
 
 // Define main font
 const roboto = Roboto({weight:['400','500','700'],subsets:['latin'],variable:'--font-roboto'})
@@ -23,13 +22,18 @@ export const metadata = {
 
 export default async function RootLayout({
   children,
+
 }: {
-  children: React.ReactNode
+  children: React.ReactNode,
+
 }) {
 
   // Fetch the user
   const session = await getServerSession(authOptions)
- 
+
+
+
+
   
 return (
     <html lang="en" className={`${roboto.variable} ${lobster.variable}`}>
@@ -38,7 +42,13 @@ return (
              
               <ToasterProvider/>
               <Nav user={session?.user} expires={session?.expires as string} />
-                {children}
+              <div className='flex flex-row justify-evenly items-center'>
+                  <MusicPlayer/>
+                  <div className='flex-grow'>
+                  {children}
+                  </div>
+              </div>
+
         </Hydrate>
        
        

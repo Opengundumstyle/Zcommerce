@@ -10,6 +10,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET as string, {
 export const revalidate = 0
 
 export const getProducts = async () => {
+
   const limit = 10; // Number of products to fetch per request
   let allProducts: any[] = [];
 

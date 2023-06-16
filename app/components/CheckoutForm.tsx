@@ -62,7 +62,7 @@ export default function CheckoutForm({clientSecret}:{clientSecret:string}){
                   onMouseEnter={() => setIsHovered(true)}
                   onMouseLeave={() => setIsHovered(false)}>
                    <span id="button-text">
-                      {isLoading? <span>Processing 👀</span> : <span className="flex flex-row justify-center items-center">Pay now {isHovered?<div className="text-lg"><FireAnimation/></div>:' '}</span>}
+                      {isLoading? <span>Processing 👀</span> : <span className="flex flex-row justify-center items-center min-h-[30px]">Pay now {isHovered?<div className="text-lg "><FireAnimation/></div>:' '}</span>}
                    </span>
                </button>
          </form>

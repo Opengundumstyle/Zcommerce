@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react';
 import { FaPlay, FaPause } from 'react-icons/fa';
 import usePlayer from '@/hooks/usePlayer';
 import Slider from './Slider'; 
-
+import { useSession } from "@/store";
 
 import { AiFillStepForward,AiFillStepBackward } from "react-icons/ai";
 import { HiSpeakerWave,HiSpeakerXMark } from "react-icons/hi2";
@@ -18,20 +18,27 @@ import useSound from 'use-sound';
 interface PlayerContentProps {
     song?: Song;
     songUrl?: string;
+    playerHovered:boolean
   }
 
 
   const PlayerContent: React.FC<PlayerContentProps> = ({ 
     song, 
-    songUrl
+    songUrl,
+    playerHovered
   }) => {
 
     const [isHovered, setIsHovered] = useState(false);
+
     const player = usePlayer()
+
+    const session = useSession()
     
     const[volume,setVolume] = useState(1)
 
     const VolumeIcon = volume === 0? HiSpeakerXMark:HiSpeakerWave
+
+    
 
 
     const toggleMute = ()=>{
@@ -81,7 +88,7 @@ interface PlayerContentProps {
         if(player.activeId === undefined){ 
         player.setId('1')
         }
-        if(player.isPlaying)player.setIsPlaying()
+        player.setIsPlaying(true)
     
         play()
 
@@ -89,8 +96,10 @@ interface PlayerContentProps {
 
 
   const handlePause = () => {
-    player.isPlaying && player.setIsPlaying()
-    pause()
+
+        player.setIsPlaying(false)
+
+        pause()
 
   }
 
@@ -99,39 +108,38 @@ interface PlayerContentProps {
     songUrl as string,
     { 
       volume: volume,
-      onplay: () => {if(!player.isPlaying)player.setIsPlaying()},
+      onplay: () => {if(!player.isPlaying)player.setIsPlaying(true)},
       onend: () => {
-       player.isPlaying && player.setIsPlaying();
+       player.isPlaying && player.setIsPlaying(false);
         onPlayNext();
       },
-      onpause: () => { player.isPlaying && player.setIsPlaying()},
+      onpause: () => { if(player.isPlaying)player.setIsPlaying(false)},
       format: ['mp3']
     }
   );
 
 
 useEffect(()=>{
-    console.log('do i have sound???',sound)
-    console.log('do i have song???',song)
+   
     sound?.play()
     return ()=>{
       sound?.unload()
     }
   },[sound])
-  
 
 
-console.log('is it playing',player.isPlaying)
+
+
 
     return (
     <div className="flex flex-col items-center justify-center">
-      <div    className={`relative w-48 h-48 bg-gray-300 rounded-full`}
+      <div  className={`relative w-48 h-48 bg-gray-300 rounded-full`}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
             style={{
               animation: `spin 4s infinite linear`,
               animationPlayState: player.isPlaying? 'running' : 'paused',
-              border: '1px solid rgba(0, 0, 0, 0.2)',
+              border: '2px solid rgba(0, 0, 0, 0.2)',
             }}>
          <div className="absolute inset-0 w-full h-full rounded-full overflow-hidden">
           <img
@@ -145,14 +153,15 @@ console.log('is it playing',player.isPlaying)
           <div className={`absolute inset-0 flex items-center justify-center opacity-0 ${isHovered ?'opacity-100':''}`}>
               <div className='flex flex-col items-center justify-center'>
                 <p className={`text-white text-lg font-bold `}>{song?.title}</p>
-                <p className='text-gray-200 text-xs'>by {song?.author}</p>
+               {song && <p className='text-gray-200 text-xs'>by {song?.author}</p>} 
             </div>
           </div>
         </div>
       </div>
 
        {/**speaker */}
-       <div className='mt-3 text-xl text-gray-500 flex flex-row items-center justify-start'>
+       {(!playerHovered && !session.isSession)?'':
+       <div className='mt-3 text-2xl text-gray-500 flex flex-row items-center justify-start hover:scale-110 transition duration-300 ease-in-out transform'>
             <VolumeIcon
               onClick={toggleMute}
               className='cursor-pointer'
@@ -162,36 +171,42 @@ console.log('is it playing',player.isPlaying)
               onChange={(value)=>setVolume(value)}
             />
        </div>
+       }
 
       {/**Player and back+forward button*/}
-      <div className='flex flex-row space-x-3 justify-center items-center mt-3'>
 
+        {(!playerHovered && !session.isSession)?'':
+              <div className='flex flex-row space-x-3 justify-center items-center mt-3'>
+
+            
+              <AiFillStepBackward className='text-4xl hover:bg-gray-100 rounded-full p-1 cursor-pointer transition duration-300 ease-in-out transform text-gray-500 hover:text-teal-700 hover:scale-105'
+                                  onClick={onPlayPrevious}/>
+    
+
+                <div className="flex items-center p-1">
+                  {player.isPlaying ? (
+                    <FaPause 
+                      className="text-4xl text-base-700 cursor-pointer items-center "
+                      onClick={handlePause}
+                      onMouseEnter={() => setIsHovered(true)}
+                      onMouseLeave={() => setIsHovered(false)}
+                        />
+                  ) : (
+                    <FaPlay className="hover:scale-110 text-2xl text-base-700 hover:text-teal-700 cursor-pointer items-center transition duration-300 ease-in-out transform" 
+                      onClick={handlePlay}/>
+                  )}
+                </div>
+            
           
-             <AiFillStepBackward className='text-4xl hover:bg-gray-100 rounded-full p-1 cursor-pointer transition duration-300 ease-in-out transform text-gray-500 hover:text-teal-700 hover:scale-105'
-                                 onClick={onPlayPrevious}/>
-   
-
-          <div className="flex items-center p-1">
-            {player.isPlaying ? (
-              <FaPause 
-                className="text-4xl text-base-700 cursor-pointer items-center "
-                onClick={handlePause}
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
+                <AiFillStepForward 
+                  className='text-4xl hover:bg-gray-100 rounded-full p-1 cursor-pointer transition duration-300 ease-in-out transform text-gray-500 hover:text-teal-700 hover:scale-105'
+                  onClick={onPlayNext}
                   />
-            ) : (
-              <FaPlay className="hover:scale-110 text-2xl text-base-700 hover:text-teal-700 cursor-pointer items-center transition duration-300 ease-in-out transform" 
-                onClick={handlePlay}/>
-            )}
-          </div>
-           
-        
-          <AiFillStepForward 
-            className='text-4xl hover:bg-gray-100 rounded-full p-1 cursor-pointer transition duration-300 ease-in-out transform text-gray-500 hover:text-teal-700 hover:scale-105'
-             onClick={onPlayNext}
-            />
-      </div>
-    </div>)
+              </div>
+          }
+    </div>
+    
+    )
 
   }
 
