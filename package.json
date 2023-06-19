@@ -39,6 +39,7 @@
     "react-hot-toast": "^2.4.1",
     "react-icons": "^4.9.0",
     "react-spinners": "^0.13.8",
+    "spotify-web-api-node": "^5.0.2",
     "stripe": "^11.11.0",
     "ts-node": "^10.9.1",
     "typescript": "5.0.4",
@@ -47,6 +48,7 @@
   },
   "devDependencies": {
     "@types/react-lottie": "^1.2.6",
+    "@types/spotify-web-api-node": "^5.0.7",
     "autoprefixer": "^10.4.14",
     "postcss": "^8.4.23",
     "supabase": "^1.64.8",

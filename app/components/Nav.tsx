@@ -15,7 +15,6 @@ import DarkLight from "./DarkLight"
 import { useRouter } from "next/navigation"
 import {AiFillShopping,AiOutlineHistory} from 'react-icons/ai'
 import { IoIosLogOut } from "react-icons/io";
-import { useState } from "react"
 
 import usePlayer from '@/hooks/usePlayer';
 
@@ -41,7 +40,7 @@ export default function Nav({user}:Session){
           router.push('/')
      } 
 
-
+      console.log('what is the user',user)
 
       return (
           <nav className="flex justify-between items-center py-12 ">
@@ -105,7 +104,7 @@ export default function Nav({user}:Session){
                                     src={user?.image as string || 'https://res.cloudinary.com/dzklgl8gn/image/upload/v1685947029/placeholder_abrdr8.jpg'} 
                                     alt={user.name as string} 
                                     width={36} height={36}
-                                    className="rounded-full lg:mt-7 mt-2"
+                                    className="rounded-full lg:mt-7 mt-2 w-10 h-10 object-cover"
                                     
                                     /> 
                                     <div className="text-sm hidden lg:block font-lobster">{user.name}</div>

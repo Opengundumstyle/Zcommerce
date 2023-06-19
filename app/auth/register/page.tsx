@@ -53,13 +53,15 @@ const SignUpPage= () => {
 
  // Handle Google signin
 async function handleGoogleSignIn(){
+    session.toggleSession()
     signIn('google',{callbackUrl:'http://localhost:3000'})
 }
 
-// Handle gihub login
-async function handleGithubSignIn(){
- signIn('github',{callbackUrl:'http://localhost:3000'})
-}                         
+//Handle Spotify Loin
+async function handleSpotifySignIn(){
+    session.toggleSession()
+    signIn('spotify',{callbackUrl:'http://localhost:3000'})
+}                       
 
 
   return (
@@ -153,10 +155,11 @@ async function handleGithubSignIn(){
                         </button>
                     </div>
                     <div className="input-button">
-                        <button type="button" className={styles.button_custom} onClick={handleGithubSignIn}>
-                            Continue with GitHub <Image src={'/assets/github.svg'} width={20} height={20} alt="git"/>
-                        </button>
-                    </div>
+                 <button type="button" className={styles.button_custom} onClick={handleSpotifySignIn}>
+                      Continue with Spotify <Image src={'/assets/spotify.svg'} width={23} height={23} alt="spotify"/>
+                 </button>
+              </div>
+            
                 </form>
                 {/**bottom */}
                 <p className="text-center text-gray-400 mb-5 text-sm">

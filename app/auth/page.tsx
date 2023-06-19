@@ -60,12 +60,20 @@ const AuthPage = () => {
 
   // Handle Google signin
   async function handleGoogleSignIn(){
+       sessionStore.toggleSession()
       signIn('google',{callbackUrl:'http://localhost:3000'})
   }
 
   // Handle gihub login
   async function handleGithubSignIn(){
+   sessionStore.toggleSession()
    signIn('github',{callbackUrl:'http://localhost:3000'})
+}
+
+//Handle Spotify Login
+async function handleSpotifySignIn(){
+     sessionStore.toggleSession()
+     signIn('spotify',{callbackUrl:'http://localhost:3000'})
 }
 
   return (
@@ -134,10 +142,17 @@ const AuthPage = () => {
                  </button>
               </div>
               <div className="input-button">
+                 <button type="button" className={styles.button_custom} onClick={handleSpotifySignIn}>
+                      Continue with Spotify <Image src={'/assets/spotify.svg'} width={23} height={23} alt="spotify"/>
+                 </button>
+              </div>
+            
+              <div className="input-button">
                  <button type="button" className={styles.button_custom} onClick={handleGithubSignIn}>
                       Continue with GitHub <Image src={'/assets/github.svg'} width={20} height={20} alt="git"/>
                  </button>
               </div>
+              
           </form>
            {/**bottom */}
            <p className="text-center text-gray-400 pb-5 text-sm">

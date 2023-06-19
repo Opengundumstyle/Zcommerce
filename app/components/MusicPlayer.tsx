@@ -4,17 +4,20 @@
 
 import useGetSongById from '@/hooks/useGetSongById';
 import usePlayer from '@/hooks/usePlayer';
+import useSpotify from '@/hooks/useSpotify';
 
 import PlayerContent from './PlayerContent';
 import { useSession } from '@/store';
 import useCartStore from '@/store';
+import { Session } from "next-auth"
 
 import style from '../../styles/MusicPlayer.module.css'
 
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import spotifyApi from '@/lib/spotify';
 
-const MusicPlayer = () => {
+const MusicPlayer = ({user}:Session) => {
 
 
     const player = usePlayer()
@@ -26,6 +29,24 @@ const MusicPlayer = () => {
     const cart = useCartStore()
 
     const [playerHovered,setPlayerHovered] = useState(false)
+
+    const [playlists,setPLaylists] = useState()
+
+    const spodify = useSpotify(user as Session)
+
+    console.log('what is this spodify sht',spodify)
+    
+    useEffect(()=>{
+        if(spodify.getAccessToken()){
+            spotifyApi.getUserPlaylists().then((data)=>{
+                 setPLaylists(data.body.items)
+            })
+        }
+    },[user,spotifyApi])
+
+
+   console.log(playlists)
+
        
     const SpotifyAd = ()=>{
         return (

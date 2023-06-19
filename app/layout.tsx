@@ -30,10 +30,7 @@ export default async function RootLayout({
 
   // Fetch the user
   const session = await getServerSession(authOptions)
-
-
-
-
+  console.log('what is session',session)
   
 return (
     <html lang="en" className={`${roboto.variable} ${lobster.variable}`}>
@@ -43,7 +40,7 @@ return (
               <ToasterProvider/>
               <Nav user={session?.user} expires={session?.expires as string} />
               <div className='flex flex-row justify-evenly items-center'>
-                  <MusicPlayer/>
+                  <MusicPlayer user={session?.user} expires={session?.expires as string}/>
                   <div className='flex-grow'>
                   {children}
                   </div>
