@@ -9,16 +9,16 @@ const Song = ({ song, index }) => {
   return (
     <div
       key={index}
-      className={`flex items-center gap-2 cursor-pointer ${
-        onHovered ? "opacity-100" : "opacity-90"
+      className={`flex items-center gap-2 cursor-pointer rounded-md ${
+        onHovered ? " bg-gray-500 bg-opacity-80" : ""
       }`}
       onMouseEnter={() => setOnHovered(true)}
       onMouseLeave={() => setOnHovered(false)}
     >
-      <div className={`w-8 text-center ${onHovered && 'text-teal-700'}`}>{index + 1}</div>
+      <div className={`w-8 text-center ${onHovered && 'text-black'}`}>{index + 1}</div>
       <div className="relative">
         <img
-          className={`w-10 h-10 ${onHovered ? "opacity-80" : ""}`}
+          className={`w-10 h-10 ${onHovered ? "opacity-50" : ""}`}
           src={song.image}
           alt={song.name}
         />
@@ -30,7 +30,7 @@ const Song = ({ song, index }) => {
       </div>
       <div className="flex flex-col">
         <h3 className="font-bold">{song.name}</h3>
-        <p className="text-sm text-gray-500">{song.artists}</p>
+        <p className={`text-sm text-gray-500 ${onHovered && 'text-white opacity-100'}`}>{song.artists}</p>
       </div>
     </div>
   );
