@@ -12,6 +12,7 @@ import { useSession } from "@/store";
 import { AiFillStepForward,AiFillStepBackward } from "react-icons/ai";
 import { HiSpeakerWave,HiSpeakerXMark } from "react-icons/hi2";
 import useSound from 'use-sound';
+import Playlists from "./Playlists";
 
 
 
@@ -25,7 +26,7 @@ interface PlayerContentProps {
   const PlayerContent: React.FC<PlayerContentProps> = ({ 
     song, 
     songUrl,
-    playerHovered
+    playerHovered,
   }) => {
 
     const [isHovered, setIsHovered] = useState(false);
@@ -133,6 +134,7 @@ useEffect(()=>{
 
 
     return (
+
     <div className="flex flex-col items-center justify-center">
       <div  className={`relative w-48 h-48 bg-gray-300 rounded-full`}
             onMouseEnter={() => setIsHovered(true)}
