@@ -10,7 +10,7 @@ const Song = ({ song, index }) => {
     <div
       key={index}
       className={`flex items-center gap-2 cursor-pointer ${
-        onHovered ? "opacity-80" : ""
+        onHovered ? "opacity-100" : "opacity-90"
       }`}
       onMouseEnter={() => setOnHovered(true)}
       onMouseLeave={() => setOnHovered(false)}
