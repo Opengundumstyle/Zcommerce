@@ -14,11 +14,13 @@ import useCartStore from '@/store';
 import { Session } from "next-auth"
 
 import style from '../../styles/MusicPlayer.module.css'
+import { motion } from 'framer-motion';
 
 import { useEffect, useState } from 'react';
 import spotifyApi from '@/lib/spotify';
 
 
+import { signIn} from "next-auth/react";
 
 const MusicPlayer = ({user}:Session) => {
 
@@ -72,6 +74,12 @@ const MusicPlayer = ({user}:Session) => {
     const [is_active, setActive] = useState(false);
     const [current_track, setTrack] = useState(track);
     const [webPlayer,setWebPlayer] = useState(undefined)
+
+
+    async function handleSpotifySignIn(){
+      if(session.isSession)session.toggleSession()
+      signIn('spotify',{callbackUrl:'http://localhost:3000'})
+ }
    
    
     useEffect(()=>{ 
@@ -173,6 +181,8 @@ const MusicPlayer = ({user}:Session) => {
                 spotifyApi.getUserPlaylists().then((data)=>{
                     setPLaylists(data.body.items)
                 })
+
+            
                 // Function to recursively fetch all liked songs
             const getAllLikedSongs = async(offset:number = 0, limit:number = 50)=> {
               
@@ -243,17 +253,17 @@ const MusicPlayer = ({user}:Session) => {
 
   console.log('webplayer',webPlayer)
   console.log('current track',current_track)
-
+  console.log('my playlists',playlists)
 
   return (
     <div 
-       className={`flex flex-col gap-4 
+       className={`flex flex-col gap-4 items-center
                   ${!session.isSession? musicplayer.isOpen?`${style.music_player} pt-10`:'hidden':''} 
                   ${cart.isOpen && 'hidden'}`}
                   onMouseEnter={()=>setPlayerHovered(true)}
                   onMouseLeave={()=>setPlayerHovered(false)}
                       >
-        {(!musicplayer.activeId)&&(session.isSession)&& <SpotifyAd/>}
+        {(!musicplayer.activeId)&&(session.isSession) &&<SpotifyAd/>}
         <div className='flex flex-row justify-evenly items-center'>
         {/* {playlists && <Playlist playlists={playlists}/>}  */}
       
@@ -270,7 +280,21 @@ const MusicPlayer = ({user}:Session) => {
                    webPlayer={webPlayer} 
                    spodify={spodify} 
                    current_track={current_track}/>}
+
+              
         </div>
+
+       {(!musicplayer.activeId)&&(session.isSession)?'':!playerHovered && !session.isSession? '': !current_track.name?
+          <motion.div 
+           className='p-3 text-sm'
+           initial={{ opacity: 0, y: 10 }}
+           animate={{ opacity: 1, y: 0 }}
+           transition={{ duration: 0.5 }}
+            > Listen with <span className=' text-teal-700 font-semibold hover:font-bold hover:underline cursor-pointer' 
+             onClick={handleSpotifySignIn}>
+           Spotify</span> instead</motion.div>:''
+           }
+          
     </div>
   );
 };

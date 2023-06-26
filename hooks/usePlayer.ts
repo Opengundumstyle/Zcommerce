@@ -12,6 +12,8 @@ interface PlayerStore{
      togglePlayer:(On:boolean) =>void
      uri?:string
      setUri:(val:string)=>void
+     favIds:string[]
+     setfavIds:(ids:string[])=>void
 
 }
 
@@ -27,7 +29,9 @@ const usePlayer = create<PlayerStore>((set)=>({
      isOpen:false,
      togglePlayer:(on: boolean) => set({ isOpen: on }),
      uri:'',
-     setUri:(val)=>set((state)=>({uri:val}))
+     setUri:(val)=>set((state)=>({uri:val})),
+     favIds:[],
+     setfavIds:(ids:string[])=>set({favIds:ids})
 }))
 
 

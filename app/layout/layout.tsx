@@ -72,7 +72,6 @@ if(status?.error){
              onClick={handleDemoLogin}>
         Use Demo 
        </div>
-        instead
       </div>
           <motion.div
             initial={{ y: '100vh', x: '20wh' }}
