@@ -218,7 +218,7 @@ useEffect(()=>{
                 <div className="flex items-center p-1">
                   {player.isPlaying ? (
                     <FaPause 
-                      className="text-4xl text-base-700 cursor-pointer items-center "
+                      className="text-2xl text-base-700 cursor-pointer items-center "
                       onClick={handlePause}
                       onMouseEnter={() => setIsHovered(true)}
                       onMouseLeave={() => setIsHovered(false)}

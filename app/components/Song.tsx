@@ -1,7 +1,7 @@
 
 'use client'
 import { useState } from "react";
-import { BsFillPlayFill } from "react-icons/bs";
+import { BsFillPlayFill,BsFillPauseFill } from "react-icons/bs";
 import usePlayer from "@/hooks/usePlayer";
 import MusicPlayingAnimation from "./MusicPlayingAnimation";
 
@@ -18,12 +18,13 @@ const Song = ({song,index,webPlayer,spodify,current_track}) => {
   const handlePlay = ()=>{
   
    
-           spodify.play({ uris: [song.uri] })
-           if(!player.isPlaying)
-           { player.setIsPlaying(true)
+          current_track.id === song.id?  webPlayer.togglePlay():spodify.play({ uris: [song.uri] })
+
+           if(!player.isPlaying){ 
+             player.setIsPlaying(true)
             }else{
               player.setIsPlaying(false)
-              webPlayer.togglePlay()
+             
             }
     
 
@@ -49,7 +50,7 @@ const Song = ({song,index,webPlayer,spodify,current_track}) => {
         />
         {onHovered && (
           <div className="absolute inset-0 flex items-center justify-center">
-            <BsFillPlayFill className="text-white text-2xl" />
+            {current_track.id === song.id && player.isPlaying?<BsFillPauseFill className="text-white text-2xl" />:<BsFillPlayFill className="text-white text-2xl" />}
           </div>
         )}
       </div>
