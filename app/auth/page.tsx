@@ -94,7 +94,7 @@ async function handleSpotifySignIn(){
                 <p className="w-full mx-auto text-gray-400 text-sm">Zcommerce is a trendy fashion ecommerce store that offers a wide range of stylish clothing and accessories for fashion-forward individuals</p>
           </div>
           {/**form */}
-          <form className="flex flex-col gap-5 " onSubmit={formik.handleSubmit}>
+          <form className="flex flex-col gap-3 " onSubmit={formik.handleSubmit}>
               <div className={styles.input_group}>
                  <input 
                   type="email" 

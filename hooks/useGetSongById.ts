@@ -3,8 +3,10 @@ import { useState,useEffect, useMemo } from "react"
 import supabase from "@/app/util/supabaseClient"
 import { toast } from "react-hot-toast"
 import usePlayer from "./usePlayer"
+import spotifyApi from "@/lib/spotify"
+import { Session } from "next-auth"
 
-const useGetSongById = (id?:string)=>{
+const useGetSongById = (id?:string,uri?:string)=>{
 
      const [isLoading,setIsLoading] = useState(false)
      const [song,setSong] = useState<Song | undefined>(undefined)
@@ -32,9 +34,8 @@ const useGetSongById = (id?:string)=>{
                setIsLoading(false)
              }
 
-             
- 
-          }else{
+          }
+          else{
             fetchSong = async()=>{
                const {data,error} = await supabase.from('songs').select("*").eq('id',id).single()
 

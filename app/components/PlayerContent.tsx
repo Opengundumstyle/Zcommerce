@@ -19,7 +19,9 @@ import Playlists from "./Playlists";
 interface PlayerContentProps {
     song?: Song;
     songUrl?: string;
-    playerHovered:boolean
+    playerHovered:boolean;
+    current_track:any;
+    webPlayer:any;
   }
 
 
@@ -27,6 +29,8 @@ interface PlayerContentProps {
     song, 
     songUrl,
     playerHovered,
+    current_track,
+    webPlayer
   }) => {
 
     const [isHovered, setIsHovered] = useState(false);
@@ -39,9 +43,6 @@ interface PlayerContentProps {
 
     const VolumeIcon = volume === 0? HiSpeakerXMark:HiSpeakerWave
 
-    
-
-
     const toggleMute = ()=>{
         if(volume === 0){
             setVolume(1)
@@ -52,7 +53,12 @@ interface PlayerContentProps {
     
       
       const onPlayNext = ()=>{
-        if(player.ids.length === 0){
+
+        if(current_track.name){
+            
+          webPlayer.nextTrack()
+           
+        }else{ if(player.ids.length === 0){
            return 
         }
  
@@ -61,47 +67,67 @@ interface PlayerContentProps {
         if(!nextSong){
            return player.setId(player.ids[0])
         }
- 
-        player.setId(nextSong)
+        
+        player.setId(nextSong)}
         
     }
  
  
     const onPlayPrevious = ()=>{
-     if(player.ids.length === 0){
-        return 
-     }
- 
-     const currentIdx = player.ids.findIndex((id)=>id === player.activeId)
-     const previousSong  = player.ids[currentIdx - 1]
-     if(!previousSong){
-        return player.setId(player.ids[player.ids.length-1])
-     }
- 
-     player.setId(previousSong)
+      if(current_track.name){
+
+           webPlayer.previousTrack()
+
+      }else {  
+          if(player.ids.length === 0){
+            return 
+          }
+    
+        const currentIdx = player.ids.findIndex((id)=>id === player.activeId)
+        const previousSong  = player.ids[currentIdx - 1]
+
+        if(!previousSong){
+            return player.setId(player.ids[player.ids.length-1])
+        }
+    
+        player.setId(previousSong)}
      
  }
 
 
  const handlePlay = () =>{
-
+        
+      if(current_track.name){
+          console.log('did i run???')
+          !player.isPlaying && webPlayer.togglePlay()
+      }else{
 
         if(player.activeId === undefined){ 
         player.setId('1')
         }
-        player.setIsPlaying(true)
+        play()
+
+      }
+
+        !player.isPlaying && player.setIsPlaying(true)
         player.togglePlayer(true)
     
-        play()
+    
 
   }
 
 
   const handlePause = () => {
 
-        player.setIsPlaying(false)
+        player.isPlaying && player.setIsPlaying(false)
 
-        pause()
+        if(current_track.name){
+          player.isPlaying && webPlayer.togglePlay()
+        }else{
+          pause()
+        }
+
+       
 
   }
 
@@ -121,17 +147,15 @@ interface PlayerContentProps {
   );
 
 
+
+// play zcommerce playlist
 useEffect(()=>{
-   
+    if(current_track.name) return
     sound?.play()
     return ()=>{
       sound?.unload()
     }
   },[sound])
-
-
-
-
 
     return (
 
@@ -145,6 +169,10 @@ useEffect(()=>{
               border: '2px solid rgba(0, 0, 0, 0.2)',
             }}>
          <div className="absolute inset-0 w-full h-full rounded-full overflow-hidden">
+         {/** image cover */}
+          {current_track.name?
+            <img src={current_track.album.images[0].url || 'https://e7.pngegg.com/pngimages/915/866/png-clipart-compact-disc-music-no-age-polyvinyl-record-co-phonograph-record-disco-in-vinile-album-poster.png'}  alt="Song Cover"
+             className={`w-full h-full object-cover transition duration-300 ease-in-out transform hover:scale-105 ${isHovered?'blur-sm':''}`}/>:
           <img
             src={
               song?.image_path ||
@@ -152,11 +180,12 @@ useEffect(()=>{
             }
             alt="Song Cover"
             className={`w-full h-full object-cover transition duration-300 ease-in-out transform hover:scale-105 ${isHovered?'blur-sm':''}`}
-          />
+          />}
+
           <div className={`absolute inset-0 flex items-center justify-center opacity-0 ${isHovered ?'opacity-100':''}`}>
               <div className='flex flex-col items-center justify-center'>
-                <p className={`text-white text-lg font-bold `}>{song?.title}</p>
-               {song && <p className='text-gray-200 text-xs'>by {song?.author}</p>} 
+               <p className={`text-white text-lg font-bold `}>{current_track.name?current_track.name:song?.title}</p>
+               {current_track.name?<p className='text-gray-200 text-xs'>by &nbsp;{current_track.artists[0].name}</p>:song && <p className='text-gray-200 text-xs'>by &nbsp;{song?.author}</p>} 
             </div>
           </div>
         </div>

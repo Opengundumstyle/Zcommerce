@@ -49,6 +49,7 @@
   "devDependencies": {
     "@types/react-lottie": "^1.2.6",
     "@types/spotify-web-api-node": "^5.0.7",
+    "@types/spotify-web-playback-sdk": "^0.1.15",
     "autoprefixer": "^10.4.14",
     "postcss": "^8.4.23",
     "supabase": "^1.64.8",

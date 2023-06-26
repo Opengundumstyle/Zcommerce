@@ -80,7 +80,7 @@ async function handleSpotifySignIn(){
                 </div>
                 {/**form */}
 
-                <form className="flex flex-col gap-5 pt-0" onSubmit={formik.handleSubmit}>
+                <form className="flex flex-col gap-3 pt-0" onSubmit={formik.handleSubmit}>
                 <div className={`${styles.input_group} ${formik.errors.name && formik.touched.name?'border-rose-500':''}`}>
                         <input 
                         type="text" 

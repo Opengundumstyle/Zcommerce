@@ -7,9 +7,11 @@ interface PlayerStore{
      setIds:(ids:string[])=>void
      reset:()=>void
      isPlaying:boolean
-     setIsPlaying: (play: boolean) => void;
+     setIsPlaying: (play: boolean) => void
      isOpen:boolean
      togglePlayer:(On:boolean) =>void
+     uri?:string
+     setUri:(val:string)=>void
 
 }
 
@@ -24,6 +26,8 @@ const usePlayer = create<PlayerStore>((set)=>({
      setIsPlaying: (play: boolean) => set({ isPlaying: play }),
      isOpen:false,
      togglePlayer:(on: boolean) => set({ isOpen: on }),
+     uri:'',
+     setUri:(val)=>set((state)=>({uri:val}))
 }))
 
 

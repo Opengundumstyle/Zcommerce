@@ -2,6 +2,8 @@ import SpotifyWebApi from 'spotify-web-api-node'
 
 const scopes = [
      'user-read-email',
+     'streaming',
+     'user-read-private',
      'playlist-read-private',
      'playlist-read-collaborative',
      'streaming',
@@ -13,7 +15,8 @@ const scopes = [
      'user-modify-playback-state',
      'user-read-currently-playing',
      'user-read-recently-played',
-     'user-follow-read'
+     'user-follow-read',
+     'user-modify-playback-state'
 ].join(',')
 
 

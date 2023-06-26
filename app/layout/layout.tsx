@@ -25,7 +25,6 @@ const LayOut = ({ children }: LayOutProps) => {
  const router = useRouter()
  const sessionStore = useSession()
 
-console.log('did layout triggered???')
 
  const handleDemoLogin = async()=>{
   const status =  await signIn('credentials',{

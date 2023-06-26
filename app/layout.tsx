@@ -8,6 +8,8 @@ import {Roboto,Lobster_Two} from 'next/font/google'
 import ToasterProvider from './providers/Toasterprovider'
 import MusicPlayer from './components/MusicPlayer'
 
+import Head from 'next/head'
+
 // Define main font
 const roboto = Roboto({weight:['400','500','700'],subsets:['latin'],variable:'--font-roboto'})
 const lobster = Lobster_Two({weight:'700',subsets:['latin'],variable:'--font-lobster'})
@@ -30,13 +32,17 @@ export default async function RootLayout({
 
   // Fetch the user
   const session = await getServerSession(authOptions)
-  console.log('what is session',session)
+ 
   
 return (
     <html lang="en" className={`${roboto.variable} ${lobster.variable}`}>
-     
+
+
+      <Head>
+        <script src="https://sdk.scdn.co/spotify-player.js"></script>
+      </Head>
         <Hydrate>
-             
+              
               <ToasterProvider/>
               <Nav user={session?.user} expires={session?.expires as string} />
               <div className='flex flex-row justify-evenly items-center'>

@@ -40,7 +40,7 @@ export default function Nav({user}:Session){
           router.push('/')
      } 
 
-      console.log('what is the user',user)
+      
 
       return (
           <nav className="flex justify-between items-center py-12 ">

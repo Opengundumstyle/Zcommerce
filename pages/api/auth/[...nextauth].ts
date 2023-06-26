@@ -118,8 +118,6 @@ export const authOptions:NextAuthOptions = {
    },
    callbacks: {
       session: async ({ session, token }) => {
-        console.log('what is session',session)
-        console.log('what is token',token)
         if (session?.user) {
           session.user.id = token.uid;
           session.user.accesstoken= token.accessToken
@@ -127,9 +125,6 @@ export const authOptions:NextAuthOptions = {
         return session;
       },
       jwt: async ({ user,token,account }) => {
-        console.log('what is jwt tooken',token)
-        console.log('what is user ',user)
-        console.log('what is account ',account)
         if (user) {
           token.uid = user.id;
           token.accessToken= account?.access_token
@@ -137,61 +132,6 @@ export const authOptions:NextAuthOptions = {
         return token;
       },
     },
-    // callbacks:{
-        //  async jwt({user,token,account}){
-        //   console.log('do i have account',account)
-        //   console.log('do i have user',user)
-        //   console.log('do i have token',token)
-     
-        //   if(account && user){
-        //     console.log('do i have account',account)
-        //     console.log('do i have user',user)
-        //     console.log('do i have token',token)
-        //     return{
-        //        ...token,
-        //        accessToken:account.access_token,
-        //        refreshToken:account.refresh_token,
-        //       //  uid:user.id,
-        //        username:account.providerAccountId,
-        //       //  accessTokenExpires:account.expires_at * 1000
-               
-        //     }
-        //  }
-        //  //return previous token if access token has not expires yet
-        //     if(Date.now()){
-        //       console.log("EXISTING TOKEN IS VALID")
-        //         return token
-        //     }
-
-        //   // if access token is expired, refresh it.
-        //   console.log("ACCESS TOKEN IS EXPIRED")
-        //   return await refreshAccessToken(token)
-        //  },
-    //     async jwt({ token, account, user }) {
-    //       // Persist the OAuth access_token and or the user id to the token right after signin
-    //       console.log('do i have token jwt',token)
-    //       console.log('do i have account',account)
-    //       console.log('do i have user',user)
-    //       if (account) {
-    //         token.accessToken = account.access_token
-    //         token.uid = user.id;
-    //       }
-    //       return token
-    //     },
-
-    //      async session({ session,token }) {
-            
-    //       console.log('Tokendog:', token);
-    //       console.log('Session:', session);
-    //       if (session?.user) {
-    //         session.user.accessToken = token.accessToken
-    //         session.user.refreshToken = token.refreshToken
-    //         session.user.username = token.username
-    //       }
-
-    //         return session
-    //     },
-    //  }
     
    session: {
       strategy: "jwt",

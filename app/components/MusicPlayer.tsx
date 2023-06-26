@@ -1,10 +1,9 @@
-
 'use client'
-
 
 import useGetSongById from '@/hooks/useGetSongById';
 import usePlayer from '@/hooks/usePlayer';
 import useSpotify from '@/hooks/useSpotify';
+
 
 import PlayerContent from './PlayerContent';
 import Playlist from './Playlists';
@@ -16,17 +15,49 @@ import { Session } from "next-auth"
 
 import style from '../../styles/MusicPlayer.module.css'
 
-
 import { useEffect, useState } from 'react';
 import spotifyApi from '@/lib/spotify';
 
+
+
 const MusicPlayer = ({user}:Session) => {
 
+      const track = {
+        name: "",
+        album: {
+            images: [
+                { url: "" }
+            ]
+        },
+        artists: [
+            { name: "" }
+        ]
+    }
 
-    const player = usePlayer()
+    const transferPlaybackHere = (deviceId) => {
+      fetch("https://api.spotify.com/v1/me/player", {
+        method: "PUT",
+        headers: {
+          authorization: `Bearer ${user?.accesstoken}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          "device_ids": [deviceId],
+          "play": true,
+        }),
+      });
+    };
 
-    const {song} = useGetSongById(player.activeId)
 
+
+  
+
+    const spodify = useSpotify(user as Session)
+
+    const musicplayer = usePlayer()
+
+    const {song} = useGetSongById(musicplayer.activeId,musicplayer.uri)
+    
     const session = useSession()
 
     const cart = useCartStore()
@@ -37,7 +68,83 @@ const MusicPlayer = ({user}:Session) => {
 
     const [favSongs,setFavSongs]  = useState()
 
-    const spodify = useSpotify(user as Session)
+
+    const [is_active, setActive] = useState(false);
+    const [current_track, setTrack] = useState(track);
+    const [webPlayer,setWebPlayer] = useState(undefined)
+   
+   
+    useEffect(()=>{ 
+     if(spodify.getAccessToken()){
+            const script = document.createElement("script");
+            script.src = "https://sdk.scdn.co/spotify-player.js";
+            script.async = true;
+
+          document.body.appendChild(script);
+          
+          window.onSpotifyWebPlaybackSDKReady = ()=>{
+
+
+              const player = new window.Spotify.Player({
+                  name:"Web Playback SDK",
+                  getOAuthToken:cb =>{cb(user?.accesstoken)},
+                  volume:0.5
+              })
+
+              setWebPlayer(player)
+
+
+              player.addListener('ready', ({ device_id }) => {
+                  console.log('Ready with Device ID', device_id);
+                  transferPlaybackHere(device_id)
+  
+              });
+
+              player.addListener('not_ready', ({ device_id }) => {
+                  console.log('Device ID has gone offline', device_id);
+                
+
+              });
+
+              
+
+              player.addListener('player_state_changed', ( state => {
+                console.log('what is the fking state',state)
+                if (!state) {
+                    return;
+                }
+
+                setTrack(state.track_window.current_track);
+  
+                if(!state.paused)musicplayer.setIsPlaying(true)
+
+                musicplayer.togglePlayer(true)
+
+                player.getCurrentState().then( state => { 
+                    console.log('Current State:', state);
+                    (!state)? setActive(false) : setActive(true) 
+                   
+                });
+
+            }));
+
+
+
+              player.connect().then(success => {
+                  if (success) {
+                    console.log('The Web Playback SDK successfully connected to Spotify!');
+                  }
+                })
+              }
+      
+      }
+
+    },
+    [])
+
+
+
+
 
 
     // Function to fetch album information in batches
@@ -59,15 +166,13 @@ const MusicPlayer = ({user}:Session) => {
         return albums;
       }
 
-
-  
     
+      // fetch all liked songs from spotify
         useEffect(()=>{
             if(spodify.getAccessToken()){
                 spotifyApi.getUserPlaylists().then((data)=>{
                     setPLaylists(data.body.items)
                 })
-
                 // Function to recursively fetch all liked songs
             const getAllLikedSongs = async(offset:number = 0, limit:number = 50)=> {
               
@@ -85,10 +190,10 @@ const MusicPlayer = ({user}:Session) => {
 
                     // Fetch album information in batches
                     const albums = await fetchAlbums(albumIds);
-                    console.log('albums',albums)
+      
 
                     const likedSongs = items.map((item) => {
-                      const { id, name, album, artists } = item.track;
+                      const { id, name, album, artists, uri } = item.track;
                 
                       // Find the corresponding album for the current song
                       const albumInfo = albums.find(item => item.id === album.id);
@@ -97,6 +202,7 @@ const MusicPlayer = ({user}:Session) => {
                       return {
                         id,
                         name,
+                        uri,
                         album: album.name,
                         artists: artists.map(artist => artist.name).join(', '),
                         image
@@ -115,7 +221,7 @@ const MusicPlayer = ({user}:Session) => {
 
                   getAllLikedSongs()
                   .then((likedSongs) => {
-        
+                   
                     setFavSongs(likedSongs)
                     // Process and display the liked songs
                   })
@@ -126,41 +232,44 @@ const MusicPlayer = ({user}:Session) => {
 
             }
         },[user,spotifyApi])
-
-
-      console.log(playlists)
-      console.log(favSongs)
-
           
         const SpotifyAd = ()=>{
             return (
                 <div className='max-w-xs font-sans font-light text-gray-400 text-sm'>
-                Try listening to music while shopping? check out zcommerce's playlist 
+                  Try listening to music while shopping? check out zcommerce's playlist 
                 </div>
             )
         }
 
+  console.log('webplayer',webPlayer)
+  console.log('current track',current_track)
 
 
   return (
     <div 
        className={`flex flex-col gap-4 
-                  ${!session.isSession? player.isOpen?`${style.music_player} pt-10`:'hidden':''} 
+                  ${!session.isSession? musicplayer.isOpen?`${style.music_player} pt-10`:'hidden':''} 
                   ${cart.isOpen && 'hidden'}`}
                   onMouseEnter={()=>setPlayerHovered(true)}
                   onMouseLeave={()=>setPlayerHovered(false)}
                       >
-        {(!player.activeId)&&(session.isSession)&& <SpotifyAd/>}
+        {(!musicplayer.activeId)&&(session.isSession)&& <SpotifyAd/>}
         <div className='flex flex-row justify-evenly items-center'>
         {/* {playlists && <Playlist playlists={playlists}/>}  */}
-       
+      
             <PlayerContent 
                 key={song?.song_path}
                 song={song} songUrl={song?.song_path} 
                 playerHovered={playerHovered}
-                playlists={playlists}
+                current_track={current_track}
+                webPlayer={webPlayer}
                 />
-             {favSongs && <Songs songs={favSongs}/>}
+             {favSongs && playerHovered && 
+                   <Songs 
+                   songs={favSongs} 
+                   webPlayer={webPlayer} 
+                   spodify={spodify} 
+                   current_track={current_track}/>}
         </div>
     </div>
   );
