@@ -18,6 +18,8 @@ function useSongInfo(spotify:SpotifyWebApi,songId:string,action:string) {
 
     const previousSongIndex = (currentSongIndex - 1 >= 0?currentSongIndex - 1 : player.favIds.length - 1)
     const previousId = player.favIds[previousSongIndex]
+
+
    
     return previousId
 }
@@ -27,18 +29,18 @@ function useSongInfo(spotify:SpotifyWebApi,songId:string,action:string) {
      const nextSongIndex = currentSongIndex + 1 <= player.favIds.length?currentSongIndex + 1 : 0
      const nextId = player.favIds[nextSongIndex]
 
-
+     
      return nextId
  }
 
 
-
+ let id = (action === 'prev')? getPrevSongId():getNextSongId()
 
    useEffect(()=>{
 
-       if(!player.isLikedPlaylist || !songId) return 
+       if(!player.isLikedPlaylist || !songId || !id) return 
 
-       let id = (action === 'prev')? getPrevSongId():getNextSongId()
+      
       
        const fetchSongInfo = async()=>{ 
          
@@ -58,7 +60,7 @@ function useSongInfo(spotify:SpotifyWebApi,songId:string,action:string) {
      fetchSongInfo()
 
 
-     } ,[songId])
+     } ,[songId,id])
 
 
 

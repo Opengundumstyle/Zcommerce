@@ -3,7 +3,7 @@
 
 import { Song } from "@/types/SongType";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect,useRef } from 'react';
 import { FaPlay, FaPause } from 'react-icons/fa';
 import usePlayer from '@/hooks/usePlayer';
 import Slider from './Slider'; 
@@ -30,6 +30,7 @@ interface PlayerContentProps {
     is_paused:boolean;
     duration:Number;
     position:Number;
+   
  
 
   }
@@ -45,10 +46,14 @@ interface PlayerContentProps {
     is_paused,
     duration,
     position,
+  
 
   }) => {
 
     const [isHovered, setIsHovered] = useState(false);
+
+    // Declare a ref to store the previous value of is_paused
+    const prevIsPausedRef = useRef(false);
 
     const player = usePlayer()
 
@@ -187,14 +192,21 @@ interface PlayerContentProps {
 
 // automatically play spotify liked songs in order
 useEffect(()=>{
-    if(is_paused && duration !== position)return
-    if(nextSong){
-      spodify.play({ uris: [nextSong?.uri] })
+       // Check if is_paused changed from false to true
+  if (!prevIsPausedRef.current && is_paused) {
+    if (position === 0) {
+      if (nextSong) {
+        spodify.play({ uris: [nextSong?.uri] });
+      }
     }
+  }
+
+  // Update the previous value of is_paused
+  prevIsPausedRef.current = is_paused;
+  
 },[is_paused])
 
-console.log('what is the position',position)
-console.log('what is the duration',duration)
+
 
 // play zcommerce playlist
 useEffect(()=>{

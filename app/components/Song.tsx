@@ -44,7 +44,7 @@ const Song = ({song,index,webPlayer,spodify,current_track}) => {
       <div className={`w-8 text-center ${onHovered && 'text-black'}`}>{current_track.id === song.id && player.isPlaying?<MusicPlayingAnimation/>: index + 1}</div>
       <div className="relative">
         <img
-          className={`w-10 h-10 ${onHovered ? "opacity-50" : ""}`}
+          className={`w-10 h-10 object-cover ${onHovered ? "opacity-50" : ""}`}
           src={song.image}
           alt={song.name}
         />

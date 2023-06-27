@@ -66,10 +66,13 @@ const MusicPlayer = ({user}:Session) => {
 
     const [playerHovered,setPlayerHovered] = useState(false)
 
+    const[playlistDisplay,setPlaylistDisplay] = useState(false)
+
     const [playlists,setPLaylists] = useState()
 
     const [favSongs,setFavSongs]  = useState()
-
+    
+    
 
     const [is_active, setActive] = useState(false);
     const [is_paused,setPaused] = useState(false)
@@ -77,6 +80,7 @@ const MusicPlayer = ({user}:Session) => {
     const [webPlayer,setWebPlayer] = useState(undefined)
     const [duration,setDuration] = useState(0)
     const [position,setPosition] = useState(0)
+
 
     async function handleSpotifySignIn(){
       if(session.isSession)session.toggleSession()
@@ -128,6 +132,7 @@ const MusicPlayer = ({user}:Session) => {
                 setPaused(state.paused)
                 setPosition(state.position)
                 setDuration(state.duration)
+              
 
                 if(!state.paused)musicplayer.setIsPlaying(true)
                 
@@ -237,7 +242,7 @@ const MusicPlayer = ({user}:Session) => {
                    
                     setFavSongs(likedSongs)
                     musicplayer.setfavIds(favIds)
-                    // Process and display the liked songs
+                    !musicplayer.favIds.includes(current_track?.id) && musicplayer.setIsLikedPlaylist(false)
                   })
                   .catch((error: any) => {
                     console.error('Error:', error);
@@ -265,8 +270,8 @@ const MusicPlayer = ({user}:Session) => {
                   onMouseLeave={()=>setPlayerHovered(false)}
                       >
         {(!musicplayer.activeId)&&(session.isSession) &&<SpotifyAd/>}
-        <div className='flex flex-row justify-evenly items-center'>
-        {/* {playlists && <Playlist playlists={playlists}/>}  */}
+        <div className='flex flex-row justify-start items-center gap-5'>
+       
       
             <PlayerContent 
                 key={song?.song_path}
@@ -279,15 +284,65 @@ const MusicPlayer = ({user}:Session) => {
                 duration={duration}
                 position={position}
                
+               
                 />
-             {favSongs && playerHovered && 
-                   <Songs 
-                   songs={favSongs} 
-                   webPlayer={webPlayer} 
-                   spodify={spodify} 
-                   current_track={current_track}/>}
+            
+            {favSongs && playerHovered && !playlistDisplay &&
+                  <div className='flex flex-col'>
+                  <Songs 
+                  songs={favSongs} 
+                  webPlayer={webPlayer} 
+                  spodify={spodify} 
+                  current_track={current_track}/>
+                  <div
+                    className='mt-6 
+                              cursor-pointer 
+                              transition duration-500 
+                              hover:bg-teal-500 
+                              hover:bg-opacity-30
+                              flex 
+                              max-w-xs 
+                              justify-center
+                              items-center
+                              rounded-sm
+                              py-1
+                              '
+                    onClick={()=>{setPlaylistDisplay(true)}}
+                    >
+                      <span className="px-2 text-sm">Go to my playlists</span>
+                  </div>
 
+              </div>}
+
+              {
+                  playlists && playerHovered && playlistDisplay &&
               
+                      <div className='flex flex-col'>
+                      
+                        <Playlist playlists={playlists}/>
+                    
+                      <div
+                        className='mt-3 
+                                  cursor-pointer 
+                                  transition duration-500 
+                                  hover:bg-teal-500 
+                                  hover:bg-opacity-30
+                                  flex 
+                                  max-w-xs 
+                                  justify-center
+                                  items-center
+                                  rounded-sm
+                                  py-1
+                                  '
+                        onClick={()=>{setPlaylistDisplay(false)}}
+                        >
+                          <span className="px-2 text-sm">Back to my liked songs</span>
+                      </div>
+
+                    </div>
+          
+              }
+                
         </div>
 
        {(!musicplayer.activeId)&&(session.isSession)?'':!playerHovered && !session.isSession? '': !current_track.name?
