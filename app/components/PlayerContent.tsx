@@ -13,6 +13,10 @@ import { AiFillStepForward,AiFillStepBackward } from "react-icons/ai";
 import { HiSpeakerWave,HiSpeakerXMark } from "react-icons/hi2";
 import useSound from 'use-sound';
 
+import useSongInfo from "@/hooks/useSongInfo";
+import SpotifyWebApi from "spotify-web-api-node";
+
+
 
 
 
@@ -22,6 +26,12 @@ interface PlayerContentProps {
     playerHovered:boolean;
     current_track:any;
     webPlayer:any;
+    spodify:SpotifyWebApi;
+    is_paused:boolean;
+    duration:Number;
+    position:Number;
+ 
+
   }
 
 
@@ -30,7 +40,12 @@ interface PlayerContentProps {
     songUrl,
     playerHovered,
     current_track,
-    webPlayer
+    webPlayer,
+    spodify,
+    is_paused,
+    duration,
+    position,
+
   }) => {
 
     const [isHovered, setIsHovered] = useState(false);
@@ -42,6 +57,15 @@ interface PlayerContentProps {
     const[volume,setVolume] = useState(1)
 
     const VolumeIcon = volume === 0? HiSpeakerXMark:HiSpeakerWave
+
+    const PREVIOUS = 'prev'
+    const NEXT = 'next'
+    
+    const prevSong = useSongInfo(spodify,current_track?.id,PREVIOUS)
+    const nextSong = useSongInfo(spodify,current_track?.id,NEXT)
+    console.log('do i have prev',prevSong)
+    console.log('do i have next',nextSong)
+    console.log('what is currenttrackid',current_track)
 
     const toggleMute = ()=>{
         if(volume === 0){
@@ -56,11 +80,19 @@ interface PlayerContentProps {
 
         if(current_track.name){
             
-          webPlayer.nextTrack()
+           if(player.isLikedPlaylist){
+            
+            spodify.play({ uris: [nextSong?.uri] })
+            
+            }else{
+                webPlayer.nextTrack()
+            }
            
-        }else{ if(player.ids.length === 0){
+        }else{ 
+
+          if(player.ids.length === 0){
            return 
-        }
+          }
  
         const currentIdx = player.ids.findIndex((id)=>id === player.activeId)
         const nextSong  = player.ids[currentIdx + 1]
@@ -72,11 +104,17 @@ interface PlayerContentProps {
         
     }
  
- 
+   
     const onPlayPrevious = ()=>{
       if(current_track.name){
-
-           webPlayer.previousTrack()
+           if(player.isLikedPlaylist){
+            
+                // console.log('what is the fking previous song',song)
+                spodify.play({ uris: [prevSong?.uri] })
+                
+           }else{
+               webPlayer.previousTrack()
+           }
 
       }else {  
           if(player.ids.length === 0){
@@ -98,7 +136,7 @@ interface PlayerContentProps {
  const handlePlay = () =>{
         
       if(current_track.name){
-          console.log('did i run???')
+        
           !player.isPlaying && webPlayer.togglePlay()
       }else{
 
@@ -147,6 +185,16 @@ interface PlayerContentProps {
   );
 
 
+// automatically play spotify liked songs in order
+useEffect(()=>{
+    if(is_paused && duration !== position)return
+    if(nextSong){
+      spodify.play({ uris: [nextSong?.uri] })
+    }
+},[is_paused])
+
+console.log('what is the position',position)
+console.log('what is the duration',duration)
 
 // play zcommerce playlist
 useEffect(()=>{

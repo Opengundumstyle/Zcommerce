@@ -14,6 +14,8 @@ interface PlayerStore{
      setUri:(val:string)=>void
      favIds:string[]
      setfavIds:(ids:string[])=>void
+     isLikedPlaylist:boolean
+     setIsLikedPlaylist:(On:boolean)=>void
 
 }
 
@@ -31,7 +33,9 @@ const usePlayer = create<PlayerStore>((set)=>({
      uri:'',
      setUri:(val)=>set((state)=>({uri:val})),
      favIds:[],
-     setfavIds:(ids:string[])=>set({favIds:ids})
+     setfavIds:(ids:string[])=>set({favIds:ids}),
+     isLikedPlaylist:true,
+     setIsLikedPlaylist:(on:boolean)=>set({isLikedPlaylist:on})
 }))
 
 

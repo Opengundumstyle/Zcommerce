@@ -19,14 +19,14 @@ const Song = ({song,index,webPlayer,spodify,current_track}) => {
   
    
           current_track.id === song.id?  webPlayer.togglePlay():spodify.play({ uris: [song.uri] })
-
+             
            if(!player.isPlaying){ 
              player.setIsPlaying(true)
             }else{
               player.setIsPlaying(false)
-             
             }
-    
+            
+            player.setIsLikedPlaylist(true)
 
   }
 
@@ -34,8 +34,8 @@ const Song = ({song,index,webPlayer,spodify,current_track}) => {
   return (
     <div
       key={index}
-      className={`flex items-center gap-2 cursor-pointer rounded-md ${
-        onHovered ? " bg-gray-500 bg-opacity-80" : ""
+      className={`flex items-center gap-2 cursor-pointer rounded-md py-2 ${
+        onHovered|| current_track.id === song.id && player.isPlaying ? " bg-gray-500 bg-opacity-80" : ""
       }`}
       onMouseEnter={() => setOnHovered(true)}
       onMouseLeave={() => setOnHovered(false)}

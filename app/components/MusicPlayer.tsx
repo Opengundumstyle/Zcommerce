@@ -72,9 +72,11 @@ const MusicPlayer = ({user}:Session) => {
 
 
     const [is_active, setActive] = useState(false);
+    const [is_paused,setPaused] = useState(false)
     const [current_track, setTrack] = useState(track);
     const [webPlayer,setWebPlayer] = useState(undefined)
-
+    const [duration,setDuration] = useState(0)
+    const [position,setPosition] = useState(0)
 
     async function handleSpotifySignIn(){
       if(session.isSession)session.toggleSession()
@@ -123,9 +125,12 @@ const MusicPlayer = ({user}:Session) => {
                 }
 
                 setTrack(state.track_window.current_track);
-  
-                if(!state.paused)musicplayer.setIsPlaying(true)
+                setPaused(state.paused)
+                setPosition(state.position)
+                setDuration(state.duration)
 
+                if(!state.paused)musicplayer.setIsPlaying(true)
+                
                 musicplayer.togglePlayer(true)
 
                 player.getCurrentState().then( state => { 
@@ -149,9 +154,7 @@ const MusicPlayer = ({user}:Session) => {
 
     },
     [])
-
-
-
+    
 
 
 
@@ -181,7 +184,7 @@ const MusicPlayer = ({user}:Session) => {
                 spotifyApi.getUserPlaylists().then((data)=>{
                     setPLaylists(data.body.items)
                 })
-
+              let favIds: string[] = []
             
                 // Function to recursively fetch all liked songs
             const getAllLikedSongs = async(offset:number = 0, limit:number = 50)=> {
@@ -194,7 +197,7 @@ const MusicPlayer = ({user}:Session) => {
                       // Reached the end, all liked songs have been fetched
                       return [];
                     }
-
+                     
 
                     const albumIds = items.map(item => item.track.album.id);
 
@@ -204,7 +207,7 @@ const MusicPlayer = ({user}:Session) => {
 
                     const likedSongs = items.map((item) => {
                       const { id, name, album, artists, uri } = item.track;
-                
+                      favIds.push(id)
                       // Find the corresponding album for the current song
                       const albumInfo = albums.find(item => item.id === album.id);
                       const image = albumInfo?.images[0]?.url || '';
@@ -233,6 +236,7 @@ const MusicPlayer = ({user}:Session) => {
                   .then((likedSongs) => {
                    
                     setFavSongs(likedSongs)
+                    musicplayer.setfavIds(favIds)
                     // Process and display the liked songs
                   })
                   .catch((error: any) => {
@@ -251,9 +255,6 @@ const MusicPlayer = ({user}:Session) => {
             )
         }
 
-  console.log('webplayer',webPlayer)
-  console.log('current track',current_track)
-  console.log('my playlists',playlists)
 
   return (
     <div 
@@ -273,6 +274,11 @@ const MusicPlayer = ({user}:Session) => {
                 playerHovered={playerHovered}
                 current_track={current_track}
                 webPlayer={webPlayer}
+                spodify={spodify}
+                is_paused={is_paused}
+                duration={duration}
+                position={position}
+               
                 />
              {favSongs && playerHovered && 
                    <Songs 
