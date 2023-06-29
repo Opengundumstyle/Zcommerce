@@ -82,8 +82,6 @@ interface PlayerContentProps {
       const onPlayNext = ()=>{
 
         if(current_track.name){
-            
-         console.log('is the state correct now',player.isLikedPlaylist)
 
            if(player.isLikedPlaylist){
             

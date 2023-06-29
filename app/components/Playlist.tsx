@@ -3,7 +3,7 @@
 import Song from "./Song";
 import { useEffect,useState} from "react";
 
-const Playlist = ({playlistId,spodify,webPlayer,current_track}:any) => {
+const Playlist = ({playlistId,spodify,webPlayer,current_track,setOpenPlaylist}:any) => {
 
     
   const [songs,setSongs] = useState([])
@@ -62,7 +62,7 @@ useEffect( ()=>{
     
 
     return (
-      <div>
+      <div className="flex flex-col gap-4">
         
       <div className="overflow-y-auto max-h-64">
         <div className="p-4">
@@ -78,11 +78,14 @@ useEffect( ()=>{
             )
             )}
 
-         {
-           
-         }
         </div>
       </div>
+       
+       <div onClick={()=>setOpenPlaylist(false)}
+           className="flex flex-row justify-end p-1 cursor-pointer hover:text-white text-gray-400 transition duration-200 text-sm">
+           back to playlists
+         </div>
+
       </div>
     );
   };

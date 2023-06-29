@@ -302,21 +302,21 @@ const MusicPlayer = ({user}:Session) => {
                   spodify={spodify} 
                   current_track={current_track}/>
                   <div
-                    className='mt-6 
+                    className='mt-4
+                              text-gray-400
                               cursor-pointer 
                               transition duration-200 
-                              hover:bg-teal-500 
+                              hover:text-white
                               hover:bg-opacity-30
                               flex 
-                              max-w-xs 
-                              justify-center
+                              justify-start
                               items-center
                               rounded-sm
                               py-1
                               '
                     onClick={()=>{setPlaylistDisplay(true)}}
                     >
-                      <span className="py-2 text-md">Go to my playlists</span>
+                      <span className="p-2 text-sm">More playlists</span>
                   </div>
 
               </div>}
@@ -332,25 +332,8 @@ const MusicPlayer = ({user}:Session) => {
                          webPlayer={webPlayer}
                          current_track={current_track}
                          context={context}
+                         setPlaylistDisplay={setPlaylistDisplay}
                          />
-                    
-                      <div
-                        className='mt-3 
-                                  cursor-pointer 
-                                  transition duration-200 
-                                  hover:bg-teal-500 
-                                  hover:bg-opacity-30
-                                  flex 
-                                  max-w-xs 
-                                  justify-center
-                                  items-center
-                                  rounded-sm
-                                  py-1
-                                  '
-                        onClick={()=>{setPlaylistDisplay(false)}}
-                        >
-                          <span className="py-2 text-md">Back to my liked songs</span>
-                      </div>
 
                     </div>
           
