@@ -54,13 +54,13 @@ const SignUpPage= () => {
  // Handle Google signin
 async function handleGoogleSignIn(){
     session.toggleSession()
-    signIn('google',{callbackUrl:'http://localhost:3000'})
+    signIn('google',{callbackUrl:'https://zcommerce-silk.vercel.app'})
 }
 
 //Handle Spotify Loin
 async function handleSpotifySignIn(){
     session.toggleSession()
-    signIn('spotify',{callbackUrl:'http://localhost:3000'})
+    signIn('spotify',{callbackUrl:'https://zcommerce-silk.vercel.app'})
 }                       
 
 
