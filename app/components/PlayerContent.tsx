@@ -14,8 +14,15 @@ import { HiSpeakerWave,HiSpeakerXMark } from "react-icons/hi2";
 import useSound from 'use-sound';
 
 import useSongInfo from "@/hooks/useSongInfo";
-import SpotifyWebApi from "spotify-web-api-node";
+import SpotifyWebApi from "spotify-web-api-node"; 
 
+import {BsRepeat,BsShuffle} from "react-icons/bs";
+//BsRepeat
+//BsShuffle
+//BsPlusSquare
+//BsSuitHeart
+//BsSuitHeartFill
+//BsTrash3
 
 
 
@@ -269,6 +276,8 @@ useEffect(()=>{
         {(!playerHovered && !session.isSession)?'':
               <div className='flex flex-row space-x-3 justify-center items-center mt-3'>
 
+                <BsShuffle className="text-3xl hover:bg-gray-100 rounded-full p-1 cursor-pointer transition duration-300 ease-in-out transform text-gray-500 hover:text-teal-700 hover:scale-105"/>
+
             
               <AiFillStepBackward className='text-4xl hover:bg-gray-100 rounded-full p-1 cursor-pointer transition duration-300 ease-in-out transform text-gray-500 hover:text-teal-700 hover:scale-105'
                                   onClick={onPlayPrevious}/>
@@ -293,6 +302,8 @@ useEffect(()=>{
                   className='text-4xl hover:bg-gray-100 rounded-full p-1 cursor-pointer transition duration-300 ease-in-out transform text-gray-500 hover:text-teal-700 hover:scale-105'
                   onClick={onPlayNext}
                   />
+
+                  <BsRepeat className="text-3xl hover:bg-gray-100 rounded-full p-1 cursor-pointer transition duration-300 ease-in-out transform text-gray-500 hover:text-teal-700 hover:scale-105"/>
               </div>
           }
     </div>
