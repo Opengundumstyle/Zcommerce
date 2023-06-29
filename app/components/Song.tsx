@@ -5,20 +5,53 @@ import { BsFillPlayFill,BsFillPauseFill } from "react-icons/bs";
 import usePlayer from "@/hooks/usePlayer";
 import MusicPlayingAnimation from "./MusicPlayingAnimation";
 
-const Song = ({song,index,webPlayer,spodify,current_track}) => {
+const Song = ({song,index,webPlayer,spodify,current_track,playlistId}) => {
+  
+ 
   
 
-  
+
   const [onHovered, setOnHovered] = useState(false);
 
   const player = usePlayer()
 
 
 
-  const handlePlay = ()=>{
+  const playSongInPlaylist = async () => {
+
+    const url = `https://api.spotify.com/v1/me/player/play`;
+    
   
+    const response = await fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${spodify.getAccessToken()}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+       context_uri:`spotify:playlist:${playlistId}`,
+        offset:{
+           position:index
+        }
+      }),
+    });
+  
+    if (response.status === 204) {
+      console.log('Playback started');
+    } else {
+      console.error('Failed to start playback');
+    }
+
+
+  };
+
+
+
+
+  const handlePlay = ()=>{
+
    
-          current_track.id === song.id?  webPlayer.togglePlay():spodify.play({ uris: [song.uri] })
+          current_track.id === song.id?  webPlayer.togglePlay():playlistId?playSongInPlaylist():spodify.play({uris:[song.uri]})
              
            if(!player.isPlaying){ 
              player.setIsPlaying(true)
@@ -26,7 +59,7 @@ const Song = ({song,index,webPlayer,spodify,current_track}) => {
               player.setIsPlaying(false)
             }
             
-            player.setIsLikedPlaylist(true)
+           !playlistId && player.setIsLikedPlaylist(true)
 
   }
 

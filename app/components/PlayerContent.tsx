@@ -68,9 +68,7 @@ interface PlayerContentProps {
     
     const prevSong = useSongInfo(spodify,current_track?.id,PREVIOUS)
     const nextSong = useSongInfo(spodify,current_track?.id,NEXT)
-    console.log('do i have prev',prevSong)
-    console.log('do i have next',nextSong)
-    console.log('what is currenttrackid',current_track)
+    
 
     const toggleMute = ()=>{
         if(volume === 0){
@@ -85,6 +83,8 @@ interface PlayerContentProps {
 
         if(current_track.name){
             
+         console.log('is the state correct now',player.isLikedPlaylist)
+
            if(player.isLikedPlaylist){
             
             spodify.play({ uris: [nextSong?.uri] })
@@ -113,8 +113,7 @@ interface PlayerContentProps {
     const onPlayPrevious = ()=>{
       if(current_track.name){
            if(player.isLikedPlaylist){
-            
-                // console.log('what is the fking previous song',song)
+    
                 spodify.play({ uris: [prevSong?.uri] })
                 
            }else{
@@ -192,6 +191,8 @@ interface PlayerContentProps {
 
 // automatically play spotify liked songs in order
 useEffect(()=>{
+  // if it's not from liked songs,use spotify auto playlist 
+  if(!player.isLikedPlaylist)return
        // Check if is_paused changed from false to true
   if (!prevIsPausedRef.current && is_paused) {
     if (position === 0) {

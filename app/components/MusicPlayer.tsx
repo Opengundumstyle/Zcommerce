@@ -6,7 +6,7 @@ import useSpotify from '@/hooks/useSpotify';
 
 
 import PlayerContent from './PlayerContent';
-import Playlist from './Playlists';
+import Playlists from './Playlists';
 import Songs from './Songs';
 
 import { useSession } from '@/store';
@@ -21,6 +21,7 @@ import spotifyApi from '@/lib/spotify';
 
 
 import { signIn} from "next-auth/react";
+
 
 const MusicPlayer = ({user}:Session) => {
 
@@ -68,6 +69,8 @@ const MusicPlayer = ({user}:Session) => {
 
     const[playlistDisplay,setPlaylistDisplay] = useState(false)
 
+   
+
     const [playlists,setPLaylists] = useState()
 
     const [favSongs,setFavSongs]  = useState()
@@ -76,11 +79,12 @@ const MusicPlayer = ({user}:Session) => {
 
     const [is_active, setActive] = useState(false);
     const [is_paused,setPaused] = useState(false)
+    const [context, setContext] = useState();
     const [current_track, setTrack] = useState(track);
     const [webPlayer,setWebPlayer] = useState(undefined)
     const [duration,setDuration] = useState(0)
     const [position,setPosition] = useState(0)
-
+    
 
     async function handleSpotifySignIn(){
       if(session.isSession)session.toggleSession()
@@ -120,19 +124,18 @@ const MusicPlayer = ({user}:Session) => {
 
               });
 
-              
-
               player.addListener('player_state_changed', ( state => {
                 console.log('what is the fking state',state)
                 if (!state) {
                     return;
                 }
-
+                
+                setContext(state.context)
                 setTrack(state.track_window.current_track);
                 setPaused(state.paused)
                 setPosition(state.position)
                 setDuration(state.duration)
-              
+                
 
                 if(!state.paused)musicplayer.setIsPlaying(true)
                 
@@ -159,6 +162,9 @@ const MusicPlayer = ({user}:Session) => {
 
     },
     [])
+
+
+
     
 
 
@@ -197,7 +203,7 @@ const MusicPlayer = ({user}:Session) => {
                   try {
                     const response = await spotifyApi.getMySavedTracks({ limit, offset });
                     const { items } = response.body;
-
+                    console.log('i am curious what is the liked song context',items)
                     if (items.length === 0) {
                       // Reached the end, all liked songs have been fetched
                       return [];
@@ -212,6 +218,7 @@ const MusicPlayer = ({user}:Session) => {
 
                     const likedSongs = items.map((item) => {
                       const { id, name, album, artists, uri } = item.track;
+                     
                       favIds.push(id)
                       // Find the corresponding album for the current song
                       const albumInfo = albums.find(item => item.id === album.id);
@@ -283,7 +290,7 @@ const MusicPlayer = ({user}:Session) => {
                 is_paused={is_paused}
                 duration={duration}
                 position={position}
-               
+             
                
                 />
             
@@ -297,7 +304,7 @@ const MusicPlayer = ({user}:Session) => {
                   <div
                     className='mt-6 
                               cursor-pointer 
-                              transition duration-500 
+                              transition duration-200 
                               hover:bg-teal-500 
                               hover:bg-opacity-30
                               flex 
@@ -309,7 +316,7 @@ const MusicPlayer = ({user}:Session) => {
                               '
                     onClick={()=>{setPlaylistDisplay(true)}}
                     >
-                      <span className="px-2 text-sm">Go to my playlists</span>
+                      <span className="py-2 text-md">Go to my playlists</span>
                   </div>
 
               </div>}
@@ -319,12 +326,18 @@ const MusicPlayer = ({user}:Session) => {
               
                       <div className='flex flex-col'>
                       
-                        <Playlist playlists={playlists}/>
+                        <Playlists 
+                         playlists={playlists} 
+                         spodify={spodify}
+                         webPlayer={webPlayer}
+                         current_track={current_track}
+                         context={context}
+                         />
                     
                       <div
                         className='mt-3 
                                   cursor-pointer 
-                                  transition duration-500 
+                                  transition duration-200 
                                   hover:bg-teal-500 
                                   hover:bg-opacity-30
                                   flex 
@@ -336,12 +349,14 @@ const MusicPlayer = ({user}:Session) => {
                                   '
                         onClick={()=>{setPlaylistDisplay(false)}}
                         >
-                          <span className="px-2 text-sm">Back to my liked songs</span>
+                          <span className="py-2 text-md">Back to my liked songs</span>
                       </div>
 
                     </div>
           
               }
+
+
                 
         </div>
 
