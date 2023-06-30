@@ -17,8 +17,7 @@ import {AiFillShopping,AiOutlineHistory} from 'react-icons/ai'
 import { IoIosLogOut } from "react-icons/io";
 
 import usePlayer from '@/hooks/usePlayer';
-
-
+import styles from '../../styles/MusicPlayer.module.css'
 
 export default function Nav({user}:Session){
       
@@ -39,6 +38,10 @@ export default function Nav({user}:Session){
           if(sessionstore.isSession === true) sessionstore.toggleSession()
           router.push('/')
      } 
+
+      console.log('what is the current song',player.currentSong)
+      console.log('i don get this player wtf',player)
+
 
       
 
@@ -110,22 +113,30 @@ export default function Nav({user}:Session){
                                     <div className="text-sm hidden lg:block font-lobster">{user.name}</div>
                                   </div>
                                   <ul tabIndex={0} className="dropdown-content menu p-4 space-y-4 shadow bg-base-100 rounded-box w-72">
-                                     <li className="rounded-md outline-none"
-                                            onClick={()=>{
-                                                if(!player.isOpen) {
-                                                   if(!player.activeId) player.setId('1')
-                                                    player.togglePlayer(true)
-                                                  }else{
-                                                     player.togglePlayer(false)
-                                                  }
-                                                }}>
-                                                <div className="flex flex-row justify-between items-center space-x-6">
-                                                     Music Player 
-                                                     <div className="font-semibold">{player.isOpen?'on':'off'}</div>
-                                                </div>
-                                                
-                                      </li>
+                                  <li 
+                                       className="rounded-md outline-none"
+                                       onClick={() => {
+                                         if (!player.isOpen) {
+                                           if (!player.activeId) player.setId('1');
+                                           player.togglePlayer(true);
+                                         } else {
+                                           player.togglePlayer(false);
+                                         }
+                                       }}
+                                     >
+                                       <div className="flex flex-row items-center justify-between gap-0">
+                                         Music Player
+                                          <div className={`overflow-hidden whitespace-nowrap overflow-ellipsis max-w-[70px] flex-grow` }>
+                                            <div className={`${styles.animate_marquee} text-sm text-gray-400`}  style={{ animationDuration: `20s` }}>
+                                                  {player.isPlaying && player.currentSong}
+                                            </div>
+                                         </div> 
                                        
+                                         <div className="font-semibold p-0">{player.isOpen ? 'on' : 'off'}</div>
+                                       </div>
+                                     </li>
+                                           
+                                 
                                        <Link 
                                          href={'/dashboard'} 
                                          className="hover:bg-base-300 p-4 rounded-md"

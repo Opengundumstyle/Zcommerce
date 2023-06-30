@@ -24,3 +24,17 @@
   .background_transition {
     transition: background-color 0.6s ease; /* Add the background color transition here */
   }
+
+  @keyframes marquee {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(-180%);
+    }
+  }
+  
+  .animate_marquee {
+    animation: marquee linear infinite;
+    white-space: nowrap;
+  }

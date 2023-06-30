@@ -85,6 +85,7 @@ const MusicPlayer = ({user}:Session) => {
     const [duration,setDuration] = useState(0)
     const [position,setPosition] = useState(0)
     
+    
 
     async function handleSpotifySignIn(){
       if(session.isSession)session.toggleSession()
@@ -135,14 +136,22 @@ const MusicPlayer = ({user}:Session) => {
                 setPaused(state.paused)
                 setPosition(state.position)
                 setDuration(state.duration)
-                
+              
 
-                if(!state.paused)musicplayer.setIsPlaying(true)
+                musicplayer.setIsRepeat(state.repeat_mode);
+                musicplayer.setIsShuffe(state.shuffle);
+               
+
+       
+
+                (state.paused)?musicplayer.setIsPlaying(false):musicplayer.setIsPlaying(true)
+              
                 
                 musicplayer.togglePlayer(true)
 
                 player.getCurrentState().then( state => { 
                     console.log('Current State:', state);
+                     musicplayer.setCurrentSong(state?.track_window.current_track.name);
                     (!state)? setActive(false) : setActive(true) 
                    
                 });
@@ -203,7 +212,7 @@ const MusicPlayer = ({user}:Session) => {
                   try {
                     const response = await spotifyApi.getMySavedTracks({ limit, offset });
                     const { items } = response.body;
-                    console.log('i am curious what is the liked song context',items)
+                  
                     if (items.length === 0) {
                       // Reached the end, all liked songs have been fetched
                       return [];
@@ -249,7 +258,7 @@ const MusicPlayer = ({user}:Session) => {
                    
                     setFavSongs(likedSongs)
                     musicplayer.setfavIds(favIds)
-                    !musicplayer.favIds.includes(current_track?.id) && musicplayer.setIsLikedPlaylist(false)
+                    context?.uri && musicplayer.setIsLikedPlaylist(false)
                   })
                   .catch((error: any) => {
                     console.error('Error:', error);
@@ -290,7 +299,7 @@ const MusicPlayer = ({user}:Session) => {
                 is_paused={is_paused}
                 duration={duration}
                 position={position}
-             
+                
                
                 />
             

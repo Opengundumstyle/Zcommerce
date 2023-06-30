@@ -61,22 +61,22 @@ const AuthPage = () => {
   // Handle Google signin
   async function handleGoogleSignIn(){
        sessionStore.toggleSession()
-      // signIn('google',{callbackUrl:'http://localhost:3000'})
-      signIn('google',{callbackUrl:'https://zcommerce-silk.vercel.app'})
+      signIn('google',{callbackUrl:'http://localhost:3000'})
+      // signIn('google',{callbackUrl:'https://zcommerce-silk.vercel.app'})
   }
 
   // Handle gihub login
   async function handleGithubSignIn(){
    sessionStore.toggleSession()
-   // signIn('github',{callbackUrl:'http://localhost:3000'})
-   signIn('github',{callbackUrl:'https://zcommerce-silk.vercel.app'})
+   signIn('github',{callbackUrl:'http://localhost:3000'})
+   // signIn('github',{callbackUrl:'https://zcommerce-silk.vercel.app'})
 }
 
 //Handle Spotify Login
 async function handleSpotifySignIn(){
      sessionStore.toggleSession()
-   //   signIn('spotify',{callbackUrl:'http://localhost:3000'})
-   signIn('spotify',{callbackUrl:'https://zcommerce-silk.vercel.app'})
+     signIn('spotify',{callbackUrl:'http://localhost:3000'})
+   // signIn('spotify',{callbackUrl:'https://zcommerce-silk.vercel.app'})
 }
 
   return (
