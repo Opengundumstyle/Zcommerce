@@ -16,16 +16,12 @@ import useSound from 'use-sound';
 import useSongInfo from "@/hooks/useSongInfo";
 import SpotifyWebApi from "spotify-web-api-node"; 
 
-import {BsRepeat,BsShuffle} from "react-icons/bs";
-//BsRepeat
-//BsShuffle
+import {BsRepeat,BsShuffle,BsRepeat1} from "react-icons/bs";
+
 //BsPlusSquare
 //BsSuitHeart
 //BsSuitHeartFill
 //BsTrash3
-
-
-
 
 interface PlayerContentProps {
     song?: Song;
@@ -37,9 +33,6 @@ interface PlayerContentProps {
     is_paused:boolean;
     duration:Number;
     position:Number;
-   
- 
-
   }
 
 
@@ -51,10 +44,8 @@ interface PlayerContentProps {
     webPlayer,
     spodify,
     is_paused,
-    duration,
     position,
-  
-
+    duration,
   }) => {
 
     const [isHovered, setIsHovered] = useState(false);
@@ -147,16 +138,18 @@ interface PlayerContentProps {
       if(current_track.name){
         
           !player.isPlaying && webPlayer.togglePlay()
+          !player.isPlaying && player.setIsPlaying(true)
       }else{
 
         if(player.activeId === undefined){ 
         player.setId('1')
+        !player.isPlaying && player.setIsPlaying(true)
         }
         play()
 
       }
 
-        !player.isPlaying && player.setIsPlaying(true)
+        
         player.togglePlayer(true)
     
     
@@ -172,11 +165,48 @@ interface PlayerContentProps {
           player.isPlaying && webPlayer.togglePlay()
         }else{
           pause()
-        }
-
-       
+        } 
 
   }
+
+ const shuffle = ()=>{
+    if(player.isShuffle === false){
+
+     spodify.setShuffle(true).then(function() {
+
+      player.setIsShuffe(true)
+
+      console.log('Shuffle is on.');
+      }, function  (err) {
+        //if the user making the request is non-premium, a 403 FORBIDDEN response code will be returned
+        console.log('Something went wrong!', err);
+      });
+      }else{
+          spodify.setShuffle(false)
+          player.setIsShuffe(false)
+      }
+}
+
+ const repeat = ()=>{
+
+  if(player.isRepeat === 0){
+   
+    spodify.setRepeat('track')
+
+    .then(function () {
+      player.setIsRepeat(1)
+      console.log('Repeat track.');
+      }, function(err) {
+      //if the user making the request is non-premium, a 403 FORBIDDEN response code will be returned
+      console.log('Something went wrong!', err);
+    });
+    }else{
+      spodify.setRepeat('off')
+      player.setIsRepeat(0)
+    }
+}
+
+
 
 
   const [play, { pause, sound }] = useSound(
@@ -276,8 +306,11 @@ useEffect(()=>{
         {(!playerHovered && !session.isSession)?'':
               <div className='flex flex-row space-x-3 justify-center items-center mt-3'>
 
-                <BsShuffle className="text-3xl hover:bg-gray-100 rounded-full p-1 cursor-pointer transition duration-300 ease-in-out transform text-gray-500 hover:text-teal-700 hover:scale-105"/>
-
+           { spodify.getAccessToken() && <BsShuffle 
+                  className={`text-3xl hover:bg-gray-100 rounded-full p-1 cursor-pointer transition duration-300 ease-in-out transform text-gray-500 hover:text-teal-700 hover:scale-105 ${player.isShuffle && 'text-teal-700'}`}
+                  onClick={shuffle}
+                /> 
+             }
             
               <AiFillStepBackward className='text-4xl hover:bg-gray-100 rounded-full p-1 cursor-pointer transition duration-300 ease-in-out transform text-gray-500 hover:text-teal-700 hover:scale-105'
                                   onClick={onPlayPrevious}/>
@@ -303,7 +336,15 @@ useEffect(()=>{
                   onClick={onPlayNext}
                   />
 
-                  <BsRepeat className="text-3xl hover:bg-gray-100 rounded-full p-1 cursor-pointer transition duration-300 ease-in-out transform text-gray-500 hover:text-teal-700 hover:scale-105"/>
+               { spodify.getAccessToken() && <> { player.isRepeat?
+                      <BsRepeat1 
+                        className="text-4xl hover:bg-gray-100 rounded-full p-1 cursor-pointer transition duration-300 ease-in-out transform text-teal-700 hover:text-black hover:scale-105"
+                        onClick={repeat}/>:
+                      <BsRepeat 
+                        className="text-3xl hover:bg-gray-100 rounded-full p-1 cursor-pointer transition duration-300 ease-in-out transform text-gray-500 hover:text-teal-700 hover:scale-105"
+                        onClick={repeat}
+                   />}
+                   </>}
               </div>
           }
     </div>
