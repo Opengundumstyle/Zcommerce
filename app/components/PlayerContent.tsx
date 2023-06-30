@@ -143,8 +143,8 @@ interface PlayerContentProps {
 
         if(player.activeId === undefined){ 
         player.setId('1')
-        !player.isPlaying && player.setIsPlaying(true)
         }
+        player.setIsPlaying(true)
         play()
 
       }
