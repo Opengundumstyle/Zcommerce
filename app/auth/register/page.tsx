@@ -54,15 +54,15 @@ const SignUpPage= () => {
  // Handle Google signin
 async function handleGoogleSignIn(){
     session.toggleSession()
-    // signIn('google',{callbackUrl:'https://zcommerce-silk.vercel.app'})
-    signIn('google',{callbackUrl:'http://localhost:3000'})
+    signIn('google',{callbackUrl:'https://zcommerce-silk.vercel.app'})
+    // signIn('google',{callbackUrl:'http://localhost:3000'})
 }
 
 //Handle Spotify Loin
 async function handleSpotifySignIn(){
     session.toggleSession()
-    // signIn('spotify',{callbackUrl:'https://zcommerce-silk.vercel.app'})
-    signIn('spotify',{callbackUrl:'http://localhost:3000'})
+    signIn('spotify',{callbackUrl:'https://zcommerce-silk.vercel.app'})
+    // signIn('spotify',{callbackUrl:'http://localhost:3000'})
 }                       
 
 
