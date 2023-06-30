@@ -16,12 +16,16 @@ import useSound from 'use-sound';
 import useSongInfo from "@/hooks/useSongInfo";
 import SpotifyWebApi from "spotify-web-api-node"; 
 
-import {BsRepeat,BsShuffle,BsRepeat1} from "react-icons/bs";
+import {BsRepeat,BsShuffle,BsRepeat1,BsPlusSquare } from "react-icons/bs";
+
+import { AiFillHeart,AiOutlineHeart } from "react-icons/ai";
 
 //BsPlusSquare
 //BsSuitHeart
 //BsSuitHeartFill
 //BsTrash3
+//AiFillHeart
+//AiOutlineHeart
 
 interface PlayerContentProps {
     song?: Song;
@@ -143,8 +147,8 @@ interface PlayerContentProps {
 
         if(player.activeId === undefined){ 
         player.setId('1')
-        !player.isPlaying && player.setIsPlaying(true)
         }
+        player.setIsPlaying(true)
         play()
 
       }
@@ -246,6 +250,7 @@ useEffect(()=>{
 
 // play zcommerce playlist
 useEffect(()=>{
+    console.log('do u have? current track',current_track.name)
     if(current_track.name) return
     sound?.play()
     return ()=>{
@@ -289,16 +294,22 @@ useEffect(()=>{
 
        {/**speaker */}
        {(!playerHovered && !session.isSession)?'':
-       <div className='mt-3 text-2xl text-gray-500 flex flex-row items-center justify-start hover:scale-110 transition duration-300 ease-in-out transform'>
-            <VolumeIcon
-              onClick={toggleMute}
-              className='cursor-pointer'
-            />
-            <Slider 
-              value={volume}
-              onChange={(value)=>setVolume(value)}
-            />
-       </div>
+       <div className="flex flex-row justify-center gap-5 items-center">
+          <div className='mt-3 text-2xl text-gray-500 flex flex-row items-center justify-start hover:scale-110 transition duration-300 ease-in-out transform'>
+      
+                <VolumeIcon
+                  onClick={toggleMute}
+                  className='cursor-pointer'
+                />
+                <Slider 
+                  value={volume}
+                  onChange={(value)=>setVolume(value)}
+                />
+          </div>
+
+             {/* <BsPlusSquare/>
+            < AiFillHeart className="text-2xl fill-red-400 cursor-pointer"/> */}
+        </div>
        }
 
       {/**Player and back+forward button*/}
