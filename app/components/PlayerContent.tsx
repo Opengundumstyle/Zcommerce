@@ -22,6 +22,7 @@ import { AiFillHeart,AiOutlineHeart } from "react-icons/ai";
 
 import PlaylistModal from "./PlaylistModal";
 
+import { toast } from "react-hot-toast"
 
 
 interface PlayerContentProps {
@@ -221,6 +222,9 @@ const likeSong = () => {
     .then(() => {
       setIsLiked(true)
       console.log('Song liked successfully.');
+      toast('add to liked songs', {
+        icon: '🫡',
+      });
       // Update the isLiked state or perform any other necessary actions
     })
     .catch((error) => {
@@ -234,6 +238,9 @@ const unlikeSong = () => {
     .then(() => {
       setIsLiked(false)
       console.log('Song unliked successfully.');
+      toast('removed from liked songs', {
+        icon: '🫡',
+      });
       // Update the isLiked state or perform any other necessary actions
     })
     .catch((error) => {
