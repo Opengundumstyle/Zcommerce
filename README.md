@@ -31,10 +31,10 @@ The project aims to create a brand new online shopping experience by implementin
 1. Clone the repository:
 
 2. Install the dependencies:
-3. 
-4. Create a Spotify Developer account and set up an application to obtain the required API credentials.
 
-5. Set up environment variables:
+3. Create a Spotify Developer account and set up an application to obtain the required API credentials.
+
+   Set up environment variables:
 
 - Create a `.env` file in the root directory of the project.
 - Add the following variables to the `.env` file:
@@ -44,9 +44,9 @@ The project aims to create a brand new online shopping experience by implementin
   REACT_APP_SPOTIFY_REDIRECT_URI=your-redirect-uri
   ```
 
-5. Start the development server:
+4. Start the development server:
 
-6. Open your web browser and visit `http://localhost:3000` to access the application.
+5. Open your web browser and visit `http://localhost:3000` to access the application.
 
 ## Usage
 
