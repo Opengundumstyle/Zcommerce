@@ -1,4 +1,4 @@
-# Z-commerce
+# [Z-commerce](https://zcommerce-silk.vercel.app/)
 
 This is an ecommerce application built with React and Spotify Web API.
 
@@ -66,7 +66,7 @@ Contributions are welcome! If you find any bugs or want to suggest new features,
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the [MIT License](https://github.com/Opengundumstyle/Zcommerce/blob/main/LICENSE.txt).
 
 
 
