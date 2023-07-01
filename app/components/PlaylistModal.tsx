@@ -1,23 +1,21 @@
-import { useState } from 'react';
 
 
 import { AiOutlinePlus } from "react-icons/ai";
+import { toast } from "react-hot-toast"
 
 const PlaylistModal = ({ playlists,songuri,setOpenModal,spodify}) => {
 
-  const [selectedPlaylist, setSelectedPlaylist] = useState('');
-
-  
- 
 
   const handlePlaylistClick = (playlistId) => {
     
-    console.log('what is playlusyId',playlistId)
 
       spodify.addTracksToPlaylist(playlistId, [songuri])
       .then(function(data) {
          setOpenModal(false)
          console.log('Added tracks to playlist!');
+         toast('Added tracks to playlist!', {
+          icon: '🫡',
+        });
       }, function(err) {
         console.log('Something went wrong!', err);
       });
