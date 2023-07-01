@@ -313,11 +313,14 @@ useEffect(() => {
     });
 }, [current_track.id]);
 
-console.log('what is currenttrack',current_track)
 
     return (
 
     <div className="flex flex-col items-center justify-center">
+
+      <div className="flex flex-col">
+     
+       {!playerHovered && !session.isSession && <div className="text-gray-400 flex justify-end p-1 font-lobster text-md">Hover Me</div>}
       <div  className={`relative w-48 h-48 bg-gray-300 rounded-full`}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
@@ -347,6 +350,8 @@ console.log('what is currenttrack',current_track)
             </div>
           </div>
         </div>
+      </div>
+
       </div>
 
        {/**speaker */}
