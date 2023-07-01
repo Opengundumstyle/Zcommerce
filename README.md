@@ -1,4 +1,4 @@
-# My Project
+# Z-commerce
 
 This is an ecommerce application built with React and Spotify Web API.
 
