@@ -128,7 +128,7 @@ export default function Nav({user}:Session){
                                          Music Player
                                           <div className={`overflow-hidden whitespace-nowrap overflow-ellipsis max-w-[70px] flex-grow` }>
                                             <div className={`${styles.animate_marquee} text-sm text-gray-400`}  style={{ animationDuration: `20s` }}>
-                                                  {player.isPlaying && player.currentSong}
+                                                  {player.isPlaying && player.isOpen && player.currentSong}
                                             </div>
                                          </div> 
                                        

@@ -13,8 +13,11 @@ const Song = ({song,index,webPlayer,spodify,current_track,playlistId}) => {
 
   const [onHovered, setOnHovered] = useState(false);
 
+
   const player = usePlayer()
 
+
+ 
 
 
   const playSongInPlaylist = async () => {
@@ -42,8 +45,10 @@ const Song = ({song,index,webPlayer,spodify,current_track,playlistId}) => {
       console.error('Failed to start playback');
     }
 
-
   };
+
+
+
 
 
 
