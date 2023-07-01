@@ -7,17 +7,10 @@ import MusicPlayingAnimation from "./MusicPlayingAnimation";
 
 const Song = ({song,index,webPlayer,spodify,current_track,playlistId}) => {
   
- 
-  
-
 
   const [onHovered, setOnHovered] = useState(false);
 
-
   const player = usePlayer()
-
-
- 
 
 
   const playSongInPlaylist = async () => {
@@ -46,11 +39,6 @@ const Song = ({song,index,webPlayer,spodify,current_track,playlistId}) => {
     }
 
   };
-
-
-
-
-
 
 
   const handlePlay = ()=>{

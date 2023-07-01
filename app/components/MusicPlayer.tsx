@@ -22,6 +22,8 @@ import spotifyApi from '@/lib/spotify';
 
 import { signIn} from "next-auth/react";
 
+import { BsFillInfoSquareFill} from "react-icons/bs";
+
 
 const MusicPlayer = ({user}:Session) => {
 
@@ -69,11 +71,19 @@ const MusicPlayer = ({user}:Session) => {
 
     const[playlistDisplay,setPlaylistDisplay] = useState(false)
 
-   
-
     const [playlists,setPLaylists] = useState()
 
     const [favSongs,setFavSongs]  = useState()
+
+    const [isHovered, setIsHovered] = useState(false);
+
+    const handleMouseEnter = () => {
+      setIsHovered(true);
+    };
+  
+    const handleMouseLeave = () => {
+      setIsHovered(false);
+    };
     
     
 
@@ -126,7 +136,7 @@ const MusicPlayer = ({user}:Session) => {
               });
 
               player.addListener('player_state_changed', ( state => {
-                console.log('what is the fking state',state)
+                console.log('what is the state',state)
                 if (!state) {
                     return;
                 }
@@ -355,13 +365,41 @@ const MusicPlayer = ({user}:Session) => {
 
        {(!musicplayer.activeId)&&(session.isSession)?'':!playerHovered && !session.isSession? '': !current_track.name?
           <motion.div 
-           className='p-3 text-sm'
+           className='p-3 text-sm flex flex-row gap-1 items-center relative'
            initial={{ opacity: 0, y: 10 }}
            animate={{ opacity: 1, y: 0 }}
            transition={{ duration: 0.5 }}
-            > Listen with <span className=' text-teal-700 font-semibold hover:font-bold hover:underline cursor-pointer' 
-             onClick={handleSpotifySignIn}>
-           Spotify</span> instead</motion.div>:''
+            >  
+              <div className='font-bold'>
+              Listen 
+              </div>
+              with
+              <span className=' text-teal-700 font-semibold hover:font-bold hover:underline cursor-pointer text-md' 
+              onClick={handleSpotifySignIn}>
+              Spotify
+              </span> 
+
+             instead 
+              
+              <div 
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+              >
+               <BsFillInfoSquareFill
+                className="cursor-pointer"
+               />
+        
+              {isHovered && (
+                <div className={`absolute top-9 left-0 p-3 bg-white border border-gray-300 rounded text-gray-500`}>
+                  <p>Only works for&nbsp;
+                      <a href='https://www.spotify.com/us/premium/?utm_source=us-en_brand_contextual-desktop_text&utm_medium=paidsearch&utm_campaign=alwayson_ucanz_us_premiumbusiness_premium_brand+contextual-desktop+text+exact+us-en+google&gclid=Cj0KCQjwnf-kBhCnARIsAFlg493wvTXow7AQFzWaDbIQ6f8HbIdzRRiASaAdHb7oWwl8Hxmhih_qK6YaAi5VEALw_wcB&gclsrc=aw.ds' 
+                       target='_blank' className='font-bold hover:text-teal-700'>
+                        premium user
+                      </a> for now. But hang tight, we are working on it !!</p>
+                </div>
+              )}
+              </div>
+             </motion.div>:''
            }
           
     </div>
