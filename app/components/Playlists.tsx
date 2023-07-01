@@ -9,7 +9,7 @@ import MusicPlayingAnimation from "./MusicPlayingAnimation";
 const Playlists = ({ playlists,spodify,webPlayer,current_track,context,setPlaylistDisplay}:any) => {
 
   
-// console.log('what are the fking playlists',playlists)
+
 
   const [openPlaylist,setOpenPlaylist] = useState(false)
   const [selectedPlaylistId, setSelectedPlaylistId] = useState(null);

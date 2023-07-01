@@ -276,6 +276,7 @@ const MusicPlayer = ({user}:Session) => {
             )
         }
 
+ 
 
   return (
     <div 
@@ -299,17 +300,17 @@ const MusicPlayer = ({user}:Session) => {
                 is_paused={is_paused}
                 duration={duration}
                 position={position}
-                
+                playlists={playlists} 
                
                 />
             
             {favSongs && playerHovered && !playlistDisplay &&
                   <div className='flex flex-col'>
                   <Songs 
-                  songs={favSongs} 
-                  webPlayer={webPlayer} 
-                  spodify={spodify} 
-                  current_track={current_track}/>
+                    songs={favSongs} 
+                    webPlayer={webPlayer} 
+                    spodify={spodify} 
+                    current_track={current_track}/>
                   <div
                     className='mt-4
                               text-gray-400

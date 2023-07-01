@@ -20,12 +20,9 @@ import {BsRepeat,BsShuffle,BsRepeat1,BsPlusSquare } from "react-icons/bs";
 
 import { AiFillHeart,AiOutlineHeart } from "react-icons/ai";
 
-//BsPlusSquare
-//BsSuitHeart
-//BsSuitHeartFill
-//BsTrash3
-//AiFillHeart
-//AiOutlineHeart
+import PlaylistModal from "./PlaylistModal";
+
+
 
 interface PlayerContentProps {
     song?: Song;
@@ -37,6 +34,7 @@ interface PlayerContentProps {
     is_paused:boolean;
     duration:Number;
     position:Number;
+    playlists:any;
   }
 
 
@@ -50,9 +48,11 @@ interface PlayerContentProps {
     is_paused,
     position,
     duration,
+    playlists
   }) => {
 
     const [isHovered, setIsHovered] = useState(false);
+    const [isLiked,setIsLiked] = useState(false)
 
     // Declare a ref to store the previous value of is_paused
     const prevIsPausedRef = useRef(false);
@@ -70,7 +70,13 @@ interface PlayerContentProps {
     
     const prevSong = useSongInfo(spodify,current_track?.id,PREVIOUS)
     const nextSong = useSongInfo(spodify,current_track?.id,NEXT)
+
     
+    const LikedIcon = isLiked?AiFillHeart:AiOutlineHeart
+
+    const [openModal,setOpenModal] = useState(false)
+
+   
 
     const toggleMute = ()=>{
         if(volume === 0){
@@ -156,7 +162,6 @@ interface PlayerContentProps {
         
         player.togglePlayer(true)
     
-    
 
   }
 
@@ -211,7 +216,30 @@ interface PlayerContentProps {
 }
 
 
+const likeSong = () => {
+  spodify.addToMySavedTracks([current_track.id])
+    .then(() => {
+      setIsLiked(true)
+      console.log('Song liked successfully.');
+      // Update the isLiked state or perform any other necessary actions
+    })
+    .catch((error) => {
+      console.error('Failed to like the song:', error);
+    });
+};
 
+// Function to unlike a song
+const unlikeSong = () => {
+  spodify.removeFromMySavedTracks([current_track.id])
+    .then(() => {
+      setIsLiked(false)
+      console.log('Song unliked successfully.');
+      // Update the isLiked state or perform any other necessary actions
+    })
+    .catch((error) => {
+      console.error('Failed to unlike the song:', error);
+    });
+};
 
   const [play, { pause, sound }] = useSound(
     songUrl as string,
@@ -226,6 +254,14 @@ interface PlayerContentProps {
       format: ['mp3']
     }
   );
+
+
+  // create playlist element
+  const displayPlaylists = ()=>{
+      console.log('display this sht',playlists)
+      setOpenModal(true)
+   
+  }
 
 
 // automatically play spotify liked songs in order
@@ -257,6 +293,27 @@ useEffect(()=>{
       sound?.unload()
     }
   },[sound])
+
+
+// check liked status
+useEffect(() => {
+ 
+  // Fetch the song status to check if it's a liked song
+  const trackId = current_track.id // Replace with the ID of the song you want to check
+  spodify.containsMySavedTracks([trackId])
+    .then((response) => { 
+      
+      const isSaved = response.body[0]
+    
+      setIsLiked(isSaved);
+     
+    })
+    .catch((error) => {
+      console.error('Failed to fetch song status:', error);
+    });
+}, [current_track.id]);
+
+console.log('what is currenttrack',current_track)
 
     return (
 
@@ -294,21 +351,37 @@ useEffect(()=>{
 
        {/**speaker */}
        {(!playerHovered && !session.isSession)?'':
-       <div className="flex flex-row justify-center gap-5 items-center">
-          <div className='mt-3 text-2xl text-gray-500 flex flex-row items-center justify-start hover:scale-110 transition duration-300 ease-in-out transform'>
-      
-                <VolumeIcon
-                  onClick={toggleMute}
-                  className='cursor-pointer'
-                />
-                <Slider 
-                  value={volume}
-                  onChange={(value)=>setVolume(value)}
-                />
-          </div>
+       <div className="flex flex-row gap-10 items-center">
+             
+          {spodify.getAccessToken()&&<LikedIcon 
+          className={`text-2xl cursor-pointer ${isLiked && 'fill-red-500'}`}
+          onClick={isLiked?unlikeSong:likeSong}
+          /> 
+        }
+              <div className='text-2xl text-gray-500 flex flex-row items-center justify-start hover:scale-110 transition duration-300 ease-in-out transform'>
+          
+                    <VolumeIcon
+                      onClick={toggleMute}
+                      className='cursor-pointer'
+                    />
+                    <Slider 
+                      value={volume}
+                      onChange={(value)=>setVolume(value)}
+                    />
+              </div>
 
-             {/* <BsPlusSquare/>
-            < AiFillHeart className="text-2xl fill-red-400 cursor-pointer"/> */}
+           {spodify.getAccessToken()&&
+             <BsPlusSquare 
+               className="cursor-pointer"
+               onClick={displayPlaylists}
+               />
+              }
+               {openModal && (
+                <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                  <PlaylistModal playlists={playlists} songuri={current_track.uri} setOpenModal={setOpenModal} spodify={spodify} />
+                </div>
+              )}
+          
         </div>
        }
 
