@@ -76,7 +76,7 @@ const MusicPlayer = ({user}:Session) => {
 
     const [favSongs,setFavSongs]  = useState()
 
-    const [showExplore,setExplore] = useState()
+    const [showExplore,setExplore] = useState(false)
 
     const [isHovered, setIsHovered] = useState(false);
 
@@ -104,6 +104,13 @@ const MusicPlayer = ({user}:Session) => {
       if(session.isSession)session.toggleSession()
       signIn('spotify',{callbackUrl:'http://localhost:3000'})
  }
+
+
+    const handleExplore=()=>{
+         setExplore(true)
+         setPlaylistDisplay(false)
+        
+    }
    
    
     useEffect(()=>{ 
@@ -184,12 +191,6 @@ const MusicPlayer = ({user}:Session) => {
 
     },
     [])
-
-
-
-    
-
-
 
     // Function to fetch album information in batches
       async function fetchAlbums(ids) {
@@ -289,6 +290,9 @@ const MusicPlayer = ({user}:Session) => {
             )
         }
 
+
+      console.log('what is explore status',showExplore)
+
  
 
   return (
@@ -303,10 +307,39 @@ const MusicPlayer = ({user}:Session) => {
 
         <div className='flex flex-row justify-start items-center gap-5'>
 
-           { spodify.getAccessToken() && playerHovered && !session.isSession && 
-              <div className="absolute top-3 left-16 m-4 font-normal text-gray-500 font-serif text-md hover:text-white cursor-pointer hover:scale-110 hover:underline">
-                explore
+           { spodify.getAccessToken() && playerHovered && !session.isSession && ( !showExplore?(
+             <div className='absolute top-3 left-16 m-4 font-normal flex flex-row gap-2 items-baseline'>
+              <div className="text-gray-500 font-bold font-serif text-md hover:text-teal-700 cursor-pointer hover:scale-110 hover:underline transition duration-300"
+                    onClick={handleExplore}>
+                      Explore
               </div>
+              <hr className="text-teal-700"/>
+             { playlistDisplay?
+              <div className="text-gray-500 font-serif text-sm">
+                    Playlists
+              </div>:
+              <div className="text-gray-500 font-serif text-sm">
+                    Liked Songs
+              </div>}
+              </div>):
+               <div className='absolute top-3 left-16 m-4 font-normal flex flex-row gap-2'>
+                    <div className='text-gray-500 font-serif text-sm hover:text-white cursor-pointer hover:scale-110 hover:underline transition duration-300'
+                         onClick={()=>{
+                             setExplore(false)
+                         }}
+                    >
+                      Liked Songs
+                    </div>
+                    <div className='text-gray-500 font-serif text-sm hover:text-white cursor-pointer hover:scale-110 hover:underline transition duration-300'
+                         onClick={()=>{
+                            setExplore(false)
+                            setPlaylistDisplay(true)
+                         }}
+                    >
+                      Playlists
+                    </div>
+              </div>
+              )
               }
       
             <PlayerContent 
@@ -323,7 +356,7 @@ const MusicPlayer = ({user}:Session) => {
                
                 />
             
-            {favSongs && playerHovered && !playlistDisplay &&
+            {favSongs && playerHovered && !playlistDisplay && !showExplore&&
                   <div className='flex flex-col'>
                   <Songs 
                     songs={favSongs} 
@@ -350,7 +383,7 @@ const MusicPlayer = ({user}:Session) => {
 
               </div>}
 
-            {playlists && playerHovered && playlistDisplay &&
+            {playlists && playerHovered && playlistDisplay && !showExplore&&
               
                       <div className='flex flex-col'>
                       
@@ -366,7 +399,7 @@ const MusicPlayer = ({user}:Session) => {
                     </div>
           
               }
-            {showExplore && <Explore/>
+            {showExplore&&playerHovered && <Explore/>
             }
 
 

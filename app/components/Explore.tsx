@@ -5,7 +5,7 @@ const Explore = ()=>{
       
 
     return( 
-         <div>你妈</div>
+        <input type="text" placeholder="What you want to listen to?" className="input input-bordered input-accent w-full rounded-lg min-w-full" />
     )
 }
 
