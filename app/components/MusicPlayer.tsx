@@ -8,6 +8,7 @@ import useSpotify from '@/hooks/useSpotify';
 import PlayerContent from './PlayerContent';
 import Playlists from './Playlists';
 import Songs from './Songs';
+import Explore from './Explore';
 
 import { useSession } from '@/store';
 import useCartStore from '@/store';
@@ -74,6 +75,8 @@ const MusicPlayer = ({user}:Session) => {
     const [playlists,setPLaylists] = useState()
 
     const [favSongs,setFavSongs]  = useState()
+
+    const [showExplore,setExplore] = useState()
 
     const [isHovered, setIsHovered] = useState(false);
 
@@ -297,8 +300,14 @@ const MusicPlayer = ({user}:Session) => {
                   onMouseLeave={()=>setPlayerHovered(false)}
                       >
         {(!musicplayer.activeId)&&(session.isSession) &&<SpotifyAd/>}
+
         <div className='flex flex-row justify-start items-center gap-5'>
-       
+
+           { spodify.getAccessToken() && playerHovered && !session.isSession && 
+              <div className="absolute top-3 left-16 m-4 font-normal text-gray-500 font-serif text-md hover:text-white cursor-pointer hover:scale-110 hover:underline">
+                explore
+              </div>
+              }
       
             <PlayerContent 
                 key={song?.song_path}
@@ -341,8 +350,7 @@ const MusicPlayer = ({user}:Session) => {
 
               </div>}
 
-              {
-                  playlists && playerHovered && playlistDisplay &&
+            {playlists && playerHovered && playlistDisplay &&
               
                       <div className='flex flex-col'>
                       
@@ -358,6 +366,8 @@ const MusicPlayer = ({user}:Session) => {
                     </div>
           
               }
+            {showExplore && <Explore/>
+            }
 
 
                 
