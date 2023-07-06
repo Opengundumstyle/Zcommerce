@@ -66,7 +66,7 @@ const Explore = ({spodify,webPlayer,current_track}:any)=>{
                 return {
                     name:searchInfo?.tracks.items[0].name,
                     image:searchInfo?.tracks.items[0].album.images[0].url,
-                    uri:searchInfo?.tracks.items[0].album.uri,
+                    uri:searchInfo?.tracks.items[0].uri,
                     artistName:searchInfo?.tracks.items[0].artists.map((artist: { name: any }) =>artist.name).join(','),
                     id:searchInfo?.tracks.items[0].id,
                     type: 'song'
