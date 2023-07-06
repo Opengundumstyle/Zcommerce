@@ -8,6 +8,7 @@ import useSpotify from '@/hooks/useSpotify';
 import PlayerContent from './PlayerContent';
 import Playlists from './Playlists';
 import Songs from './Songs';
+import Explore from './Explore';
 
 import { useSession } from '@/store';
 import useCartStore from '@/store';
@@ -75,6 +76,8 @@ const MusicPlayer = ({user}:Session) => {
 
     const [favSongs,setFavSongs]  = useState()
 
+    const [showExplore,setExplore] = useState(false)
+
     const [isHovered, setIsHovered] = useState(false);
 
     const handleMouseEnter = () => {
@@ -101,6 +104,13 @@ const MusicPlayer = ({user}:Session) => {
       if(session.isSession)session.toggleSession()
       signIn('spotify',{callbackUrl:'http://localhost:3000'})
  }
+
+
+    const handleExplore=()=>{
+         setExplore(true)
+         setPlaylistDisplay(false)
+        
+    }
    
    
     useEffect(()=>{ 
@@ -181,12 +191,6 @@ const MusicPlayer = ({user}:Session) => {
 
     },
     [])
-
-
-
-    
-
-
 
     // Function to fetch album information in batches
       async function fetchAlbums(ids) {
@@ -286,6 +290,7 @@ const MusicPlayer = ({user}:Session) => {
             )
         }
 
+  
  
 
   return (
@@ -297,24 +302,58 @@ const MusicPlayer = ({user}:Session) => {
                   onMouseLeave={()=>setPlayerHovered(false)}
                       >
         {(!musicplayer.activeId)&&(session.isSession) &&<SpotifyAd/>}
+
         <div className='flex flex-row justify-start items-center gap-5'>
+
+           { spodify.getAccessToken() && playerHovered && !session.isSession && ( !showExplore?(
+             <div className='absolute top-3 left-16 m-4 font-normal flex flex-row gap-2 items-baseline'>
+              <div className="text-gray-500 font-bold font-serif text-md hover:text-teal-700 cursor-pointer hover:scale-110 hover:underline transition duration-300"
+                    onClick={handleExplore}>
+                      Explore
+              </div>
+              <hr className="text-teal-700"/>
+             { playlistDisplay?
+              <div className="text-gray-500 font-serif text-sm">
+                    Playlists
+              </div>:
+              <div className="text-gray-500 font-serif text-sm">
+                    Liked Songs
+              </div>}
+              </div>):
+               <div className='absolute top-3 left-16 m-4 font-normal flex flex-row gap-2'>
+                    <div className='text-gray-500 font-serif text-sm hover:text-white cursor-pointer hover:scale-110 hover:underline transition duration-300'
+                         onClick={()=>{
+                             setExplore(false)
+                         }}
+                    >
+                      Liked Songs
+                    </div>
+                    <div className='text-gray-500 font-serif text-sm hover:text-white cursor-pointer hover:scale-110 hover:underline transition duration-300'
+                         onClick={()=>{
+                            setExplore(false)
+                            setPlaylistDisplay(true)
+                         }}
+                    >
+                      Playlists
+                    </div>
+              </div>)
+              }
+              
+                <PlayerContent 
+                    key={song?.song_path}
+                    song={song} songUrl={song?.song_path} 
+                    playerHovered={playerHovered}
+                    current_track={current_track}
+                    webPlayer={webPlayer}
+                    spodify={spodify}
+                    is_paused={is_paused}
+                    duration={duration}
+                    position={position}
+                    playlists={playlists} 
+                    />
        
-      
-            <PlayerContent 
-                key={song?.song_path}
-                song={song} songUrl={song?.song_path} 
-                playerHovered={playerHovered}
-                current_track={current_track}
-                webPlayer={webPlayer}
-                spodify={spodify}
-                is_paused={is_paused}
-                duration={duration}
-                position={position}
-                playlists={playlists} 
-               
-                />
             
-            {favSongs && playerHovered && !playlistDisplay &&
+            {favSongs && playerHovered && !playlistDisplay && !showExplore&&
                   <div className='flex flex-col'>
                   <Songs 
                     songs={favSongs} 
@@ -341,8 +380,7 @@ const MusicPlayer = ({user}:Session) => {
 
               </div>}
 
-              {
-                  playlists && playerHovered && playlistDisplay &&
+            {playlists && playerHovered && playlistDisplay && !showExplore&&
               
                       <div className='flex flex-col'>
                       
@@ -358,6 +396,12 @@ const MusicPlayer = ({user}:Session) => {
                     </div>
           
               }
+            {showExplore&&playerHovered &&
+            
+            
+                 <Explore spodify={spodify} webPlayer={webPlayer} current_track={current_track} />
+         
+            }
 
 
                 
