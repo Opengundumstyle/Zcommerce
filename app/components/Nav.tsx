@@ -39,11 +39,6 @@ export default function Nav({user}:Session){
           router.push('/')
      } 
 
-      console.log('what is the current song',player.currentSong)
-      console.log('i don get this player wtf',player)
-
-
-      
 
       return (
           <nav className="flex justify-between items-center py-12 ">

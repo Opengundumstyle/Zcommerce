@@ -5,14 +5,14 @@ import { BsFillPlayFill,BsFillPauseFill } from "react-icons/bs";
 import usePlayer from "@/hooks/usePlayer";
 import MusicPlayingAnimation from "./MusicPlayingAnimation";
 
-const Song = ({song,index,webPlayer,spodify,current_track,playlistId}) => {
+const Song = ({song,index,webPlayer,spodify,current_track,playlistId,explore}) => {
   
 
   const [onHovered, setOnHovered] = useState(false);
 
   const player = usePlayer()
 
-
+   console.log('what is explore',explore)
   const playSongInPlaylist = async () => {
 
     const url = `https://api.spotify.com/v1/me/player/play`;
@@ -62,15 +62,15 @@ const Song = ({song,index,webPlayer,spodify,current_track,playlistId}) => {
       key={index}
       className={`flex items-center gap-2 cursor-pointer rounded-md py-2 ${
         onHovered|| current_track.id === song.id && player.isPlaying ? " bg-gray-500 bg-opacity-80" : ""
-      }`}
+      } ${explore?'h-10 justify-start truncate px-2':''}`}
       onMouseEnter={() => setOnHovered(true)}
       onMouseLeave={() => setOnHovered(false)}
       onClick={handlePlay}
     >
       <div className={`w-8 text-center ${onHovered && 'text-black'}`}>{current_track.id === song.id && player.isPlaying?<MusicPlayingAnimation/>: index + 1}</div>
       <div className="relative">
-        <img
-          className={`w-10 h-10 object-cover ${onHovered ? "opacity-50" : ""}`}
+      <img
+          className={`object-contain ${onHovered ? "opacity-50" : ""}  w-10 h-10 flex-shrink-0`}
           src={song.image}
           alt={song.name}
         />
@@ -80,9 +80,9 @@ const Song = ({song,index,webPlayer,spodify,current_track,playlistId}) => {
           </div>
         )}
       </div>
-      <div className="flex flex-col">
-        <h3 className="font-bold">{song.name}</h3>
-        <p className={`text-sm text-gray-500 ${onHovered && 'text-white opacity-100'}`}>{song.artists}</p>
+      <div className={`flex flex-col ${explore && 'flex-grow'}`}>
+        <h3 className={`text-white font-bold overflow-hidden whitespace-nowrap overflow-ellipsis`}>{song.name}</h3>
+        <p className={`text-sm text-gray-500 ${onHovered && 'text-white opacity-100'}`}>{explore !==true && song.artists}</p>
       </div>
     </div>
   );

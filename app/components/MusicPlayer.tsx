@@ -290,9 +290,7 @@ const MusicPlayer = ({user}:Session) => {
             )
         }
 
-
-      console.log('what is explore status',showExplore)
-
+  
  
 
   return (
@@ -338,23 +336,22 @@ const MusicPlayer = ({user}:Session) => {
                     >
                       Playlists
                     </div>
-              </div>
-              )
+              </div>)
               }
-      
-            <PlayerContent 
-                key={song?.song_path}
-                song={song} songUrl={song?.song_path} 
-                playerHovered={playerHovered}
-                current_track={current_track}
-                webPlayer={webPlayer}
-                spodify={spodify}
-                is_paused={is_paused}
-                duration={duration}
-                position={position}
-                playlists={playlists} 
-               
-                />
+              
+                <PlayerContent 
+                    key={song?.song_path}
+                    song={song} songUrl={song?.song_path} 
+                    playerHovered={playerHovered}
+                    current_track={current_track}
+                    webPlayer={webPlayer}
+                    spodify={spodify}
+                    is_paused={is_paused}
+                    duration={duration}
+                    position={position}
+                    playlists={playlists} 
+                    />
+       
             
             {favSongs && playerHovered && !playlistDisplay && !showExplore&&
                   <div className='flex flex-col'>
@@ -399,7 +396,11 @@ const MusicPlayer = ({user}:Session) => {
                     </div>
           
               }
-            {showExplore&&playerHovered && <Explore/>
+            {showExplore&&playerHovered &&
+            
+            
+                 <Explore spodify={spodify} webPlayer={webPlayer} current_track={current_track} />
+         
             }
 
 
