@@ -6,15 +6,15 @@ import { toast } from "react-hot-toast"
 const PlaylistModal = ({ playlists,songuri,setOpenModal,spodify}) => {
 
 
-  const handlePlaylistClick = (playlistId) => {
+  const handlePlaylistClick = (playlistId,name) => {
     
 
       spodify.addTracksToPlaylist(playlistId, [songuri])
       .then(function(data) {
          setOpenModal(false)
          console.log('Added tracks to playlist!');
-         toast('Added tracks to playlist!', {
-          icon: '🫡',
+         toast(`Added song to ${name}`, {
+          icon: '🎶',
         });
       }, function(err) {
         console.log('Something went wrong!', err);
@@ -44,7 +44,7 @@ const PlaylistModal = ({ playlists,songuri,setOpenModal,spodify}) => {
             <li
               key={playlist.id}
               className="cursor-pointer py-2 hover:bg-gray-500 rounded-sm px-1 text-sm"
-              onClick={() => handlePlaylistClick(playlist.id)}
+              onClick={() => handlePlaylistClick(playlist.id,playlist.name)}
             >
               {playlist.name}
             </li>
