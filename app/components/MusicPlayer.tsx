@@ -26,6 +26,8 @@ import { signIn} from "next-auth/react";
 import { BsFillInfoSquareFill} from "react-icons/bs";
 
 
+import { BiSearch } from "react-icons/bi";
+
 const MusicPlayer = ({user}:Session) => {
 
       const track = {
@@ -307,10 +309,13 @@ const MusicPlayer = ({user}:Session) => {
         <div className='flex flex-row justify-start items-center gap-5'>
 
            { spodify.getAccessToken() && playerHovered && !session.isSession && ( !showExplore?(
-             <div className='absolute top-3 left-16 m-4 font-normal flex flex-row gap-2 items-baseline'>
+             <div className='absolute top-3 left-16 m-4 font-normal flex flex-row gap-2 items-center'>
               <div className="text-gray-500 font-bold font-serif text-md hover:text-teal-700 cursor-pointer hover:scale-110 hover:underline transition duration-300"
                     onClick={handleExplore}>
-                      Explore
+                      <div className='flex flex-row gap-1 items-center'>
+                      <BiSearch className='text-lg'/>
+                       Explore
+                      </div>
               </div>
               <hr className="text-teal-700"/>
              { playlistDisplay?
