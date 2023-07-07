@@ -3,7 +3,7 @@
 import { AiOutlinePlus } from "react-icons/ai";
 import { toast } from "react-hot-toast"
 
-const PlaylistModal = ({ playlists,songuri,setOpenModal,spodify}) => {
+const PlaylistModal = ({ playlists,songuri,setOpenModal,spodify,name}) => {
 
 
   const handlePlaylistClick = (playlistId,name) => {
@@ -12,15 +12,39 @@ const PlaylistModal = ({ playlists,songuri,setOpenModal,spodify}) => {
       spodify.addTracksToPlaylist(playlistId, [songuri])
       .then(function(data) {
          setOpenModal(false)
-         console.log('Added tracks to playlist!');
+
+         console.log('Added track to playlist!');
          toast(`Added song to ${name}`, {
           icon: '🎶',
+
         });
       }, function(err) {
         console.log('Something went wrong!', err);
       });
 
   };
+
+
+  const createPlaylist = async()=>{
+     
+  try {
+    // Step 1: Create a playlist
+    const playlist = await spodify.createPlaylist(name, { public: false });
+    const playlistId = playlist.body.id;
+   
+    // Step 2: Add tracks to the playlist
+    await spodify.addTracksToPlaylist(playlistId, [songuri]);
+
+    console.log('Playlist created and tracks added successfully');
+    setOpenModal(false)
+    toast(`Created playlist as ${name}!`, {
+      icon: '🎶',
+    });
+ 
+  } catch (error) {
+    console.error('Failed to create playlist and add tracks:', error);
+  }
+  }
 
 
   const closeModal = ()=>{
@@ -33,7 +57,9 @@ const PlaylistModal = ({ playlists,songuri,setOpenModal,spodify}) => {
         <h2 className="text-md font-bold mb-1 cursor-pointer hover:bg-slate-600 hover:text-white p-2 rounded-md text-gray-300 " 
             onClick={()=>{}}
          >
-             <div className='flex flex-row justify-between items-center'>
+             <div className='flex flex-row justify-between items-center'
+                  onClick={createPlaylist}
+              >
                Create Playlist <span> <AiOutlinePlus/></span>
             </div>
            
