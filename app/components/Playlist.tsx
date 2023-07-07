@@ -12,8 +12,8 @@ const Playlist = ({playlistId,spodify,webPlayer,current_track,setOpenPlaylist,de
     
   const [songs,setSongs] = useState([])
   const [hasPermission, setHasPermission] = useState(false);
-
-  
+  console.log('what is the desc',description)
+   
 
 useEffect( ()=>{
      
@@ -93,6 +93,12 @@ const deletePlaylist = async () => {
   });
 };
 
+function removeAnchorTags(str) {
+  const anchorRegex = /<a\b[^>]*>(.*?)<\/a>/gi;
+  return str.replace(anchorRegex, '$1');
+}
+
+
     
 
     return (
@@ -108,7 +114,7 @@ const deletePlaylist = async () => {
             <Image src={image} alt={name} width={50} height={50} className="rounded-md w-20 h-20" />
             <div className="title flex flex-col items-start gap-1">
               <div className="font-bold text-xl text-white">{name}</div>
-              {description && <div className="text-gray-300 text-sm">{description}</div>}
+              {description && <div className="text-gray-300 text-sm">{removeAnchorTags(description)}</div>}
               <div className="flex flex-row items-center text-gray-300 text-sm gap-10">
                  <div className="flex flex-row gap-2">
                   <div>{owner.display_name}</div>
