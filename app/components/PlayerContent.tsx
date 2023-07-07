@@ -390,7 +390,7 @@ useEffect(() => {
               }
                {openModal && (
                 <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
-                  <PlaylistModal playlists={playlists} songuri={current_track.uri} setOpenModal={setOpenModal} spodify={spodify} />
+                  <PlaylistModal playlists={playlists} songuri={current_track.uri} setOpenModal={setOpenModal} spodify={spodify} name={current_track.name} />
                 </div>
               )}
           

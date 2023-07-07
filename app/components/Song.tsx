@@ -12,7 +12,6 @@ const Song = ({song,index,webPlayer,spodify,current_track,playlistId,explore}) =
 
   const player = usePlayer()
 
-   console.log('what is explore',explore)
   const playSongInPlaylist = async () => {
 
     const url = `https://api.spotify.com/v1/me/player/play`;
@@ -60,7 +59,7 @@ const Song = ({song,index,webPlayer,spodify,current_track,playlistId,explore}) =
   return (
     <div
       key={index}
-      className={`flex items-center gap-2 cursor-pointer rounded-md py-2 ${
+      className={`flex items-center gap-2 cursor-pointer rounded-md py-2 px-4 ${
         onHovered|| current_track.id === song.id && player.isPlaying ? " bg-gray-500 bg-opacity-80" : ""
       } ${explore?'h-10 justify-start truncate px-2':''}`}
       onMouseEnter={() => setOnHovered(true)}

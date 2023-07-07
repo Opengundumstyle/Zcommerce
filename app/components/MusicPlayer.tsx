@@ -216,6 +216,7 @@ const MusicPlayer = ({user}:Session) => {
         useEffect(()=>{
             if(spodify.getAccessToken()){
                 spotifyApi.getUserPlaylists().then((data)=>{
+                   console.log('i just want to see the raw playlists body',data.body)
                     setPLaylists(data.body.items)
                 })
               let favIds: string[] = []

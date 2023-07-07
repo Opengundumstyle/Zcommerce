@@ -1,24 +1,35 @@
 'use client'
 
 import Image from "next/image";
-import { JSXElementConstructor, Key, PromiseLikeOfReactNode, ReactElement, ReactFragment, SetStateAction, useState } from "react";
+import { JSXElementConstructor, Key, PromiseLikeOfReactNode, ReactElement, ReactFragment, useState } from "react";
 import Playlist from "./Playlist";
 import usePlayer from "@/hooks/usePlayer";
 import MusicPlayingAnimation from "./MusicPlayingAnimation";
 
+
 const Playlists = ({ playlists,spodify,webPlayer,current_track,context,setPlaylistDisplay}:any) => {
-
-  
-
 
   const [openPlaylist,setOpenPlaylist] = useState(false)
   const [selectedPlaylistId, setSelectedPlaylistId] = useState(null);
+  const [selectedDescription,setSelectedDescription] = useState(null);
+  const [selectedName,setSelectedName]= useState(null)
+  const [selectedImage,setSelectedImage] = useState(null)
+  const [seletedOwner,setSelectedOwner] = useState(null)
+  const [selectedTrackNum,setSelectedTrackNum] = useState(null)
+
   const player = usePlayer()
   
 
-  const openPlaylistHandler = (playlistId: SetStateAction<null>) => {
-    setSelectedPlaylistId(playlistId);
-    setOpenPlaylist(true);
+  console.log('let me see the playlists info',playlists)
+
+  const openPlaylistHandler = (playlistId,description,name,image,owner,tracksNum) => {
+        setSelectedPlaylistId(playlistId);
+        setSelectedDescription(description)
+        setSelectedName(name)
+        setSelectedImage(image)
+        setSelectedOwner(owner)
+        setSelectedTrackNum(tracksNum)
+        setOpenPlaylist(true);
   };
 
     const handlePlaylistPlay = (playlistId: any)=>{
@@ -57,6 +68,11 @@ const Playlists = ({ playlists,spodify,webPlayer,current_track,context,setPlayli
             current_track={current_track}
             context={context}
             setOpenPlaylist={setOpenPlaylist}
+            description={selectedDescription}
+            name={selectedName}
+            image={selectedImage}
+            owner={seletedOwner}
+            tracksNum={selectedTrackNum}
           />;
   }
 
@@ -70,9 +86,11 @@ const Playlists = ({ playlists,spodify,webPlayer,current_track,context,setPlayli
            className={`${!(playlist.uri === context.uri) && 'hover:bg-slate-500 hover:bg-opacity-60'}  ${playlist.uri === context.uri && 'bg-teal-700 bg-opacity-50'}`}
            onClick={() => {
                  player.setIsLikedPlaylist(false)
+                 console.log('what is the playlist',playlist)
+                // if(!(playlist.uri === context.uri)) handlePlaylistPlay(playlist.id,)
                 if(!(playlist.uri === context.uri)) handlePlaylistPlay(playlist.id)
-                 openPlaylistHandler(playlist.id)}
-                 
+                 openPlaylistHandler(playlist.id,playlist.description,playlist.name,playlist.images[0].url,playlist.owner,playlist.tracks.total)
+                  }  
                 }
            >
             <div key={index} className="flex flex-row justify-start items-center gap-5 p-2 cursor-pointer font-semibold">
