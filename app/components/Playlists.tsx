@@ -20,9 +20,6 @@ const Playlists = ({ playlists,spodify,webPlayer,current_track,context,setPlayli
   const [isHovered, setIsHovered] = useState(null);
 
   const player = usePlayer()
-  
-
-  console.log('let me see the playlists info',playlists)
 
   const openPlaylistHandler = (playlistId,description,name,image,owner,tracksNum) => {
         setSelectedPlaylistId(playlistId);

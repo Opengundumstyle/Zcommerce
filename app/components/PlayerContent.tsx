@@ -265,7 +265,7 @@ const unlikeSong = () => {
 
   // create playlist element
   const displayPlaylists = ()=>{
-      console.log('display this sht',playlists)
+  
       setOpenModal(true)
    
   }
@@ -293,7 +293,7 @@ useEffect(()=>{
 
 // play zcommerce playlist
 useEffect(()=>{
-    console.log('do u have? current track',current_track.name)
+  
     if(current_track.name) return
     sound?.play()
     return ()=>{
