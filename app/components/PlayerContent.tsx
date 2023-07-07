@@ -222,8 +222,8 @@ const likeSong = () => {
     .then(() => {
       setIsLiked(true)
       console.log('Song liked successfully.');
-      toast('add to liked songs', {
-        icon: '🫡',
+      toast('added to liked songs', {
+        icon: '🎶',
       });
       // Update the isLiked state or perform any other necessary actions
     })

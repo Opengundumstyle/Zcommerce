@@ -30,8 +30,10 @@ export default async function Dashboard(){
     
     if(orders === null)return <div>You need to be logged in to view your orders 👮🏽‍♀️</div>
 
-    if(orders.length === 0 ) return <div className="h-3/5 w-full flex justify-center items-center"> 
+    if(orders.length === 0 ) return <div className="h-3/5 w-full flex justify-center items-center flex-col"> 
+                                 
                                      <h1 className="text-slate-400 font-normal text-2xl ">You have no orders yooo</h1>
+                                     <div className="p-2 text-gray-600 text-sm"> didn't see your order? Try refresh</div>
                                     </div>
 
     return (
