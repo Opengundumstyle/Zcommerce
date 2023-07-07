@@ -116,7 +116,7 @@ const deletePlaylist = async () => {
                 </div>
 
                 {hasPermission && 
-                <BsTrash3 className="cursor-pointer hover:text-white hover:scale-110 text-lg "
+                <BsTrash3 className="cursor-pointer hover:text-white hover:scale-110 text-lg text-gray-400"
                           onClick={deletePlaylist}
                 /> }
               
