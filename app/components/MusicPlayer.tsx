@@ -408,7 +408,7 @@ const MusicPlayer = ({user}:Session) => {
                 
         </div>
 
-       {(!musicplayer.activeId)&&(session.isSession)?'':!playerHovered && !session.isSession? '': !current_track.name?
+       {(!musicplayer.activeId)&&(session.isSession)|| user?'':!playerHovered && !session.isSession? '': !current_track.name?
           <motion.div 
            className='p-3 text-sm flex flex-row gap-1 items-center relative'
            initial={{ opacity: 0, y: 10 }}
