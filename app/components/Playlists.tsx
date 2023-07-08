@@ -5,8 +5,7 @@ import { JSXElementConstructor, Key, PromiseLikeOfReactNode, ReactElement, React
 import Playlist from "./Playlist";
 import usePlayer from "@/hooks/usePlayer";
 import MusicPlayingAnimation from "./MusicPlayingAnimation";
-import {AiFillPlayCircle,AiFillPauseCircle } from "react-icons/ai";
-import { BsFillPlayFill,BsFillPauseFill,BsPlayCircleFill } from "react-icons/bs";
+import { BsPlayCircleFill } from "react-icons/bs";
 
 
 const Playlists = ({ playlists,spodify,webPlayer,current_track,context,setPlaylistDisplay}:any) => {
