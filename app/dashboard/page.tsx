@@ -41,7 +41,7 @@ export default async function Dashboard(){
           <div>
            <h1 className="text-bold">Your Orders</h1>
            <div className="font-medium">
-               {orders.map((order)=>(
+               {orders.reverse().map((order)=>(
                    <div key={order.id} className="rounded-lg p-8 my-4 space-y-2 bg-base-200">
                        <h2 className="text-xs font-medium">Order reference: {order.id}</h2>
                        
