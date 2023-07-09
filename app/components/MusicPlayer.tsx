@@ -435,9 +435,11 @@ const MusicPlayer = ({user}:Session) => {
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
               >
+                <a href="https://www.spotify.com/us/premium/?utm_source=us-en_brand_contextual-desktop_text&utm_medium=paidsearch&utm_campaign=alwayson_ucanz_us_performancemarketing_core_brand+contextual-desktop+text+exact+us-en+google&gclid=Cj0KCQjwtamlBhD3ARIsAARoaEydt8AH3rd3IvDN8nZbKNFFMwq030viP_QLIYOpeou0gQUS5G5kUkMaAs77EALw_wcB&gclsrc=aw.ds" target='_blank'>
                <BsFillInfoSquareFill
                 className="cursor-pointer"
                />
+               </a>
         
               {isHovered && (
                 <div className={`absolute top-9 left-0 p-3 bg-white border border-gray-300 rounded text-gray-500`}>
