@@ -33,13 +33,13 @@ export default async function Dashboard(){
     if(orders.length === 0 ) return <div className="h-3/5 w-full flex justify-center items-center flex-col"> 
                                  
                                      <h1 className="text-slate-400 font-normal text-2xl ">You have no orders yooo</h1>
-                                     <div className="p-2 text-gray-600 text-sm"> didn't see your order? Try refresh</div>
+                                     <div className="p-2 text-gray-500 text-sm"> didn't see your order? Try refresh</div>
                                     </div>
 
     return (
 
           <div>
-           <h1 className="text-bold">Your Orders</h1>
+           <h1 className="text-bold">Your Orders <span className="text-sm text-gray-500">didn't see your order? Try refresh</span></h1>
            <div className="font-medium">
                {orders.reverse().map((order)=>(
                    <div key={order.id} className="rounded-lg p-8 my-4 space-y-2 bg-base-200">
