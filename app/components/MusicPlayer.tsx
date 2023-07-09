@@ -104,7 +104,7 @@ const MusicPlayer = ({user}:Session) => {
 
     async function handleSpotifySignIn(){
       if(session.isSession)session.toggleSession()
-      signIn('spotify',{callbackUrl:'http://localhost:3000'})
+      signIn('spotify',{callbackUrl:'https://zcommerce-silk.vercel.app'})
  }
 
 
@@ -148,7 +148,7 @@ const MusicPlayer = ({user}:Session) => {
               });
 
               player.addListener('player_state_changed', ( state => {
-                console.log('what is the state',state)
+                console.log('Player State',state)
                 if (!state) {
                     return;
                 }

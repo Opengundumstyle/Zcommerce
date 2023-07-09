@@ -12,7 +12,6 @@ const Playlist = ({playlistId,spodify,webPlayer,current_track,setOpenPlaylist,de
     
   const [songs,setSongs] = useState([])
   const [hasPermission, setHasPermission] = useState(false);
-  console.log('what is the desc',description)
    
 
 useEffect( ()=>{

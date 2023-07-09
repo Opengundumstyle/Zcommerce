@@ -173,19 +173,12 @@ const Songs = ()=>{
         
           )
 
-
-
     })
 
     return topFiveSongs
 
-   
 }
 
-
-
-
-console.log('what is songs',searchInfo)
 
     return( 
       <div className='min-w-full flex flex-col justify-start relative'>
