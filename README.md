@@ -19,11 +19,14 @@ The project aims to create a brand new online shopping experience by implementin
 
 ## Technologies Used
 
+- Next JS
+- PostgresSQL
+- Supabase
 - React: A JavaScript library for building user interfaces.
 - HTML/CSS: Markup and styling of the application.
-- TypeScript: Programming language for implementing the functionality.
 - Tailwind CSS: Utility-first CSS framework for styling the application.
 - React Icons: Icon library for using icons in React components.
+  
 
 ### API Intergration
 - Spotify Web API: Provides access to Spotify's music catalog and user-related data.
