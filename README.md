@@ -25,7 +25,6 @@ The project aims to create a brand new online shopping experience by implementin
 - React: A JavaScript library for building user interfaces.
 - HTML/CSS: Markup and styling of the application.
 - Tailwind CSS: Utility-first CSS framework for styling the application.
-- React Icons: Icon library for using icons in React components.
   
 
 ### API Intergration
