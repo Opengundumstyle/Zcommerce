@@ -19,12 +19,11 @@ The project aims to create a brand new online shopping experience by implementin
 
 ## Technologies Used
 
-- Next JS
+- Next JS/React
 - PostgresSQL
 - Supabase
-- React: A JavaScript library for building user interfaces.
-- HTML/CSS: Markup and styling of the application.
-- Tailwind CSS: Utility-first CSS framework for styling the application.
+- prisma
+- Tailwind CSS
   
 
 ### API Intergration
