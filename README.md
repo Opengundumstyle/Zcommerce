@@ -6,7 +6,7 @@ This is an ecommerce application built with React and Spotify Web API.
 
 The project aims to create a brand new online shopping experience by implementing a simple and interactive music player that allows users to search and play songs from Spotify. It utilizes the Spotify Web API to authenticate users and fetch song data.
 
-## Features
+## music player Features 
 
 - Search for songs by title, artist, or album.
 - Play, pause, and control the playback of songs.
@@ -16,6 +16,9 @@ The project aims to create a brand new online shopping experience by implementin
 - Shuffle and repeat playback options.
 - Display song information and album covers.
 - Volume control.
+
+## Ecommerce Features
+
 
 ## Technologies Used
 
