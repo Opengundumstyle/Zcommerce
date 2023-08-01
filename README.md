@@ -21,8 +21,8 @@ The project aims to create a brand new online shopping experience by implementin
 
 - Shopping Cart
 - Home Page
-- Product Search 
 - Product page
+- Product Search 
 - Order history
 - User Authorization
 
