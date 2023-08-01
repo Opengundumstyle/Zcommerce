@@ -19,6 +19,12 @@ The project aims to create a brand new online shopping experience by implementin
 
 ## Ecommerce Features
 
+- Shopping Cart
+- Home Page
+- Product Search 
+- Product page
+- Order history
+- User Authorization
 
 ## Technologies Used
 
